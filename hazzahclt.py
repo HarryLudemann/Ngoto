@@ -34,6 +34,7 @@ def options():
 2. Email
 3. IP
 4. URL
+5. Google Dorks
     ''')
 
 def main():
@@ -42,7 +43,7 @@ def main():
     options()                           # Print Options
     context = {}                          # Init dict to store gathered information
     option = int(input('\nInput Option: '))    # Get user selected option eg 1-9
-    if option not in [0, 1, 2, 3, 4]:   # Insure input is 1-5
+    if option not in [0, 1, 2, 3, 4, 5]:   # Insure input is 1-5
         logging.error("Valid inputs are 1-5")
     else:
         if option == 0: # exit
@@ -59,11 +60,26 @@ def main():
         if option == 4: # URL
             target = input("\nEnter target URL: ")
             context = hz.get_url_info(target)
+        if option == 5: # URL
+            type = input("\nSearch f:file or w:website:")
+            target = input("\nEnter query: ")
+            if type == 'f':
+                files = input("\nEnter file types eg. pdf xlsx docx: ").split()
+                maxcount = input("\nOptionally enter max results ")
+                context = hz.get_document_search(target, files, maxcount)
+            elif type == 'w':
+                websites = input("\nEnter websites eg facebook.com twitter.com: ").split()
+                maxcount = input("\nOptionally enter max results ")
+                context = hz.get_website_search(target, websites, maxcount)
 
         # Print information
-        for name in context:
-            print(f'{name}: {context[name]}')
-            
+        if option in [1, 2, 3, 4]:
+            for name in context:
+                print(f'{name}: {context[name]}')
+        elif option is 5:
+            for url in context['urls']:
+                print(url)
+
     # Wait for key press to continue
     input("Press Enter to continue...")
     # Recall Menu

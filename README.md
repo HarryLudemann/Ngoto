@@ -1,6 +1,6 @@
-# Hazzah-OSINT 0.0.2
+# Hazzah-OSINT 0.0.3
 
-Python OSINT tool available as module and command line tool to gather information on a target. Created to simplify a django dashboard, currently a working work in progress.
+Lightweight python OSINT tool available as module and command line tool to gather information on a target. Created to simplify a django dashboard, currently a working work in progress.
 
 ## Setup:
 ## Using as Command line tool:
@@ -33,6 +33,7 @@ Run the hazzahclt.py script, which will bring you to the following:
 2. Email
 3. IP
 4. URL
+5. Google Dorks
 ```
 
 ## Using Hazzah-OSINT as module:
@@ -133,6 +134,24 @@ bot_status: True
     <td>True - Virus Total</td>
   </tr>
   <tr>
+    <td>get_document_search(query)</td>
+    <td>Returns dictionary of url search results</td>
+    <td>modules/main.py</td>
+    <td>False</td>
+  </tr>
+  <tr>
+    <td>get_website_search(query)</td>
+    <td>Returns dictionary of url search results</td>
+    <td>modules/main.py</td>
+    <td>False</td>
+  </tr>
+  <tr>
+    <td>google_search(query, types, parameter, maxcount)</td>
+    <td>Returns dictionary of url search results, given query, list of websites eg ['twitter.com', 'facebook.com'] or ['pdf', 'xlsx] and parameter eg filetype: or site:. optionally maxcount (by default set to 10)</td>
+    <td>modules/google.py</td>
+    <td>False</td>
+  </tr>
+  <tr>
     <td>set_ip_quality_api(api_key)</td>
     <td>Sets the IP quality api key</td>
     <td>main.py</td>
@@ -151,3 +170,7 @@ bot_status: True
     <td>N/A</td>
   </tr>
 </table>
+
+# Warning :warning:
+
+<p align="center"><b>This tool is solely for educational purposes. Developer will not be reponsible for any misuse of the tool</b></p>

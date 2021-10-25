@@ -3,7 +3,7 @@ import logging
 
 
 class osint:
-    __version__ = '0.0.2'
+    __version__ = '0.0.3'
     VIRUS_TOTAL_API_KEY = ''
     IP_QUALITY_API_KEY = ''
     NUM_VERIFY_API_KEY = ''
@@ -47,4 +47,12 @@ class osint:
             return {}
         else:
             return modules.get_file_scan(target_name, target_files, target_string, self.VIRUS_TOTAL_API_KEY)
+
+    def get_website_search(self, query, websites, max_results=10):
+        """Passed query, list of file types and optionally int of max results wanted"""
+        return modules.google_search(query, websites, 'site:', int(max_results))
+
+    def get_document_search(self, query, filetypes, max_results=10):
+        """Passed query, list of file types and optionally int of max results wanted"""
+        return modules.google_search(query, filetypes, 'filetype:', int(max_results))
     
