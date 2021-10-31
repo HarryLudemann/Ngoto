@@ -2,11 +2,16 @@ import logging
 try:
     from googlesearch import search
 except ImportError:
-    logging.error("No module named 'google' found")
+    logging.warning("No module named 'google' found, cannot use google dorking/search")
 
 def google_search(query, types, parameter, max_results=10):
     """ given query, list of websites eg ['twitter.com', 'facebook.com'] or ['pdf', 'xlsx] and parameter eg filetype: or site:
     returns list of url's """
+    try:
+        from googlesearch import search
+    except ImportError:
+        logging.error("No module named 'google' found, cannot use google dorking/search")
+
     if not types: # if types is empty
         logging.error('types var must contain list of requested file types')
         return []
