@@ -147,6 +147,7 @@ class hazzahclt(osint):
                 plugin = plugins[int(option[0]) - 1]
                 plugin = plugin()
                 context = plugin.main(self)
+                plugin.print_info(context)
 
                 # save to appropriate workplace if within
                 if self.workplace:

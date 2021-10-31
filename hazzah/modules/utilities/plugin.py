@@ -32,6 +32,11 @@ class Plugin(ABC):
         """ function that returns string of sqlite query to create table """
         pass
 
+    @abstractmethod  
+    def print_info(self, context):
+        """ gets context dictionary, prints results """
+        pass
+
     @abstractmethod 
     def main(self): 
         """ Main function to handle purpose """ 

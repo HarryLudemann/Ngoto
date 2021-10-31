@@ -24,7 +24,9 @@ class Plugin(osint.Plugins):
     def main(self, hz):
         target = self.get_input("Target phone: ", '[Phone]')
         if target == 'back': return {}
-        context = self.get_phone_info(target, hz.NUM_VERIFY_API_KEY)
+        return self.get_phone_info(target, hz.NUM_VERIFY_API_KEY)
+
+    def print_info(self, context):
         col_widths = [25, 50]
         col_names = ['Description', 'Value']
         col_values = []
@@ -32,7 +34,6 @@ class Plugin(osint.Plugins):
             if type(context[item]) != list:
                 col_values.append( [str(item), str(context[item])] )
         print( '\n' + self.Tables().get_table(col_names, col_widths, col_values) )
-        return context
 
     def create_table(self):
         return '''

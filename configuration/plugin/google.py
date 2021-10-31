@@ -31,33 +31,24 @@ class Plugin(osint.Plugins):
             if files == 'back': return {}
             maxcount = self.get_input("Optionally enter max results: ", '[Google]')
             if maxcount == 'back': return {}
-            context = self.google_search(target, files, 'filetype:', int(maxcount))
-            col_names = ['URL']
-            col_values = []
-            longest_url = 0
-            for item in context['urls']:
-                col_values.append( str([item]) )
-                if len(item) > longest_url:
-                    longest_url = len(item)
-            col_widths = [longest_url]
-            print( '\n' + self.Tables().get_table(col_names, col_widths, col_values) )
-            return context
+            return self.google_search(target, files, 'filetype:', int(maxcount))
         elif type == 'w':
             websites = self.get_input("Enter websites eg facebook.com twitter.com: ", '[Google]').split()
             if websites == 'back': return {}
             maxcount = self.get_input("Optionally enter max results: ", '[Google]')
             if maxcount == 'back': return {}
-            context = self.google_search(target, websites, 'site:', int(maxcount))
-            col_names = ['URL']
-            col_values = []
-            longest_url = 0
-            for item in context['urls']:
-                col_values.append( [item] )
-                if len(item) > longest_url:
-                    longest_url = len(item)
-            col_widths = [longest_url+1]
-            print( '\n' + self.Tables().get_table(col_names, col_widths, col_values) )
-            return context
+            return self.google_search(target, websites, 'site:', int(maxcount))
+
+    def print_info(self, context):
+        col_names = ['URL']
+        col_values = []
+        longest_url = 0
+        for item in context['urls']:
+            col_values.append( [item] )
+            if len(item) > longest_url:
+                longest_url = len(item)
+        col_widths = [longest_url]
+        print( '\n' + self.Tables().get_table(col_names, col_widths, col_values) )
 
     def create_table(self):
         return '''
