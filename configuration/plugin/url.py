@@ -4,7 +4,7 @@ from hazzah import Plugin
 class Plugin(Plugin):
     name = 'URL'
 
-    def get_urls_info(self, target_url):
+    def get_info(self, target_url):
         """ Given target URL returns urls ip
             returns dict
         """
@@ -16,7 +16,7 @@ class Plugin(Plugin):
     def main(self, hz):
         target = hz.interface.get_input("Target URL: ", '[URL]', hz.current_pos)
         if target == 'back': return {}
-        return self.get_urls_info(target)
+        return self.get_info(target)
 
     def print_info(self, hz, context):
         col_widths = [20, 50]
@@ -27,15 +27,12 @@ class Plugin(Plugin):
                 col_values.append( [item, context[item]] )
         hz.interface.output( '\n' + self.Tables().get_table(col_names, col_widths, col_values) )
 
+    def get_context(self, args):
+        return self.get_info(args[0])
+
     def create_table(self):
         return '''
         CREATE TABLE IF NOT EXISTS url (
         id integer PRIMARY KEY AUTOINCREMENT,
         ip text );
         '''
-    
-    
-
-
-
-

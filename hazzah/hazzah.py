@@ -11,7 +11,7 @@ import json
 
 class OSINT:
     """ Contains API information aswell as OSINT modules """
-    __version__ = '0.0.3'
+    __version__ = '0.0.12'
     clearConsole = lambda self: os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
     plugins = [] # list of plugins
     api_keys = {} # dict of api keys
@@ -25,6 +25,49 @@ class OSINT:
         self.plugins.append(plugin)
     def get_plugins(self):
         return self.plugins
+    def get_plugin(self, name):
+        for plugin in self.get_plugins():
+            if plugin.name == name:
+                return plugin
+
+class Hazzah(OSINT):
+    """ Module class """
+    modules = {
+        'Email' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/email.py?token=AOM7FLLHTJ4YMW7PGIODIYDBRDWYA',
+        'IP' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/ip.py?token=AOM7FLJXCKMDPWYMC3I6MBLBRDWY4',
+        'URL' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/url.py?token=AOM7FLIROPMD3IXC73NU23TBRDW22',
+        'Google' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/google.py?token=AOM7FLNW5HEOLADOTCIS5STBRDWWW',
+        'Phone' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/phone.py?token=AOM7FLKL7BH2S5TTNWPZP3LBRDWZY'
+    }
+
+    def __init__(self):
+        import requests
+        if not exists('configuration/'):
+            os.mkdir('configuration/')
+        if not exists('configuration/plugin/'):
+            os.mkdir('configuration/plugin/')
+        for module in self.modules:
+            r = requests.get(self.modules[module])
+            with open(f'configuration/plugin/{module.lower()}.py', 'w') as f:
+                f.write(r.text)
+        # load plugins
+        for file in os.listdir("configuration/plugin/"):
+            if file.endswith(".py"):
+                mod = __import__('configuration.plugin.' + file[:-3], fromlist=['Plugin'])
+                self.add_plugin( getattr(mod, 'Plugin') )
+
+    def get_plugin_context(self, plugin_name, args):
+        """ Get context from plugin, given plugin name & list of args """
+        return self.get_plugin(plugin_name)().get_context(args)
+
+class HazzahCLT(OSINT):
+    """ Command line tool class """
+    current_pos = "[Hazzah]"
+    current_workplace = "None" # Name
+    workplace = None # current workplace object
+    file_path ='configuration/workplace/' # workplace file path
+    interface = Interface()
+
     def load_config(self):
         """ Loads plugins from plugins directory """
         # check Configuration, workplace and plugins folder exist else create
@@ -47,14 +90,6 @@ class OSINT:
             if file.endswith(".py"):
                 mod = __import__('configuration.plugin.' + file[:-3], fromlist=['Plugin'])
                 self.add_plugin( getattr(mod, 'Plugin') )
-
-class HazzahCLT(OSINT):
-    """ Command line tool class """
-    current_pos = "[Hazzah]"
-    current_workplace = "None" # Name
-    workplace = None # current workplace object
-    file_path ='configuration/workplace/' # workplace file path
-    interface = Interface()
 
     # Workplace command method
     def workplace_command(self, options):

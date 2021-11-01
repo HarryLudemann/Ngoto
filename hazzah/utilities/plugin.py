@@ -1,17 +1,18 @@
-from abc import ABC, abstractmethod 
-import sys
-from hazzah.utilities.tables import Table
+from abc import ABC, abstractmethod
 
 class Plugin(ABC):
     name = ''
-    class Tables(Table):
-        """Inherits table functions accessable from osint module"""
-        def __init__(self):
-            pass
+    version = ''
+    description = ''
 
     @abstractmethod  
     def create_table(self):
         """ function that returns string of sqlite query to create table """
+        pass
+
+    @abstractmethod  
+    def get_context(self):
+        """ function that returns context dict given required args """
         pass
 
     @abstractmethod  
