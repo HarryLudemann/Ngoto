@@ -1,8 +1,8 @@
 import requests
-from hazzah import osint
+from hazzah import OSINT
 import logging
 
-class Plugin(osint.Plugins):
+class Plugin(OSINT.Plugins):
     name = 'Email'
 
     def get_email_info(self, target_email, api_key):

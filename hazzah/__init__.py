@@ -1,1 +1,1 @@
-from hazzah.main import osint
+from hazzah.main import OSINT, HazzahCLT

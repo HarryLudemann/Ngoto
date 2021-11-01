@@ -1,8 +1,8 @@
 import requests
-from hazzah import osint
+from hazzah import OSINT
 import logging
 
-class Plugin(osint.Plugins):
+class Plugin(OSINT.Plugins):
     name = 'Phone'
 
     def get_phone_info(self, target_phone, NUM_VERIFY_API_KEY):
