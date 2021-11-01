@@ -41,18 +41,18 @@ class Plugin(OSINT.Plugins):
         return context
 
     def main(self, hz):
-        target = self.get_input("Target IP: ", '[IP]')
+        target = hz.interface.get_input("Target IP: ", '[IP]', hz.current_pos)
         if target == 'back': return {}
         return self.get_ip_info(target, hz.IP_QUALITY_API_KEY)
 
-    def print_info(self, context):
+    def print_info(self, hz, context):
         col_widths = [20, 50]
         col_names = ['Description', 'Value']
         col_values = []
         for item in context:
             if type(context[item]) != list:
                 col_values.append( [str(item), str(context[item])] )
-        print( '\n' + self.Tables().get_table(col_names, col_widths, col_values) )
+        hz.interface.output( '\n' + self.Tables().get_table(col_names, col_widths, col_values) )
 
     def create_table(self):
         return '''

@@ -1,10 +1,11 @@
+# this script is to load configuration and launch the command line tool
+
 import logging
 import traceback
 import json
 import os
 from os.path import exists # check config file exists
 import hazzah
-
 
 hz = hazzah.HazzahCLT()
 clearConsole = lambda: os.system('cls' if os.name in ('nt', 'dos') else 'clear') # lamba function to clear console
