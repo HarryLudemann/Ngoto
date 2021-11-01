@@ -11,7 +11,7 @@ import json
 
 class OSINT:
     """ Contains API information aswell as OSINT modules """
-    __version__ = '0.0.12'
+    __version__ = '0.0.14'
     clearConsole = lambda self: os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
     plugins = [] # list of plugins
     api_keys = {} # dict of api keys
@@ -33,11 +33,11 @@ class OSINT:
 class Hazzah(OSINT):
     """ Module class """
     modules = {
-        'Email' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/email.py?token=AOM7FLLHTJ4YMW7PGIODIYDBRDWYA',
-        'IP' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/ip.py?token=AOM7FLJXCKMDPWYMC3I6MBLBRDWY4',
-        'URL' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/url.py?token=AOM7FLIROPMD3IXC73NU23TBRDW22',
-        'Google' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/google.py?token=AOM7FLNW5HEOLADOTCIS5STBRDWWW',
-        'Phone' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/phone.py?token=AOM7FLKL7BH2S5TTNWPZP3LBRDWZY'
+        'Email' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/email.py?token=AOM7FLLWG4WKNYKHMX442GLBRD4GG',
+        'IP' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/ip.py?token=AOM7FLLYTNPVGQRAXJZJSK3BRD4HY',
+        'URL' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/url.py?token=AOM7FLKFRGXARULWNBXEJALBRD4JE',
+        'Google' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/google.py?token=AOM7FLITTZKZWKRIHOIWI73BRD4KK',
+        'Phone' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/phone.py?token=AOM7FLITRMJPSDKVGA6X3JDBRD4LO'
     }
 
     def __init__(self):
@@ -46,10 +46,12 @@ class Hazzah(OSINT):
             os.mkdir('configuration/')
         if not exists('configuration/plugin/'):
             os.mkdir('configuration/plugin/')
-        for module in self.modules:
-            r = requests.get(self.modules[module])
-            with open(f'configuration/plugin/{module.lower()}.py', 'w') as f:
-                f.write(r.text)
+            
+        if not exists('configuration/plugin/email.py'):
+            for module in self.modules:
+                r = requests.get(self.modules[module])
+                with open(f'configuration/plugin/{module.lower()}.py', 'w') as f:
+                    f.write(r.text)
         # load plugins
         for file in os.listdir("configuration/plugin/"):
             if file.endswith(".py"):
