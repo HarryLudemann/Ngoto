@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod 
 import sys
-from hazzah.modules.utilities.tables import Table
+from hazzah.utilities.tables import Table
 
 class Plugin(ABC):
     name = ''

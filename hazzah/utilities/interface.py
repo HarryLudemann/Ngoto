@@ -1,7 +1,7 @@
 import logging
 import traceback
 import sys
-from hazzah.modules.utilities.plugin import Plugin
+from hazzah.utilities.plugin import Plugin
 
 class Interface:
     class bcolors:

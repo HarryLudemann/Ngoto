@@ -1,11 +1,11 @@
-from hazzah import OSINT
+from hazzah import Plugin
 import logging
 try:
     from googlesearch import search
 except ImportError:
     logging.warning("No module named 'google' found, cannot use google dorking/search")
 
-class Plugin(OSINT.Plugins):
+class Plugin(Plugin):
     name = 'Google'
 
     def google_search(self, query, types, parameter, max_results=10):

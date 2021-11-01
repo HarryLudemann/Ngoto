@@ -1,8 +1,8 @@
 import requests
-from hazzah import OSINT
+from hazzah import Plugin
 import logging
 
-class Plugin(OSINT.Plugins):
+class Plugin(Plugin):
     name = 'IP'
 
     def get_ip_info(self, target_ip, IP_QUALITY_API_KEY):

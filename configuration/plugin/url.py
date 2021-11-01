@@ -1,8 +1,7 @@
 import socket
-from hazzah import OSINT
-import logging
+from hazzah import Plugin
 
-class Plugin(OSINT.Plugins):
+class Plugin(Plugin):
     name = 'URL'
 
     def get_urls_info(self, target_url):
