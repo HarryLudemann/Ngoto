@@ -10,6 +10,17 @@
 * Use as command line tool or as module.
 * Easily create/store received data into workplaces/databases
 
+# Command line tool commands:
+    o/options                   --  Returns osint options
+    c/commands                  --  Returns this list of commands
+    cls/clear                   --  Clear console
+    back                        --  back out of plugin
+    0/exit                      --  closes program
+
+    wp/workshop create (NAME)   --  Creates (NAME) workplace
+    wp/workshop join (NAME)     --  Joins (NAME) workplace
+    wp/workshop delete (NAME)   --  Deletes (NAME) workplace
+    wp/workshop leave           --  Leave current workplace
 # Setup:
 ## Using as Command line tool:
 #### 1. Clone Repo:
