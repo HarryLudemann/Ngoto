@@ -28,7 +28,7 @@ class Plugin(Plugin):
     def main(self, hz):
         target = hz.interface.get_input("Target email: ", '[Email]', hz.current_pos)
         if target == 'back': return {}
-        return self.get_email_info(target, hz.EMAIL_VERIFICATION_API_KEY)
+        return self.get_email_info(target, hz.get_api('EMAIL_VERIFICATION_API_KEY'))
 
     def print_info(self, hz, context):
         col_widths = [20, 50]

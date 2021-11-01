@@ -43,7 +43,7 @@ class Plugin(Plugin):
     def main(self, hz):
         target = hz.interface.get_input("Target IP: ", '[IP]', hz.current_pos)
         if target == 'back': return {}
-        return self.get_ip_info(target, hz.IP_QUALITY_API_KEY)
+        return self.get_ip_info(target, hz.get_api('IP_QUALITY_API_KEY'))
 
     def print_info(self, hz, context):
         col_widths = [20, 50]

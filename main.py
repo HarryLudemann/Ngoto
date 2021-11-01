@@ -8,7 +8,7 @@ import hazzah
 if __name__ == '__main__':
     hz = hazzah.HazzahCLT()
     try:
-        hz.load_plugins()
+        hz.load_config()
         hz.clearConsole()
         hz.interface.options(hz)
         hz.main()

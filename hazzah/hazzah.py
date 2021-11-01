@@ -13,27 +13,19 @@ class OSINT:
     """ Contains API information aswell as OSINT modules """
     __version__ = '0.0.3'
     clearConsole = lambda self: os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
-    VIRUS_TOTAL_API_KEY = ''
-    IP_QUALITY_API_KEY = ''
-    NUM_VERIFY_API_KEY = ''
-    EMAIL_VERIFICATION_API_KEY = ''
     plugins = [] # list of plugins
-    
-    # api key setters
-    def set_virus_total_api(self, api_key):
-        self.VIRUS_TOTAL_API_KEY = api_key
-    def set_ip_quality_api(self, api_key):
-        self.IP_QUALITY_API_KEY = api_key
-    def set_num_verify_api(self, api_key):
-        self.NUM_VERIFY_API_KEY = api_key
-    def set_email_verification_api(self, api_key):
-        self.EMAIL_VERIFICATION_API_KEY = api_key
+    api_keys = {} # dict of api keys
+
+    def add_api(self, name, key):
+        self.api_keys[name] = key
+    def get_api(self, name):
+        return self.api_keys[name]
     
     def add_plugin(self, plugin):
         self.plugins.append(plugin)
     def get_plugins(self):
         return self.plugins
-    def load_plugins(self):
+    def load_config(self):
         """ Loads plugins from plugins directory """
         # check Configuration, workplace and plugins folder exist else create
         if not exists('configuration/'):
@@ -46,10 +38,8 @@ class OSINT:
         if exists('configuration/config.json'):
             with open("configuration/config.json") as json_data_file:
                 data = json.load(json_data_file)
-                self.set_virus_total_api(data['API']['TOTAL_VIRUS_API_KEY'])
-                self.set_num_verify_api(data['API']['NUM_VERIFY_API_KEY'])
-                self.set_ip_quality_api(data['API']['IP_QUALITY_API_KEY'])
-                self.set_email_verification_api(data['API']['EMAIL_VERIFICATION_API_KEY'])
+                for name in data['API']:
+                    self.add_api(name, data['API'][name])
         else:
             logging.warning("No config.json found")
         # load plugins

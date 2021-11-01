@@ -24,7 +24,7 @@ class Plugin(Plugin):
     def main(self, hz):
         target = hz.interface.get_input("Target phone: ", '[Phone]', hz.current_pos)
         if target == 'back': return {}
-        return self.get_phone_info(target, hz.NUM_VERIFY_API_KEY)
+        return self.get_phone_info(target, hz.get_api('NUM_VERIFY_API_KEY'))
 
     def print_info(self, hz, context):
         col_widths = [25, 50]
