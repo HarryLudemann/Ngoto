@@ -35,10 +35,10 @@ for file in os.listdir("configuration/plugin/"):
 
 
 if __name__ == '__main__':
-    bcolors = hz.bcolors()
+    bcolors = hz.interface.bcolors()
     try:
         clearConsole()
-        hz.options()
+        hz.interface.options(hz)
         hz.main()
     except Exception as e:
         print(f"{bcolors.ENDC}")

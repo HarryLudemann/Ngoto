@@ -1,6 +1,7 @@
 import logging
 import traceback
 import sys
+from hazzah.modules.utilities.plugin import Plugin
 
 class Interface:
     class bcolors:
@@ -40,26 +41,26 @@ class Interface:
     \_| |_/\__,_/___/___\__,_|_| |_|      
         {bcolors.ENDC}''')
 
-    def options(self):
+    def options(self, hz):
         self.logo()
         bcolors = self.bcolors()
         options = f'{bcolors.BOLD}\n0. Exit'
-        for index, plugin in enumerate(self.plugins):
+        for index, plugin in enumerate(hz.plugins):
             options += f'\n{index+1}. {plugin.name}'
-        print(options + f'\n\nWorkplace: {self.current_workplace}\n{bcolors.ENDC}')
+        print(options + f'\n\nWorkplace: {hz.current_workplace}\n{bcolors.ENDC}')
 
     def commands(self):
         self.logo()
         print(f'''
-    {bcolors.HEADER}[Basic]{bcolors.ENDC}{bcolors.BOLD}
+    {self.bcolors.HEADER}[Basic]{self.bcolors.ENDC}{self.bcolors.BOLD}
     o/options                   --  Returns osint options
     c/commands                  --  Returns this list of commands
     cls/clear                   --  Clear console
     0/exit                      --  closes program
 
-    {bcolors.HEADER}[Workplace]{bcolors.ENDC}{bcolors.BOLD}
+    {self.bcolors.HEADER}[Workplace]{self.bcolors.ENDC}{self.bcolors.BOLD}
     wp/workshop create (NAME)   --  Creates (NAME) workplace
     wp/workshop join (NAME)     --  Joins (NAME) workplace
     wp/workshop delete (NAME)   --  Deletes (NAME) workplace
     wp/workshop leave           --  Leave current workplace
-        {bcolors.ENDC}''')
+        {self.bcolors.ENDC}''')

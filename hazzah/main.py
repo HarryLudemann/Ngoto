@@ -136,7 +136,8 @@ class HazzahCLT(OSINT):
             logging.warning("No such command")
 
     def save_to_workplace(self, context, plugin_name):
-        """ either adds all vars in context to array, or if item is array creates row of that array """
+        """ Saves context dict to given plugins name table in current workplace if any
+        either adds all vars in context to array, or if item is array creates row of that array """
         values = []
         added_row = False
         first_var = True
@@ -162,9 +163,9 @@ class HazzahCLT(OSINT):
             elif option[0] in ['wp', 'workplace']:
                 self.workplace_command(option)
             elif option[0] in ['o', 'options']:
-                self.options()
+                self.interface.options(self)
             elif option[0] in ['c', 'commands']:
-                self.commands()
+                self.interface.commands()
             elif option[0] in ['cls', 'clear']:
                 clearConsole()
             elif option[0] in ['0', 'exit']:
