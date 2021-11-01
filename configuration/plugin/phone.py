@@ -1,8 +1,8 @@
 import requests
-from hazzah import osint
+from hazzah import Plugin
 import logging
 
-class Plugin(osint.Plugins):
+class Plugin(Plugin):
     name = 'Phone'
 
     def get_phone_info(self, target_phone, NUM_VERIFY_API_KEY):
@@ -22,18 +22,18 @@ class Plugin(osint.Plugins):
         return context
 
     def main(self, hz):
-        target = self.get_input("Target phone: ", '[Phone]')
+        target = hz.interface.get_input("Target phone: ", '[Phone]', hz.current_pos)
         if target == 'back': return {}
         return self.get_phone_info(target, hz.NUM_VERIFY_API_KEY)
 
-    def print_info(self, context):
+    def print_info(self, hz, context):
         col_widths = [25, 50]
         col_names = ['Description', 'Value']
         col_values = []
         for item in context:
             if type(context[item]) != list:
                 col_values.append( [str(item), str(context[item])] )
-        print( '\n' + self.Tables().get_table(col_names, col_widths, col_values) )
+        hz.interface.output( '\n' + self.Tables().get_table(col_names, col_widths, col_values) )
 
     def create_table(self):
         return '''

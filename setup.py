@@ -20,7 +20,7 @@ setup(
     description=DESCRIPTION,
     long_description_content_type="text/markdown",
     packages=find_packages(),
-    install_requires=['urllib3'],
+    install_requires=['googlesearch-python'],
     keywords=['python', 'harryludemann', 'osint', 'hazzah', 'hazzah-osint'],
     classifiers=[
         "Development Status :: 1 - Planning",

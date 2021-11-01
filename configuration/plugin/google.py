@@ -1,12 +1,11 @@
-import googlesearch
-from hazzah import osint
+from hazzah import Plugin
 import logging
 try:
     from googlesearch import search
 except ImportError:
     logging.warning("No module named 'google' found, cannot use google dorking/search")
 
-class Plugin(osint.Plugins):
+class Plugin(Plugin):
     name = 'Google'
 
     def google_search(self, query, types, parameter, max_results=10):
@@ -22,24 +21,24 @@ class Plugin(osint.Plugins):
             return { 'urls': search(formatted_query, num_results=max_results, lang="en" ) }
 
     def main(self, hz):
-        type = self.get_input("Search f:file or w:website: ", '[Google]')
+        type = hz.interface.get_input("Search f:file or w:website: ", '[Google]', hz.current_pos)
         if type == 'back': return {}
-        target = self.get_input("Enter query: ", '[Google]')
+        target = hz.interface.get_input("Enter query: ", '[Google]', hz.current_pos)
         if target == 'back': return {}
         if type == 'f':
-            files = self.get_input("Enter file types eg. pdf xlsx docx: ", '[Google]').split()
+            files = hz.interface.get_input("Enter file types eg. pdf xlsx docx: ", '[Google]', hz.current_pos).split()
             if files == 'back': return {}
-            maxcount = self.get_input("Optionally enter max results: ", '[Google]')
+            maxcount = hz.interface.get_input("Optionally enter max results: ", '[Google]', hz.current_pos)
             if maxcount == 'back': return {}
             return self.google_search(target, files, 'filetype:', int(maxcount))
         elif type == 'w':
-            websites = self.get_input("Enter websites eg facebook.com twitter.com: ", '[Google]').split()
+            websites = hz.interface.get_input("Enter websites eg facebook.com twitter.com: ", '[Google]', hz.current_pos).split()
             if websites == 'back': return {}
-            maxcount = self.get_input("Optionally enter max results: ", '[Google]')
+            maxcount = hz.interface.get_input("Optionally enter max results: ", '[Google]', hz.current_pos)
             if maxcount == 'back': return {}
             return self.google_search(target, websites, 'site:', int(maxcount))
 
-    def print_info(self, context):
+    def print_info(self, hz, context):
         col_names = ['URL']
         col_values = []
         longest_url = 0
@@ -48,7 +47,7 @@ class Plugin(osint.Plugins):
             if len(item) > longest_url:
                 longest_url = len(item)
         col_widths = [longest_url]
-        print( '\n' + self.Tables().get_table(col_names, col_widths, col_values) )
+        hz.interface.output( '\n' + self.Tables().get_table(col_names, col_widths, col_values) )
 
     def create_table(self):
         return '''

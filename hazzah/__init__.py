@@ -1,1 +1,2 @@
-from hazzah.main import osint
+from hazzah.hazzah import OSINT, HazzahCLT
+from hazzah.utilities import Plugin, Workplace

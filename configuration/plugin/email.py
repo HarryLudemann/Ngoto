@@ -1,8 +1,8 @@
 import requests
-from hazzah import osint
+from hazzah import Plugin
 import logging
 
-class Plugin(osint.Plugins):
+class Plugin(Plugin):
     name = 'Email'
 
     def get_email_info(self, target_email, api_key):
@@ -26,11 +26,11 @@ class Plugin(osint.Plugins):
             return {}
 
     def main(self, hz):
-        target = self.get_input("Target email: ", '[Email]')
+        target = hz.interface.get_input("Target email: ", '[Email]', hz.current_pos)
         if target == 'back': return {}
         return self.get_email_info(target, hz.EMAIL_VERIFICATION_API_KEY)
 
-    def print_info(self, context):
+    def print_info(self, hz, context):
         col_widths = [20, 50]
         col_names = ['Description', 'Value']
         col_values = []
@@ -38,7 +38,7 @@ class Plugin(osint.Plugins):
             if type(context[item]) != list:
                 col_values.append( [str(item), str(context[item])] )
 
-        print( '\n' + self.Tables().get_table(col_names, col_widths, col_values) )
+        hz.interface.output( '\n' + self.Tables().get_table(col_names, col_widths, col_values) )
 
     def create_table(self):
         return '''
