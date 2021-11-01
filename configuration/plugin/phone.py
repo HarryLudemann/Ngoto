@@ -5,7 +5,7 @@ import logging
 class Plugin(Plugin):
     name = 'Phone'
 
-    def get_phone_info(self, target_phone, NUM_VERIFY_API_KEY):
+    def get_info(self, target_phone, NUM_VERIFY_API_KEY):
         r = requests.get(f"http://apilayer.net/api/validate?access_key={NUM_VERIFY_API_KEY}&number={target_phone } ").json()
         context = {
             'valid': r['valid'],
@@ -24,7 +24,7 @@ class Plugin(Plugin):
     def main(self, hz):
         target = hz.interface.get_input("Target phone: ", '[Phone]', hz.current_pos)
         if target == 'back': return {}
-        return self.get_phone_info(target, hz.get_api('NUM_VERIFY_API_KEY'))
+        return self.get_info(target, hz.get_api('NUM_VERIFY_API_KEY'))
 
     def print_info(self, hz, context):
         col_widths = [25, 50]
@@ -34,6 +34,9 @@ class Plugin(Plugin):
             if type(context[item]) != list:
                 col_values.append( [str(item), str(context[item])] )
         hz.interface.output( '\n' + self.Tables().get_table(col_names, col_widths, col_values) )
+
+    def get_context(self, args):
+        return self.get_info(args[0], args[1])
 
     def create_table(self):
         return '''
@@ -50,9 +53,3 @@ class Plugin(Plugin):
         carrier text,
         line_type text );
         '''
-    
-    
-
-
-
-

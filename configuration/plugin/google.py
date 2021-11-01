@@ -8,7 +8,7 @@ except ImportError:
 class Plugin(Plugin):
     name = 'Google'
 
-    def google_search(self, query, types, parameter, max_results=10):
+    def get_info(self, query, types, parameter, max_results=10):
         """ given query, list of websites eg ['twitter.com', 'facebook.com'] or ['pdf', 'xlsx] and parameter eg filetype: or site:
         returns list of url's """
         if not types: # if types is empty
@@ -30,13 +30,16 @@ class Plugin(Plugin):
             if files == 'back': return {}
             maxcount = hz.interface.get_input("Optionally enter max results: ", '[Google]', hz.current_pos)
             if maxcount == 'back': return {}
-            return self.google_search(target, files, 'filetype:', int(maxcount))
+            return self.get_info(target, files, 'filetype:', int(maxcount))
         elif type == 'w':
             websites = hz.interface.get_input("Enter websites eg facebook.com twitter.com: ", '[Google]', hz.current_pos).split()
             if websites == 'back': return {}
             maxcount = hz.interface.get_input("Optionally enter max results: ", '[Google]', hz.current_pos)
             if maxcount == 'back': return {}
-            return self.google_search(target, websites, 'site:', int(maxcount))
+            return self.get_info(target, websites, 'site:', int(maxcount))
+
+    def get_context(self, args):
+        return self.get_info(args[0], args[1], args[2], args[3])
 
     def print_info(self, hz, context):
         col_names = ['URL']
@@ -55,9 +58,3 @@ class Plugin(Plugin):
         id integer PRIMARY KEY AUTOINCREMENT,
         url text );
         '''
-    
-    
-
-
-
-

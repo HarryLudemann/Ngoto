@@ -11,7 +11,7 @@ import json
 
 class OSINT:
     """ Contains API information aswell as OSINT modules """
-    __version__ = '0.0.3'
+    __version__ = '0.0.11'
     clearConsole = lambda self: os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
     plugins = [] # list of plugins
     api_keys = {} # dict of api keys
@@ -25,6 +25,32 @@ class OSINT:
         self.plugins.append(plugin)
     def get_plugins(self):
         return self.plugins
+    def get_plugin(self, name):
+        for plugin in self.get_plugins():
+            if plugin.name == name:
+                return plugin
+
+class Hazzah(OSINT):
+    """ Module class """
+    email_script = ''
+    ip_script = ''
+    url_script = ''
+    google_script = ''
+    phone_script = ''
+
+    def get_plugin_context(self, plugin_name, args):
+        """ Get context from plugin, given plugin name & list of args """
+        mod = __import__('configuration.plugin.' + plugin_name, fromlist=['Plugin'])
+        return getattr(mod, 'Plugin')().get_context(args)
+
+class HazzahCLT(OSINT):
+    """ Command line tool class """
+    current_pos = "[Hazzah]"
+    current_workplace = "None" # Name
+    workplace = None # current workplace object
+    file_path ='configuration/workplace/' # workplace file path
+    interface = Interface()
+
     def load_config(self):
         """ Loads plugins from plugins directory """
         # check Configuration, workplace and plugins folder exist else create
@@ -47,14 +73,6 @@ class OSINT:
             if file.endswith(".py"):
                 mod = __import__('configuration.plugin.' + file[:-3], fromlist=['Plugin'])
                 self.add_plugin( getattr(mod, 'Plugin') )
-
-class HazzahCLT(OSINT):
-    """ Command line tool class """
-    current_pos = "[Hazzah]"
-    current_workplace = "None" # Name
-    workplace = None # current workplace object
-    file_path ='configuration/workplace/' # workplace file path
-    interface = Interface()
 
     # Workplace command method
     def workplace_command(self, options):
