@@ -11,7 +11,7 @@ import json
 
 class OSINT:
     """ Contains API information aswell as OSINT modules """
-    __version__ = '0.0.11'
+    __version__ = '0.0.12'
     clearConsole = lambda self: os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
     plugins = [] # list of plugins
     api_keys = {} # dict of api keys
@@ -32,16 +32,33 @@ class OSINT:
 
 class Hazzah(OSINT):
     """ Module class """
-    email_script = ''
-    ip_script = ''
-    url_script = ''
-    google_script = ''
-    phone_script = ''
+    modules = {
+        'Email' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/email.py?token=AOM7FLLHTJ4YMW7PGIODIYDBRDWYA',
+        'IP' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/ip.py?token=AOM7FLJXCKMDPWYMC3I6MBLBRDWY4',
+        'URL' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/url.py?token=AOM7FLIROPMD3IXC73NU23TBRDW22',
+        'Google' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/google.py?token=AOM7FLNW5HEOLADOTCIS5STBRDWWW',
+        'Phone' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/phone.py?token=AOM7FLKL7BH2S5TTNWPZP3LBRDWZY'
+    }
+
+    def __init__(self):
+        import requests
+        if not exists('configuration/'):
+            os.mkdir('configuration/')
+        if not exists('configuration/plugin/'):
+            os.mkdir('configuration/plugin/')
+        for module in self.modules:
+            r = requests.get(self.modules[module])
+            with open(f'configuration/plugin/{module.lower()}.py', 'w') as f:
+                f.write(r.text)
+        # load plugins
+        for file in os.listdir("configuration/plugin/"):
+            if file.endswith(".py"):
+                mod = __import__('configuration.plugin.' + file[:-3], fromlist=['Plugin'])
+                self.add_plugin( getattr(mod, 'Plugin') )
 
     def get_plugin_context(self, plugin_name, args):
         """ Get context from plugin, given plugin name & list of args """
-        mod = __import__('configuration.plugin.' + plugin_name, fromlist=['Plugin'])
-        return getattr(mod, 'Plugin')().get_context(args)
+        return self.get_plugin(plugin_name)().get_context(args)
 
 class HazzahCLT(OSINT):
     """ Command line tool class """
