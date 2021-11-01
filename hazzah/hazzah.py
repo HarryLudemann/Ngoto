@@ -32,13 +32,7 @@ class OSINT:
 
 class Hazzah(OSINT):
     """ Module class """
-    modules = {
-        'Email' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/email.py?token=AOM7FLLWG4WKNYKHMX442GLBRD4GG',
-        'IP' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/ip.py?token=AOM7FLLYTNPVGQRAXJZJSK3BRD4HY',
-        'URL' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/url.py?token=AOM7FLKFRGXARULWNBXEJALBRD4JE',
-        'Google' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/google.py?token=AOM7FLITTZKZWKRIHOIWI73BRD4KK',
-        'Phone' : 'https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/phone.py?token=AOM7FLITRMJPSDKVGA6X3JDBRD4LO'
-    }
+    modules= ['Email', 'IP', 'URL', 'Google', 'Phone']
 
     def __init__(self):
         import requests
@@ -49,7 +43,7 @@ class Hazzah(OSINT):
             
         if not exists('configuration/plugin/email.py'):
             for module in self.modules:
-                r = requests.get(self.modules[module])
+                r = requests.get('https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/' + module.lower() + '.py')
                 with open(f'configuration/plugin/{module.lower()}.py', 'w') as f:
                     f.write(r.text)
         # load plugins
