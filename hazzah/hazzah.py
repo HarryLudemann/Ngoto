@@ -2,7 +2,7 @@
 # OSINT (controls osint modules and api keys)  
 # HazzahCLT (Controls Command line tool interface)
 
-from hazzah.utilities import Workplace, Interface
+from hazzah.utilities import Workplace, Interface, Table
 from os.path import exists # check config file exists
 import logging
 import sys
@@ -11,7 +11,7 @@ import json
 
 class OSINT:
     """ Contains API information aswell as OSINT modules """
-    __version__ = '0.0.14'
+    __version__ = '0.0.15'
     clearConsole = lambda self: os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
     plugins = [] # list of plugins
     api_keys = {} # dict of api keys
@@ -32,7 +32,6 @@ class OSINT:
 
 class Hazzah(OSINT):
     """ Module class """
-    modules= ['Email', 'IP', 'URL', 'Google', 'Phone']
 
     def __init__(self):
         import requests
@@ -41,9 +40,18 @@ class Hazzah(OSINT):
         if not exists('configuration/plugin/'):
             os.mkdir('configuration/plugin/')
             
-        if not exists('configuration/plugin/email.py'):
-            for module in self.modules:
-                r = requests.get('https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/' + module.lower() + '.py')
+            # get current pre installed plugins into list
+            modules = []
+            url = 'https://github.com/HarryLudemann/Hazzah-OSINT/tree/main/configuration/plugin'
+            open_tag = '<span class="css-truncate css-truncate-target d-block width-fit"><a class="js-navigation-open Link--primary" title="'
+            r = requests.get(url)
+            for line in r.text.split('\n'):
+                if open_tag in line:
+                    modules.append(line.replace(open_tag, '').split('"', 1)[0].strip())
+
+            # download modules
+            for module in modules:
+                r = requests.get('https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/' + module.lower())
                 with open(f'configuration/plugin/{module.lower()}.py', 'w') as f:
                     f.write(r.text)
         # load plugins
@@ -169,7 +177,7 @@ class HazzahCLT(OSINT):
                 plugin = plugins[int(option[0]) - 1]
                 plugin = plugin()
                 context = plugin.main(self)
-                plugin.print_info(self, context)
+                plugin.print_info(self, context, Table())
 
                 if self.workplace: # save if within workplace
                     self.save_to_workplace(context, plugin.name)

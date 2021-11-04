@@ -18,14 +18,14 @@ class Plugin(Plugin):
         if target == 'back': return {}
         return self.get_info(target)
 
-    def print_info(self, hz, context):
+    def print_info(self, hz, context, tables):
         col_widths = [20, 50]
         col_names = ['Description', 'Value']
         col_values = []
         for item in context:
             if type(context[item]) != list:
                 col_values.append( [item, context[item]] )
-        hz.interface.output( '\n' + self.Tables().get_table(col_names, col_widths, col_values) )
+        hz.interface.output( '\n' + tables.get_table(col_names, col_widths, col_values) )
 
     def get_context(self, args):
         return self.get_info(args[0])

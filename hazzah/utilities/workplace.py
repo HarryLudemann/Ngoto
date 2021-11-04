@@ -4,6 +4,10 @@ from sqlite3 import Error
 
 class Workplace():
     file_path = ''
+    
+    def __init__(self, filepath):
+        self.file_path = filepath
+
     def set_filepath(self, filepath):
         self.file_path = filepath
 

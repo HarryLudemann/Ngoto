@@ -41,7 +41,7 @@ class Plugin(Plugin):
     def get_context(self, args):
         return self.get_info(args[0], args[1], args[2], args[3])
 
-    def print_info(self, hz, context):
+    def print_info(self, hz, context, tables):
         col_names = ['URL']
         col_values = []
         longest_url = 0
@@ -50,7 +50,7 @@ class Plugin(Plugin):
             if len(item) > longest_url:
                 longest_url = len(item)
         col_widths = [longest_url]
-        hz.interface.output( '\n' + self.Tables().get_table(col_names, col_widths, col_values) )
+        hz.interface.output( '\n' + tables.get_table(col_names, col_widths, col_values) )
 
     def create_table(self):
         return '''
