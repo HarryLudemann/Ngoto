@@ -11,7 +11,7 @@ import json
 
 class OSINT:
     """ Contains API information aswell as OSINT modules """
-    __version__ = '0.0.14'
+    __version__ = '0.0.15'
     clearConsole = lambda self: os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
     plugins = [] # list of plugins
     api_keys = {} # dict of api keys

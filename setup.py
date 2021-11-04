@@ -7,7 +7,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
     long_description = "\n" + fh.read()
 
-VERSION = '0.0.14'
+VERSION = '0.0.15'
 DESCRIPTION = 'Hazzah OSINT module'
 LONG_DESCRIPTION = 'A python module containing variety of osint tools'
 
