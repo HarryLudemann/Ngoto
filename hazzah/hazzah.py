@@ -41,7 +41,6 @@ class Hazzah(OSINT):
         if not exists('configuration/plugin/'):
             os.mkdir('configuration/plugin/')
             
-        if not exists('configuration/plugin/email.py'):
             for module in self.modules:
                 r = requests.get('https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/' + module.lower() + '.py')
                 with open(f'configuration/plugin/{module.lower()}.py', 'w') as f:
