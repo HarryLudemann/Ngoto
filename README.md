@@ -1,4 +1,4 @@
-# Hazzah-OSINT 0.0.14
+# Hazzah-OSINT 0.0.15
 # Warning :warning:
 
 <p align="center"><b>This tool is solely for educational purposes. Developer will not be reponsible for any misuse of the tool</b></p>    
@@ -163,7 +163,7 @@ class Plugin(Plugin):
         if target == 'back': return {}
         return self.get_info(target, hz.get_api('EMAIL_VERIFICATION_API_KEY'))
 
-    def print_info(self, hz, context):
+    def print_info(self, hz, context, table):
         col_widths = [20, 50]
         col_names = ['Description', 'Value']
         col_values = []
@@ -171,7 +171,7 @@ class Plugin(Plugin):
             if type(context[item]) != list:
                 col_values.append( [str(item), str(context[item])] )
 
-        hz.interface.output( '\n' + self.Tables().get_table(col_names, col_widths, col_values) )
+        hz.interface.output( '\n' + table.get_table(col_names, col_widths, col_values) )
 
     def get_context(self, args):
         return self.get_info(args[0], args[1])
