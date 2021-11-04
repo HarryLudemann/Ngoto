@@ -32,7 +32,6 @@ class OSINT:
 
 class Hazzah(OSINT):
     """ Module class """
-    modules= ['Email', 'IP', 'URL', 'Google', 'Phone']
 
     def __init__(self):
         import requests
@@ -41,8 +40,18 @@ class Hazzah(OSINT):
         if not exists('configuration/plugin/'):
             os.mkdir('configuration/plugin/')
             
-            for module in self.modules:
-                r = requests.get('https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/' + module.lower() + '.py')
+            # get current pre installed plugins into list
+            modules = []
+            url = 'https://github.com/HarryLudemann/Hazzah-OSINT/tree/main/configuration/plugin'
+            open_tag = '<span class="css-truncate css-truncate-target d-block width-fit"><a class="js-navigation-open Link--primary" title="'
+            r = requests.get(url)
+            for line in r.text.split('\n'):
+                if open_tag in line:
+                    modules.append(line.replace(open_tag, '').split('"', 1)[0].strip())
+
+            # download modules
+            for module in modules:
+                r = requests.get('https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/' + module.lower())
                 with open(f'configuration/plugin/{module.lower()}.py', 'w') as f:
                     f.write(r.text)
         # load plugins
