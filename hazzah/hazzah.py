@@ -2,7 +2,7 @@
 # OSINT (controls osint modules and api keys)  
 # HazzahCLT (Controls Command line tool interface)
 
-from hazzah.utilities import Workplace, Interface
+from hazzah.utilities import Workplace, Interface, Table
 from os.path import exists # check config file exists
 import logging
 import sys
@@ -168,7 +168,7 @@ class HazzahCLT(OSINT):
                 plugin = plugins[int(option[0]) - 1]
                 plugin = plugin()
                 context = plugin.main(self)
-                plugin.print_info(self, context)
+                plugin.print_info(self, context, Table())
 
                 if self.workplace: # save if within workplace
                     self.save_to_workplace(context, plugin.name)
