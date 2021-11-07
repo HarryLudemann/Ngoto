@@ -1,1 +1,2 @@
 googlesearch-python==1.0.1
+pytest
