@@ -13,7 +13,6 @@ class Ngoto:
     """ Contains API information aswell as OSINT modules """
     __version__ = '0.0.15'
     clearConsole = lambda self: os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
-    plugins = [] # list of plugins
     api_keys = {} # dict of api keys
     root = Node() # root plugin nodes
 
@@ -21,15 +20,6 @@ class Ngoto:
         self.api_keys[name] = key
     def get_api(self, name):
         return self.api_keys[name]
-    
-    def add_plugin(self, plugin):
-        self.plugins.append(plugin)
-    def get_plugins(self):
-        return self.plugins
-    def get_plugin(self, name):
-        for plugin in self.get_plugins():
-            if plugin.name == name:
-                return plugin
 
 class Module(Ngoto):
     """ Module class """
@@ -56,14 +46,19 @@ class Module(Ngoto):
                 with open(f'configuration/plugin/{module.lower()}.py', 'w') as f:
                     f.write(r.text)
         # load plugins
-        for file in os.listdir("configuration/plugin/"):
-            if file.endswith(".py"):
+        for file in os.listdir("configuration/plugin/"): 
+            if file.endswith(".py"):    # if python script
                 mod = __import__('configuration.plugin.' + file[:-3], fromlist=['Plugin'])
-                self.add_plugin( getattr(mod, 'Plugin') )
+                plugin = getattr(mod, 'Plugin')()
+                new_node = Node()
+                new_node.set_plugin( plugin )
+                self.root.add_child( new_node )
+            if '.' not in file:         # if folder
+                pass
 
-    def get_plugin_context(self, plugin_name, args):
-        """ Get context from plugin, given plugin name & list of args """
-        return self.get_plugin(plugin_name)().get_context(args)
+    # def get_plugin_context(self, plugin_name, args):
+    #     """ Get context from plugin, given plugin name & list of args """
+    #     return self.get_plugin(plugin_name)().get_context(args)
 
 class CLT(Ngoto):
     """ Command line tool class """
@@ -95,10 +90,10 @@ class CLT(Ngoto):
         for file in os.listdir("configuration/plugin/"): 
             if file.endswith(".py"):    # if python script
                 mod = __import__('configuration.plugin.' + file[:-3], fromlist=['Plugin'])
-                self.root.add_child( Node().set_plugin( getattr(mod, 'Plugin') ) )
-
-                # plugin = getattr(mod, 'Plugin')
-                # print(f'Loaded plugin: {plugin().name}')
+                plugin = getattr(mod, 'Plugin')()
+                new_node = Node()
+                new_node.set_plugin( plugin )
+                self.root.add_child( new_node )
             if '.' not in file:         # if folder
                 pass
 
@@ -178,15 +173,12 @@ class CLT(Ngoto):
             else:
                 self.interface.output("Unknown command")
         else:   # must be osint function
-            plugins = self.get_plugins()
-            if int(option[0]) <= len( plugins ):
-                # load and call plugin
-                plugin = self.root.get_child( int(option[0]) - 1 ).get_plugin()
-                plugin = plugin()
-                context = plugin.main(self)
-                plugin.print_info(self, context, Table())
+            # load and call plugin
+            plugin = self.root.get_child( int(option[0]) - 1 ).get_plugin()
+            context = plugin.main(self)
+            plugin.print_info(self, context, Table())
 
-                if self.workplace: # save if within workplace
-                    self.save_to_workplace(context, plugin.name)
+            if self.workplace: # save if within workplace
+                self.save_to_workplace(context, plugin.name)
 
         self.main()

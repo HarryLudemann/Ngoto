@@ -42,9 +42,8 @@ class Interface:
         self.logo()
         bcolors = self.bcolors()
         options = f'{bcolors.BOLD}\n0. Exit'
-        for child in hz.root.get_children():
-            print(f'Loaded plugin: {child().get_plugin_name()}')
-            #options += f'\n{index+1}. {child.get_plugin().name}'
+        for index, child in enumerate( hz.root.get_children() ):
+            options += f'\n{index+1}. {child.get_plugin_name()}'
         print(options + f'\n\nWorkplace: {hz.current_workplace}\n{bcolors.ENDC}')
 
     def commands(self):
