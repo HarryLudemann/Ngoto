@@ -11,7 +11,7 @@ if __name__ == '__main__':
         hz.load_config()
         hz.clearConsole()
         hz.interface.options(hz)
-        hz.main()
+        #hz.main()
     except Exception as e:
         print(f"{hz.interface.bcolors.ENDC}")
         logging.error(traceback.format_exc())

@@ -2,7 +2,7 @@
 # OSINT (controls osint modules and api keys)  
 # HazzahCLT (Controls Command line tool interface)
 
-from ngoto.utilities import Workplace, Interface, Table
+from ngoto.utilities import Workplace, Interface, Table, Node
 from os.path import exists # check config file exists
 import logging
 import sys
@@ -15,6 +15,7 @@ class Ngoto:
     clearConsole = lambda self: os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
     plugins = [] # list of plugins
     api_keys = {} # dict of api keys
+    root = Node() # root plugin nodes
 
     def add_api(self, name, key):
         self.api_keys[name] = key
@@ -89,11 +90,17 @@ class CLT(Ngoto):
                     self.add_api(name, data['API'][name])
         else:
             logging.warning("No config.json found")
+
         # load plugins
-        for file in os.listdir("configuration/plugin/"):
-            if file.endswith(".py"):
+        for file in os.listdir("configuration/plugin/"): 
+            if file.endswith(".py"):    # if python script
                 mod = __import__('configuration.plugin.' + file[:-3], fromlist=['Plugin'])
-                self.add_plugin( getattr(mod, 'Plugin') )
+                self.root.add_child( Node().set_plugin( getattr(mod, 'Plugin') ) )
+
+                # plugin = getattr(mod, 'Plugin')
+                # print(f'Loaded plugin: {plugin().name}')
+            if '.' not in file:         # if folder
+                pass
 
     # Workplace command method
     def workplace_command(self, options):
@@ -174,7 +181,7 @@ class CLT(Ngoto):
             plugins = self.get_plugins()
             if int(option[0]) <= len( plugins ):
                 # load and call plugin
-                plugin = plugins[int(option[0]) - 1]
+                plugin = self.root.get_child( int(option[0]) - 1 ).get_plugin()
                 plugin = plugin()
                 context = plugin.main(self)
                 plugin.print_info(self, context, Table())

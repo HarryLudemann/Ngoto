@@ -5,6 +5,9 @@ class Plugin(ABC):
     version = ''
     description = ''
 
+    def get_name(self):
+        return self.name
+
     @abstractmethod  
     def create_table(self):
         """ function that returns string of sqlite query to create table """
