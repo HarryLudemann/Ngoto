@@ -2,14 +2,14 @@
 # OSINT (controls osint modules and api keys)  
 # HazzahCLT (Controls Command line tool interface)
 
-from hazzah.utilities import Workplace, Interface, Table
+from ngoto.utilities import Workplace, Interface, Table
 from os.path import exists # check config file exists
 import logging
 import sys
 import os
 import json
 
-class OSINT:
+class Ngoto:
     """ Contains API information aswell as OSINT modules """
     __version__ = '0.0.15'
     clearConsole = lambda self: os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
@@ -30,7 +30,7 @@ class OSINT:
             if plugin.name == name:
                 return plugin
 
-class Hazzah(OSINT):
+class Module(Ngoto):
     """ Module class """
 
     def __init__(self):
@@ -64,7 +64,7 @@ class Hazzah(OSINT):
         """ Get context from plugin, given plugin name & list of args """
         return self.get_plugin(plugin_name)().get_context(args)
 
-class HazzahCLT(OSINT):
+class CLT(Ngoto):
     """ Command line tool class """
     current_pos = "[Hazzah]"
     current_workplace = "None" # Name

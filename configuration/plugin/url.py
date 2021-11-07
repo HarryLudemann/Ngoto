@@ -1,5 +1,5 @@
 import socket
-from hazzah import Plugin
+from ngoto import Plugin
 
 class Plugin(Plugin):
     name = 'URL'
