@@ -1,4 +1,4 @@
-from hazzah import Plugin
+from ngoto import Plugin
 import logging
 try:
     from googlesearch import search

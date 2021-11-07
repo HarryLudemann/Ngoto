@@ -2,11 +2,11 @@
 import logging
 import traceback
 from os.path import exists # check config file exists
-import hazzah
+import ngoto
 
 
 if __name__ == '__main__':
-    hz = hazzah.HazzahCLT()
+    hz = ngoto.CLT()
     try:
         hz.load_config()
         hz.clearConsole()

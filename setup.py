@@ -7,13 +7,13 @@ here = os.path.abspath(os.path.dirname(__file__))
 with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
     long_description = "\n" + fh.read()
 
-VERSION = '0.0.15'
-DESCRIPTION = 'Hazzah OSINT module'
-LONG_DESCRIPTION = 'A python module containing variety of osint tools'
+VERSION = '0.0.16'
+DESCRIPTION = 'Ngoto module'
+LONG_DESCRIPTION = 'A python module containing variety red team tools'
 
 # Setting up
 setup(
-    name="hazzah-osint",
+    name="Ngoto",
     version=VERSION,
     author="Harry Ludemann",
     author_email="",
@@ -21,7 +21,7 @@ setup(
     long_description_content_type="text/markdown",
     packages=find_packages(),
     install_requires=['googlesearch-python'],
-    keywords=['python', 'harryludemann', 'osint', 'hazzah', 'hazzah-osint'],
+    keywords=['python', 'harryludemann', 'osint', 'hazzah', 'ngoto'],
     classifiers=[
         "Development Status :: 1 - Planning",
         "Intended Audience :: Developers",

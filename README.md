@@ -1,4 +1,4 @@
-# Hazzah-OSINT 0.0.15
+# Ngoto 0.0.15
 # Warning :warning:
 
 <p align="center"><b>This tool is solely for educational purposes. Developer will not be reponsible for any misuse of the tool</b></p>    
@@ -59,17 +59,17 @@ Workplace: None
 5. Google Dorks
 ```
 
-## Using Hazzah-OSINT as module:
+## Using Ngoto as module:
 #### 1. Install PIP Module:
 ```
-pip install hazzah-osint
+pip install ngoto
 ```
 #### 2. Import and Initialize:
 ```python
-from hazzah import osint # import the osint class from the hazzah module
+from ngoto import ngoto # import the osint class from the hazzah module
 
 # initialize the osint class and set my desired functions API's keys (Below are fake API keys)
-hz = hazzah.Hazzah()
+hz = ngoto.Module()
 ```
 #### 3. Example Calling Functions:
 ```python
@@ -110,13 +110,13 @@ print( hz.get_plugin_context('IP', ['142.250.71.78', 'ai6aofcKK1zF87XUMPzoN1s8Nx
 
 ## Create Plugin:
 ### Import Plugin Module:
-Install hazzah-osint module.
+Install ngoto module.
 ```
-pip install hazzah-osint
+pip install ngoto
 ```
-Import Plugin from hazzah, create a class named Plugin inheriting from Plugin class. eg.
+Import Plugin from ngoto, create a class named Plugin inheriting from Plugin class. eg.
 ```python
-from hazzah import Plugin
+from ngoto import Plugin
 class Plugin(Plugin):
     name = ''
 ``` 
@@ -133,7 +133,7 @@ There are 5 functions to complete:
 ### Example Plugin:
 ```python
 import requests
-from hazzah import Plugin
+from ngoto import Plugin
 
 class Plugin(Plugin):
     name = 'Email'
