@@ -1,4 +1,11 @@
-# Ngoto 0.0.15
+# Ngoto
+[![version-1.3](https://img.shields.io/badge/version-0.0.15-blue)](https://github.com/Datalux/Osintgram/releases/tag/1.3)
+[![GPLv3](https://img.shields.io/badge/license-GPLv3-blue)](https://img.shields.io/badge/license-GPLv3-blue)
+[![Python3](https://img.shields.io/badge/language-Python3-blue)](https://img.shields.io/badge/language-Python3-red)
+[![](https://img.shields.io/badge/Built%20with-❤-blue.svg?style=flat-square)]()
+[![](https://github.com/harryludemann/ngoto/workflows/pytests/badge.svg)]()
+[![platforms](https://img.shields.io/badge/platform-windows%20%7C%20linux-blue)](https://github.com/loseys/Oblivion/)
+
 # Warning :warning:
 
 <p align="center"><b>This tool is solely for educational purposes. Developer will not be reponsible for any misuse of the tool</b></p>    

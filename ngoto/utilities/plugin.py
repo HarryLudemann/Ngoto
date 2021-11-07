@@ -1,6 +1,6 @@
-from abc import ABCMeta, abstractmethod
+from abc import ABC, abstractmethod
 
-class Plugin(ABCMeta):
+class Plugin(ABC):
     name = ''
     version = ''
     description = ''
