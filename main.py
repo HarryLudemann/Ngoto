@@ -9,8 +9,8 @@ if __name__ == '__main__':
     hz = ngoto.CLT()
     try:
         hz.load_config()
-        hz.clearConsole()
-        hz.interface.options(hz)
+        #hz.clearConsole()
+        hz.interface.options(hz.current_workplace, hz.root)
         hz.main()
     except Exception as e:
         print(f"{hz.interface.bcolors.ENDC}")

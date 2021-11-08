@@ -30,21 +30,23 @@ class Interface:
     def logo(self):
         bcolors = self.bcolors()
         print(f'''{bcolors.BOLD}{bcolors.HEADER}
-     _   _                    _     
-    | | | |                  | |    
-    | |_| | __ _ __________ _| |__  
-    |  _  |/ _` |_  /_  / _` | '_ \ 
-    | | | | (_| |/ / / / (_| | | | |
-    \_| |_/\__,_/___/___\__,_|_| |_|      
+     _   _             _        
+    | \ | |           | |       
+    |  \| | __ _  ___ | |_ ___  
+    | . ` |/ _` |/ _ \| __/ _ \ 
+    | |\  | (_| | (_) | || (_) |
+    |_| \_|\__, |\___/ \__\___/ 
+            __/ |               
+           |___/                   
         {bcolors.ENDC}''')
 
-    def options(self, hz):
+    def options(self, curr_workplace, curr_node):
         self.logo()
         bcolors = self.bcolors()
         options = f'{bcolors.BOLD}\n0. Exit'
-        for index, child in enumerate( hz.root.get_children() ):
-            options += f'\n{index+1}. {child.get_plugin_name()}'
-        print(options + f'\n\nWorkplace: {hz.current_workplace}\n{bcolors.ENDC}')
+        for index, child in enumerate( curr_node.get_children() ):
+            options += f'\n{index+1}. {child.name}'
+        print(options + f'\n\nWorkplace: {curr_workplace}\n{bcolors.ENDC}')
 
     def commands(self):
         self.logo()

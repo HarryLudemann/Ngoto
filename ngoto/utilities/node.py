@@ -4,6 +4,13 @@ class Node:
     plugin = None # Nodes plugin
     parent = None # Parent node
 
+    def __init__(self, name):
+        self.name = name
+
+    @property
+    def num_children(self):
+        return len(self.children)
+
     def get_plugin_name(self):
         return self.plugin.get_name()
 
@@ -23,12 +30,13 @@ class Node:
         return self.parent
     def set_parent(self, parent):
         self.parent = parent
-
+    @property
     def is_parent(self):
         if self.children:
             return True
         return False
-    def is_root(self):
-        if self.plugin == None:
+    @property
+    def is_plugin(self):
+        if self.plugin:
             return True
         return False

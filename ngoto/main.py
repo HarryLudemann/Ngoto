@@ -14,7 +14,7 @@ class Ngoto:
     __version__ = '0.0.15'
     clearConsole = lambda self: os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
     api_keys = {} # dict of api keys
-    root = Node() # root plugin nodes
+    root = Node('root') # root plugin nodes
 
     def add_api(self, name, key):
         self.api_keys[name] = key
@@ -50,7 +50,7 @@ class Module(Ngoto):
             if file.endswith(".py"):    # if python script
                 mod = __import__('configuration.plugin.' + file[:-3], fromlist=['Plugin'])
                 plugin = getattr(mod, 'Plugin')()
-                new_node = Node()
+                new_node = Node(plugin.name)
                 new_node.set_plugin( plugin )
                 self.root.add_child( new_node )
             if '.' not in file:         # if folder
@@ -62,7 +62,7 @@ class Module(Ngoto):
 
 class CLT(Ngoto):
     """ Command line tool class """
-    current_pos = "[Hazzah]"
+    current_pos = "[Ngoto]"
     current_workplace = "None" # Name
     workplace = None # current workplace object
     file_path ='configuration/workplace/' # workplace file path
@@ -86,16 +86,31 @@ class CLT(Ngoto):
         else:
             logging.warning("No config.json found")
 
-        # load plugins
-        for file in os.listdir("configuration/plugin/"): 
+        self.load_config_helper(self.root, "configuration/plugin/")
+
+        #self.print_nodes(self.root)
+
+
+    def load_config_helper(self, curr_node, file_path):
+        """ load config recursive helper method """
+        for file in os.listdir(file_path): 
             if file.endswith(".py"):    # if python script
-                mod = __import__('configuration.plugin.' + file[:-3], fromlist=['Plugin'])
+                print( str(curr_node.num_children), curr_node.name, file_path + file)
+                mod = __import__(file_path.replace('/', '.') + file[:-3], fromlist=['Plugin'])
                 plugin = getattr(mod, 'Plugin')()
-                new_node = Node()
+                new_node = Node(plugin.name)
                 new_node.set_plugin( plugin )
-                self.root.add_child( new_node )
-            if '.' not in file:         # if folder
-                pass
+                curr_node.add_child( new_node )
+            elif '__pycache__' not in file:         # if folder
+                print( str(curr_node.num_children), curr_node.name, file_path + file)
+                new_node = Node(file + '/')
+                curr_node.add_child( self.load_config_helper(new_node, 'configuration/plugin/' + file + '/') )
+        return curr_node
+
+    def print_nodes(self, node, indent=''):
+        for child in node.get_children():
+            print(indent + child.name)
+
 
     # Workplace command method
     def workplace_command(self, options):
@@ -163,7 +178,7 @@ class CLT(Ngoto):
             elif option[0] in ['wp', 'workplace']:
                 self.workplace_command(option)
             elif option[0] in ['o', 'options']:
-                self.interface.options(self)
+                self.interface.options(self.current_workplace, self.root)
             elif option[0] in ['c', 'commands']:
                 self.interface.commands()
             elif option[0] in ['cls', 'clear']:
