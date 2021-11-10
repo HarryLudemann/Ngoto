@@ -43,9 +43,15 @@ class Interface:
     def options(self, curr_workplace, curr_node):
         self.logo()
         bcolors = self.bcolors()
+        index = 1
         options = f'{bcolors.BOLD}\n0. Exit'
-        for index, child in enumerate( curr_node.get_children() ):
-            options += f'\n{index+1}. {child.name}'
+        print(curr_node.name)
+        for folder in curr_node.get_children(): # print folders
+            options += f'\n{index}. {folder.name}'
+            index += 1
+        for plugin in curr_node.get_plugins(): # print plugins
+            options += f'\n{index}. {plugin.name}'
+            index += 1
         print(options + f'\n\nWorkplace: {curr_workplace}\n{bcolors.ENDC}')
 
     def commands(self):

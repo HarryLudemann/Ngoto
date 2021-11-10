@@ -9,22 +9,24 @@ import sys
 import os
 import json
 
+
 class Ngoto:
     """ Contains API information aswell as OSINT modules """
     __version__ = '0.0.15'
     clearConsole = lambda self: os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
     api_keys = {} # dict of api keys
-    root = Node('root') # root plugin nodes
+    root: Node
+    curr_position: Node
 
-    def add_api(self, name, key):
+    def add_api(self, name: str, key: str):
         self.api_keys[name] = key
-    def get_api(self, name):
+    def get_api(self, name: str):
         return self.api_keys[name]
 
 class Module(Ngoto):
     """ Module class """
 
-    def __init__(self):
+    def __init__(self) -> None:
         import requests
         if not exists('configuration/'):
             os.mkdir('configuration/')
@@ -68,7 +70,7 @@ class CLT(Ngoto):
     file_path ='configuration/workplace/' # workplace file path
     interface = Interface()
 
-    def load_config(self):
+    def load_config(self) -> None:
         """ Loads plugins from plugins directory """
         # check Configuration, workplace and plugins folder exist else create
         if not exists('configuration/'):
@@ -86,34 +88,24 @@ class CLT(Ngoto):
         else:
             logging.warning("No config.json found")
 
-        self.load_config_helper(self.root, "configuration/plugin/")
+        self.root = self.load_config_helper(Node('root'), "configuration/plugin/")
+        self.curr_position = self.root
 
-        #self.print_nodes(self.root)
-
-
-    def load_config_helper(self, curr_node, file_path):
+    def load_config_helper(self, curr_node: Node, file_path: str) -> Node:
         """ load config recursive helper method """
         for file in os.listdir(file_path): 
             if file.endswith(".py"):    # if python script
-                print( str(curr_node.num_children), curr_node.name, file_path + file)
                 mod = __import__(file_path.replace('/', '.') + file[:-3], fromlist=['Plugin'])
                 plugin = getattr(mod, 'Plugin')()
-                new_node = Node(plugin.name)
-                new_node.set_plugin( plugin )
+                curr_node.add_plugin( plugin )
+            elif '__pycache__' not in file: # if folder
+                new_node = Node(file + '/') # create node of folder
+                new_node = self.load_config_helper(new_node, file_path + file + '/') # add children to node
                 curr_node.add_child( new_node )
-            elif '__pycache__' not in file:         # if folder
-                print( str(curr_node.num_children), curr_node.name, file_path + file)
-                new_node = Node(file + '/')
-                curr_node.add_child( self.load_config_helper(new_node, 'configuration/plugin/' + file + '/') )
         return curr_node
 
-    def print_nodes(self, node, indent=''):
-        for child in node.get_children():
-            print(indent + child.name)
-
-
     # Workplace command method
-    def workplace_command(self, options):
+    def workplace_command(self, options: list) -> None:
         """ determines requested wp option, given list of options """
         if len(options) >= 2:
             if options[1] == 'create':  # create wp
@@ -150,7 +142,7 @@ class CLT(Ngoto):
         else:
             logging.warning("No such command")
 
-    def save_to_workplace(self, context, plugin_name):
+    def save_to_workplace(self, context: dict, plugin_name: str) -> None:
         """ Saves context dict to given plugins name table in current workplace if any
         either adds all vars in context to array, or if item is array creates row of that array """
         values = []
@@ -168,30 +160,45 @@ class CLT(Ngoto):
             self.workplace.add_row(self.current_workplace, plugin_name, values)
 
     # main operation function to start
-    def main(self):
+    def main(self) -> None:
         context = {}                  
         option = self.interface.get_input('', '', self.current_pos)
-        if option not in ['1', '2', '3', '4', '5']:   # if option is command not plugin/module
+        if not option.isdigit() or option == '0':   # if option is command not plugin/module
             option = option.split()
             if not option: # if empty string 
                 pass
             elif option[0] in ['wp', 'workplace']:
                 self.workplace_command(option)
             elif option[0] in ['o', 'options']:
-                self.interface.options(self.current_workplace, self.root)
+                self.interface.options(self.current_workplace, self.curr_position)
             elif option[0] in ['c', 'commands']:
                 self.interface.commands()
+            elif option[0] in ['b', 'back']:
+                if self.curr_position.has_parent:
+                    self.curr_position = self.curr_position.get_parent()
+                    self.clearConsole()
+                    self.interface.options(self.current_workplace, self.curr_position)
+                else:
+                    self.interface.output("You are already in root")
             elif option[0] in ['cls', 'clear']:
                 self.clearConsole()
-            elif option[0] in ['0', 'exit']:
+            elif option[0] in ['0', 'q', 'exit']:
                 sys.exit()
             else:
                 self.interface.output("Unknown command")
         else:   # must be osint function
             # load and call plugin
-            plugin = self.root.get_child( int(option[0]) - 1 ).get_plugin()
-            context = plugin.main(self)
-            plugin.print_info(self, context, Table())
+            if int(option)-1 < self.curr_position.num_children: # if folder
+                self.curr_position.get_child(int(option)-1).set_parent(self.curr_position)
+                self.curr_position = self.curr_position.get_child(int(option)-1)
+                self.clearConsole()
+                self.interface.options(self.current_workplace, self.curr_position)
+            elif int(option)-1 < self.curr_position.num_children + self.curr_position.num_plugins: # if plugin
+                plugin = self.curr_position.get_plugin( int(option[0]) - self.curr_position.num_children - 1)
+                context = plugin.main(self)
+                plugin.print_info(self, context, Table())
+            else:
+                self.interface.output(f"Plugin not found\n{self.curr_position.name}\n{self.curr_position.num_plugins}")
 
             if self.workplace: # save if within workplace
                 self.save_to_workplace(context, plugin.name)

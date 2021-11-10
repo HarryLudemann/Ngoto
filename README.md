@@ -49,12 +49,14 @@ Within the configuration folder contains a config.json as shown below, fill in A
 #### 3. Run
 Run the main.py script, which will bring you to the following:
 ```
- _   _                    _
-| | | |                  | |
-| |_| | __ _ __________ _| |__        
-|  _  |/ _` |_  /_  / _` | '_ \       
-| | | | (_| |/ / / / (_| | | | |      
-\_| |_/\__,_/___/___\__,_|_| |_|      
+     _   _             _
+    | \ | |           | |
+    |  \| | __ _  ___ | |_ ___
+    | . ` |/ _` |/ _ \| __/ _ \
+    | |\  | (_| | (_) | || (_) |
+    |_| \_|\__, |\___/ \__\___/
+            __/ |
+           |___/
 
 Workplace: None
 
