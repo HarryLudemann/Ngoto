@@ -66,14 +66,16 @@ class Module(Ngoto):
         self.workplace_path ='configuration/workplace/' # workplace file path
         self.plugin_path = 'configuration/plugin/'
         self.check_dirs()
-        # download plugins
+        # load plugins into tree
+        self.root = self.load_plugins(Node('root'), self.plugin_path)
+        self.curr_pos = self.root
+
+    def download_plugins(self):
+        """ Download all plugins from github dir and add to plugins dir (does not create folders) """
         for url in self.get_plugins_urls():
             r = requests.get(url)
             with open(self.plugin_path + url.rsplit('/', 1)[-1], 'w') as f:
                 f.write(r.text)
-        # load plugins into tree
-        self.root = self.load_plugins(Node('root'), self.plugin_path)
-        self.curr_pos = self.root
 
     def get_plugins_urls(self, path = 'https://github.com/HarryLudemann/Ngoto/tree/main/configuration/plugin/', modules = []):
         """ Given string of root directory from github returns list of plugin URLS """
