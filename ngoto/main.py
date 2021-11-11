@@ -29,8 +29,10 @@ class Ngoto:
             os.mkdir('configuration/plugin/')
 
     def add_api(self, name: str, key: str):
+        """ Add api by name and key """
         self.api_keys[name] = key
     def get_api(self, name: str) -> str:
+        """ returns api string of name """
         return self.api_keys[name]
 
     def load_plugins(self, curr_node: Node, file_path: str) -> Node:
@@ -89,8 +91,10 @@ class CLT(Ngoto):
         self.interface = Interface()
 
     def add_position(self, position: str):
+        """ Add position to current path """
         self.curr_path += '['+ position.replace('/', '') + ']'
     def remove_position(self, position: str):
+        """ Remove position from current path """
         self.curr_path = self.curr_path.replace('[' + position.replace('/', '') + ']', '')
 
     def load_config(self) -> None:
@@ -107,8 +111,8 @@ class CLT(Ngoto):
         self.root = self.load_plugins(Node('root'), "configuration/plugin/")
         self.curr_pos = self.root
 
-    # recursive function to print tree
     def print_tree(self, node: Node, indent: str = '') -> None:
+        """ recursive function to print tree """
         for plugin in node.get_plugins():
             self.interface.output(f'{indent}{plugin.name} - {plugin.version} - {plugin.description}')
         for child in node.get_children():
@@ -169,8 +173,8 @@ class CLT(Ngoto):
         if not added_row:
             self.workplace.add_row(self.curr_workplace, plugin_name, values)
 
-    # main operation function to start
     def main(self) -> None:
+        """ Main command calls, controls input, plugin calls and move between folders """
         context = {}                  
         option = self.interface.get_input('', '', self.curr_path)
         if not option.isdigit() or option == '0':   # if option is command not plugin/module
