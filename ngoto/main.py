@@ -8,6 +8,7 @@ __author__ = 'Harry Ludemann'
 __maintainer__  = 'Harry Ludemann'
 __version__ = '0.0.19'
 __license__ = 'GPLv3' 
+__copyright__ = 'Copyright of Harry Ludemann 2021'
 
 from ngoto.utilities import Workplace, Interface, Table, Node, Plugin
 import logging, sys, os, json, requests
