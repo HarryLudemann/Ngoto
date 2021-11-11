@@ -23,6 +23,13 @@ class Ngoto:
     workplace_path: str = ''
     plugin_path: str = ''
 
+    def add_api(self, name: str, key: str):
+        """ Add api by name and key """
+        self.api_keys[name] = key
+    def get_api(self, name: str) -> str:
+        """ returns api string of name """
+        return self.api_keys[name]
+
     def check_dirs(self):
         """ check and create required folders """
         if not exists(self.config_path):
@@ -31,14 +38,7 @@ class Ngoto:
             os.mkdir(self.workplace_path)
         if not exists(self.plugin_path):
             os.mkdir(self.plugin_path)
-
-    def add_api(self, name: str, key: str):
-        """ Add api by name and key """
-        self.api_keys[name] = key
-    def get_api(self, name: str) -> str:
-        """ returns api string of name """
-        return self.api_keys[name]
-
+            
     def set_path(self, path_name: str, path: str): 
         """ Given path name eg. (config, workplace or plugin) sets given path """
         if path_name == 'CONFIG': self.config_path = path
