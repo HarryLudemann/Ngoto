@@ -60,6 +60,7 @@ class Interface:
     o/options                   --  Returns osint options
     c/commands                  --  Returns this list of commands
     cls/clear                   --  Clear console
+    b/back                      --  Back out of plugin for folder
     0/exit                      --  closes program
 
     {self.bcolors.HEADER}[Workplace]{self.bcolors.ENDC}{self.bcolors.BOLD}

@@ -5,20 +5,20 @@ from sqlite3 import Error
 class Workplace():
     file_path = ''
     
-    def __init__(self, filepath):
+    def __init__(self, filepath: str):
         self.file_path = filepath
 
-    def set_filepath(self, filepath):
+    def set_filepath(self, filepath: str):
         self.file_path = filepath
 
-    def create_workplace(self, name):
+    def create_workplace(self, name: str):
         """ Creates workplace """
         self.run_command(name, '')
         #self.init_tables(name)
         logging.info(f"Created workplace {name}")
 
 
-    def run_command(self, workplace, query):
+    def run_command(self, workplace, query): 
         """ runs command, workplace name and command """
         conn = None;
         try:

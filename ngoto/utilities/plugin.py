@@ -1,14 +1,14 @@
 from abc import ABC, abstractmethod
 
 class Plugin(ABC):
-    name = ''
-    version = ''
-    description = ''
+    name: str = ''
+    version: str = ''
+    description: str = ''
 
     def __str__(self):
         return self.name
 
-    def get_name(self):
+    def get_name(self) -> str:
         return self.name
 
     @abstractmethod  
