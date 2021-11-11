@@ -9,15 +9,10 @@ __maintainer__  = 'Harry Ludemann'
 __version__ = '0.0.17'
 __license__ = 'GPLv3' 
 
-from ngoto.utilities import Workplace, Interface, Table, Node
-from os.path import exists # check config file exists
-import logging
-import sys
-import os
-import json
-import requests
-from ngoto.utilities.plugin import Plugin
- 
+from ngoto.utilities import Workplace, Interface, Table, Node, Plugin
+import logging, sys, os, json, requests
+from os.path import exists 
+
 class Ngoto:
     """ Main abstract class, contains api info and tree information """
     clearConsole = lambda _: os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
@@ -117,7 +112,7 @@ class CLT(Ngoto):
         self.curr_path = self.curr_path.replace('[' + position.replace('/', '') + ']', '')
 
     def load_config(self) -> None:
-        """ Loads plugins from plugins directory into tree and loads config vars from config.json """
+        """ Recursive load plugins from plugins directory into tree and loads config vars from config.json """
         # load config file of api keys and set
         try: 
             with open(f"{self.config_path}config.json") as json_data_file:
