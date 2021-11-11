@@ -66,25 +66,27 @@ class Module(Ngoto):
         self.workplace_path ='configuration/workplace/' # workplace file path
         self.plugin_path = 'configuration/plugin/'
         self.check_dirs()
-        # get list of plugins from github dir
-        modules = []
-        github_plugins_path = 'https://raw.githubusercontent.com/HarryLudemann/Ngoto/main/configuration/plugin/'
-        open_tag = '<span class="css-truncate css-truncate-target d-block width-fit"><a class="js-navigation-open Link--primary" title="'
-        r = requests.get(github_plugins_path)
-        for line in r.text.split('\n'):
-            if open_tag in line:
-                modules.append(line.replace(open_tag, '').split('"', 1)[0].strip())
         # download plugins
-        for module in modules:
-            r = requests.get(github_plugins_path + module.lower())
-            with open(f'{self.plugin_path}{module.lower()}.py', 'w') as f:
+        for url in self.get_plugins_urls():
+            r = requests.get(url)
+            with open(self.plugin_path + url.rsplit('/', 1)[-1], 'w') as f:
                 f.write(r.text)
         # load plugins into tree
         self.root = self.load_plugins(Node('root'), self.plugin_path)
         self.curr_pos = self.root
 
-    def get_plugin_urls(self):
-        """ Returns list of URLS of github plugins """
+    def get_plugins_urls(self, path = 'https://github.com/HarryLudemann/Ngoto/tree/main/configuration/plugin/', modules = []):
+        """ Given string of root directory from github returns list of plugin URLS """
+        open_tag = '<span class="css-truncate css-truncate-target d-block width-fit"><a class="js-navigation-open Link--primary" title="'
+        r = requests.get(path)
+        for line in r.text.split('\n'):
+            if open_tag in line:
+                plugin_name = line.replace(open_tag, '').split('"', 1)[0].strip()
+                if plugin_name[0].isupper():
+                    self.get_plugins_urls(path + plugin_name + '/', modules)
+                else:
+                    modules.append(path.replace('https://github.com/HarryLudemann/Ngoto/tree', 'https://raw.githubusercontent.com/HarryLudemann/Ngoto') + plugin_name)
+        return modules
 
     def get_plugin(self, name: str, node: Node) -> Plugin:
         """ recursive method given plugins name returns plugin, returns None if not found """
