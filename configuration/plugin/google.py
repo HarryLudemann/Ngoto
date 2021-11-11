@@ -23,20 +23,20 @@ class Plugin(Plugin):
             return { 'urls': search(formatted_query, num_results=max_results, lang="en" ) }
 
     def main(self, hz):
-        type = hz.interface.get_input("Search f:file or w:website: ", '[Google]', hz.current_pos)
+        type = hz.interface.get_input("Search f:file or w:website: ", '[Google]', hz.curr_path)
         if type == 'back': return {}
-        target = hz.interface.get_input("Enter query: ", '[Google]', hz.current_pos)
+        target = hz.interface.get_input("Enter query: ", '[Google]', hz.curr_path)
         if target == 'back': return {}
         if type == 'f':
-            files = hz.interface.get_input("Enter file types eg. pdf xlsx docx: ", '[Google]', hz.current_pos).split()
+            files = hz.interface.get_input("Enter file types eg. pdf xlsx docx: ", '[Google]', hz.curr_path).split()
             if files == 'back': return {}
-            maxcount = hz.interface.get_input("Optionally enter max results: ", '[Google]', hz.current_pos)
+            maxcount = hz.interface.get_input("Optionally enter max results: ", '[Google]', hz.curr_path)
             if maxcount == 'back': return {}
             return self.get_info(target, files, 'filetype:', int(maxcount))
         elif type == 'w':
-            websites = hz.interface.get_input("Enter websites eg facebook.com twitter.com: ", '[Google]', hz.current_pos).split()
+            websites = hz.interface.get_input("Enter websites eg facebook.com twitter.com: ", '[Google]', hz.curr_path).split()
             if websites == 'back': return {}
-            maxcount = hz.interface.get_input("Optionally enter max results: ", '[Google]', hz.current_pos)
+            maxcount = hz.interface.get_input("Optionally enter max results: ", '[Google]', hz.curr_path)
             if maxcount == 'back': return {}
             return self.get_info(target, websites, 'site:', int(maxcount))
 

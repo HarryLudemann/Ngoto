@@ -28,7 +28,7 @@ class Plugin(Plugin):
             return {}
 
     def main(self, hz):
-        target = hz.interface.get_input("Target email: ", '[Email]', hz.current_pos)
+        target = hz.interface.get_input("Target email: ", '[Email]', hz.curr_path)
         if target == 'back': return {}
         return self.get_info(target, hz.get_api('EMAIL_VERIFICATION_API_KEY'))
 

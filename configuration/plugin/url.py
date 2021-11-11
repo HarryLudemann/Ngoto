@@ -16,7 +16,7 @@ class Plugin(Plugin):
         return context
 
     def main(self, hz):
-        target = hz.interface.get_input("Target URL: ", '[URL]', hz.current_pos)
+        target = hz.interface.get_input("Target URL: ", '[URL]', hz.curr_path)
         if target == 'back': return {}
         return self.get_info(target)
 
