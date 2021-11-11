@@ -41,10 +41,17 @@ Within the configuration folder contains a config.json as shown below, fill in A
 * **EMAIL_VERIFICATION_API_KEY**: for email plugin
 ```json
 {
-    "EMAIL_VERIFICATION_API_KEY": "",
-    "NUM_VERIFY_API_KEY": "",
-    "IP_QUALITY_API_KEY": ""
+    "API": {
+        "NUM_VERIFY_API_KEY": "",
+        "IP_QUALITY_API_KEY": "",
+        "EMAIL_VERIFICATION_API_KEY": ""
+        },
+    "PATHS": {
+        "WORKPLACE": "configuration/workplace/",
+        "PLUGIN": "configuration/plugin/"
+        }
 }
+
 ```
 #### 3. Run
 Run the main.py script, which will bring you to the following:

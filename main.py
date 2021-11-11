@@ -1,4 +1,4 @@
-# this script is to launch the command line tool
+# this script is to launch command line tool
 import logging
 import traceback
 from ngoto import CLT

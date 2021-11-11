@@ -17,22 +17,25 @@ import os
 import json
 import requests
 from ngoto.utilities.plugin import Plugin
-
+ 
 class Ngoto:
     """ Main abstract class, contains api info and tree information """
-    clearConsole = lambda self: os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
+    clearConsole = lambda _: os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
     api_keys = {} # dict of api keys
     root: Node # root of plugin tree
     curr_pos: Node # current position in plugin tree
+    config_path: str = 'configuration/'
+    workplace_path: str = ''
+    plugin_path: str = ''
 
-    def __init__(self):
+    def check_dirs(self):
         """ check and create required folders """
-        if not exists('configuration/'):
-            os.mkdir('configuration/')
-        if not exists('configuration/workplace/'):
-            os.mkdir('configuration/workplace/')
-        if not exists('configuration/plugin/'):
-            os.mkdir('configuration/plugin/')
+        if not exists(self.config_path):
+            os.mkdir(self.config_path)
+        if not exists(self.workplace_path):
+            os.mkdir(self.workplace_path)
+        if not exists(self.plugin_path):
+            os.mkdir(self.plugin_path)
 
     def add_api(self, name: str, key: str):
         """ Add api by name and key """
@@ -40,6 +43,12 @@ class Ngoto:
     def get_api(self, name: str) -> str:
         """ returns api string of name """
         return self.api_keys[name]
+
+    def set_path(self, path_name: str, path: str): 
+        """ Given path name eg. (config, workplace or plugin) sets given path """
+        if path_name == 'CONFIG': self.config_path = path
+        elif path_name == 'WORKPLACE': self.workplace_path = path
+        elif path_name == 'PLUGIN': self.plugin_path = path
 
     def load_plugins(self, curr_node: Node, file_path: str) -> Node:
         """ Recursive function to traverse plugin directory adding each folder as node to tree and each plugin to node"""
@@ -58,6 +67,10 @@ class Module(Ngoto):
     """ Module class, contains Module specific methods """
     def __init__(self):
         """ Gets list of plugins from github dir, downloads plugins, loads plugins into tree """
+        self.config_path = 'configuration/'
+        self.workplace_path ='configuration/workplace/' # workplace file path
+        self.plugin_path = 'configuration/plugin/'
+        self.check_dirs()
         # get list of plugins from github dir
         modules = []
         github_plugins_path = 'https://raw.githubusercontent.com/HarryLudemann/Ngoto/main/configuration/plugin/'
@@ -69,10 +82,10 @@ class Module(Ngoto):
         # download plugins
         for module in modules:
             r = requests.get(github_plugins_path + module.lower())
-            with open(f'configuration/plugin/{module.lower()}.py', 'w') as f:
+            with open(f'{self.plugin_path}{module.lower()}.py', 'w') as f:
                 f.write(r.text)
         # load plugins into tree
-        self.root = self.load_plugins(Node('root'), "configuration/plugin/")
+        self.root = self.load_plugins(Node('root'), self.plugin_path)
         self.curr_pos = self.root
 
     def get_plugin(self, name: str, node: Node) -> Plugin:
@@ -92,7 +105,6 @@ class CLT(Ngoto):
     curr_path: str = "[Ngoto]"
     curr_workplace: str = "None" # Name
     workplace: Workplace = None # current workplace object
-    workplace_path: str ='configuration/workplace/' # workplace file path
     interface: Interface
     def __init__(self):
         self.interface = Interface()
@@ -107,15 +119,20 @@ class CLT(Ngoto):
     def load_config(self) -> None:
         """ Loads plugins from plugins directory into tree and loads config vars from config.json """
         # load config file of api keys and set
-        if exists('configuration/config.json'):
-            with open("configuration/config.json") as json_data_file:
+        try: 
+            with open(f"{self.config_path}config.json") as json_data_file:
                 data = json.load(json_data_file)
+                # load apis
                 for name in data['API']:
                     self.add_api(name, data['API'][name])
-        else:
-            logging.warning("No config.json found")
+                # load paths
+                for name in data['PATHS']:
+                    self.set_path(name, data['PATHS'][name])
+                self.check_dirs()
+        except Exception as e:
+            logging.error(e)
         # load plugins into tree
-        self.root = self.load_plugins(Node('root'), "configuration/plugin/")
+        self.root = self.load_plugins(Node('root'), self.plugin_path)
         self.curr_pos = self.root
 
     def print_tree(self, node: Node, indent: str = '') -> None:
