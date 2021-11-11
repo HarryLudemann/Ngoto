@@ -2,38 +2,46 @@
 # OSINT (controls osint modules and api keys)  
 # HazzahCLT (Controls Command line tool interface)
 
-from ngoto.utilities import Workplace, Interface, Table
+from ngoto.utilities import Workplace, Interface, Table, Node
 from os.path import exists # check config file exists
 import logging
 import sys
 import os
 import json
 
-class Ngoto:
-    """ Contains API information aswell as OSINT modules """
-    __version__ = '0.0.15'
-    clearConsole = lambda self: os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
-    plugins = [] # list of plugins
-    api_keys = {} # dict of api keys
+from ngoto.utilities.plugin import Plugin
 
-    def add_api(self, name, key):
+
+class Ngoto:
+    """ Main abstract class, contains api info and tree information """
+    __version__ = '0.0.17'
+    clearConsole = lambda self: os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
+    api_keys = {} # dict of api keys
+    root: Node
+    curr_position: Node
+
+    def add_api(self, name: str, key: str):
         self.api_keys[name] = key
-    def get_api(self, name):
+    def get_api(self, name: str):
         return self.api_keys[name]
-    
-    def add_plugin(self, plugin):
-        self.plugins.append(plugin)
-    def get_plugins(self):
-        return self.plugins
-    def get_plugin(self, name):
-        for plugin in self.get_plugins():
-            if plugin.name == name:
-                return plugin
+
+    def load_plugins(self, curr_node: Node, file_path: str) -> Node:
+        """ Recursive function to traverse plugin directory adding each folder to tree and each plugin to node"""
+        for file in os.listdir(file_path): 
+            if file.endswith(".py"):    # if python script
+                mod = __import__(file_path.replace('/', '.') + file[:-3], fromlist=['Plugin'])
+                plugin = getattr(mod, 'Plugin')()
+                curr_node.add_plugin( plugin )
+            elif '__pycache__' not in file: # if folder
+                new_node = Node(file + '/') # create node of folder
+                new_node = self.load_plugins(new_node, file_path + file + '/') # add children to node
+                curr_node.add_child( new_node )
+        return curr_node
 
 class Module(Ngoto):
     """ Module class """
 
-    def __init__(self):
+    def __init__(self) -> None:
         import requests
         if not exists('configuration/'):
             os.mkdir('configuration/')
@@ -49,30 +57,36 @@ class Module(Ngoto):
                 if open_tag in line:
                     modules.append(line.replace(open_tag, '').split('"', 1)[0].strip())
 
-            # download modules
+            # download plugins
             for module in modules:
                 r = requests.get('https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/' + module.lower())
                 with open(f'configuration/plugin/{module.lower()}.py', 'w') as f:
                     f.write(r.text)
         # load plugins
-        for file in os.listdir("configuration/plugin/"):
-            if file.endswith(".py"):
-                mod = __import__('configuration.plugin.' + file[:-3], fromlist=['Plugin'])
-                self.add_plugin( getattr(mod, 'Plugin') )
+        self.root = self.load_plugins(Node('root'), "configuration/plugin/")
+        self.curr_position = self.root
 
+    def get_plugin(self, name: str, node: Node) -> Plugin:
+        """ recursive method given plugins name returns plugin, returns None if not found """
+        for plugin in node.get_plugins():
+            if plugin.name == name:
+                return plugin 
+        for child in node.get_children():
+            self.get_plugin(name, child)
+        
     def get_plugin_context(self, plugin_name, args):
         """ Get context from plugin, given plugin name & list of args """
-        return self.get_plugin(plugin_name)().get_context(args)
+        return self.get_plugin(plugin_name, self.root).get_context(args)
 
 class CLT(Ngoto):
     """ Command line tool class """
-    current_pos = "[Hazzah]"
+    current_pos = "[Ngoto]"
     current_workplace = "None" # Name
     workplace = None # current workplace object
     file_path ='configuration/workplace/' # workplace file path
     interface = Interface()
 
-    def load_config(self):
+    def load_config(self) -> None:
         """ Loads plugins from plugins directory """
         # check Configuration, workplace and plugins folder exist else create
         if not exists('configuration/'):
@@ -89,14 +103,19 @@ class CLT(Ngoto):
                     self.add_api(name, data['API'][name])
         else:
             logging.warning("No config.json found")
-        # load plugins
-        for file in os.listdir("configuration/plugin/"):
-            if file.endswith(".py"):
-                mod = __import__('configuration.plugin.' + file[:-3], fromlist=['Plugin'])
-                self.add_plugin( getattr(mod, 'Plugin') )
+  
+        self.root = self.load_plugins(Node('root'), "configuration/plugin/")
+        self.curr_position = self.root
+
+    # recursive function to print tree
+    def print_tree(self, node: Node, indent: str = '') -> None:
+        for plugin in node.get_plugins():
+            self.interface.output(f'{indent}{plugin.name} - {plugin.version} - {plugin.description}')
+        for child in node.get_children():
+            self.print_tree(child, indent + '   ')
 
     # Workplace command method
-    def workplace_command(self, options):
+    def workplace_command(self, options: list) -> None:
         """ determines requested wp option, given list of options """
         if len(options) >= 2:
             if options[1] == 'create':  # create wp
@@ -133,7 +152,7 @@ class CLT(Ngoto):
         else:
             logging.warning("No such command")
 
-    def save_to_workplace(self, context, plugin_name):
+    def save_to_workplace(self, context: dict, plugin_name: str) -> None:
         """ Saves context dict to given plugins name table in current workplace if any
         either adds all vars in context to array, or if item is array creates row of that array """
         values = []
@@ -151,35 +170,51 @@ class CLT(Ngoto):
             self.workplace.add_row(self.current_workplace, plugin_name, values)
 
     # main operation function to start
-    def main(self):
+    def main(self) -> None:
         context = {}                  
         option = self.interface.get_input('', '', self.current_pos)
-        if option not in ['1', '2', '3', '4', '5']:   # if option is command not plugin/module
+        if not option.isdigit() or option == '0':   # if option is command not plugin/module
             option = option.split()
             if not option: # if empty string 
                 pass
             elif option[0] in ['wp', 'workplace']:
                 self.workplace_command(option)
             elif option[0] in ['o', 'options']:
-                self.interface.options(self)
+                self.interface.options(self.current_workplace, self.curr_position)
             elif option[0] in ['c', 'commands']:
                 self.interface.commands()
+            elif option[0] in ['b', 'back']:
+                if self.curr_position.has_parent:
+                    self.curr_position = self.curr_position.get_parent()
+                    self.clearConsole()
+                    self.interface.options(self.current_workplace, self.curr_position)
+                else:
+                    self.interface.output("You are already in root")
             elif option[0] in ['cls', 'clear']:
                 self.clearConsole()
-            elif option[0] in ['0', 'exit']:
+            elif option[0] in ['0', 'q', 'exit']:
                 sys.exit()
+            elif option[0] in ['p', 'plugins']:
+                self.print_tree(self.curr_position)
             else:
                 self.interface.output("Unknown command")
         else:   # must be osint function
-            plugins = self.get_plugins()
-            if int(option[0]) <= len( plugins ):
-                # load and call plugin
-                plugin = plugins[int(option[0]) - 1]
-                plugin = plugin()
+            # load and call plugin or go into folder
+            if int(option)-1 < self.curr_position.num_children: # if folder
+                self.curr_position.get_child(int(option)-1).set_parent(self.curr_position)
+                self.curr_position = self.curr_position.get_child(int(option)-1)
+                self.clearConsole()
+                self.interface.options(self.current_workplace, self.curr_position)
+            elif int(option)-1 < self.curr_position.num_children + self.curr_position.num_plugins: # if plugin
+                plugin = self.curr_position.get_plugin( int(option[0]) - self.curr_position.num_children - 1)
                 context = plugin.main(self)
-                plugin.print_info(self, context, Table())
+                if context:
+                    plugin.print_info(self, context, Table())
+            else:
+                self.interface.output(f"Plugin not found\n{self.curr_position.name}\n{self.curr_position.num_plugins}")
 
-                if self.workplace: # save if within workplace
+            if self.workplace: # save if within workplace
+                if context:
                     self.save_to_workplace(context, plugin.name)
 
         self.main()

@@ -1,3 +1,4 @@
+from sys import version
 from ngoto import Plugin
 import logging
 try:
@@ -6,7 +7,7 @@ except ImportError:
     logging.warning("No module named 'google' found, cannot use google dorking/search")
 
 class Plugin(Plugin):
-    name = 'Google'
+    name = 'Google3'
     version = 0.1
     description = 'Google Search'
 

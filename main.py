@@ -1,16 +1,14 @@
 # this script is to launch the command line tool
 import logging
 import traceback
-from os.path import exists # check config file exists
-import ngoto
-
+from ngoto import CLT
 
 if __name__ == '__main__':
-    hz = ngoto.CLT()
+    hz = CLT()
     try:
         hz.load_config()
         hz.clearConsole()
-        hz.interface.options(hz)
+        hz.interface.options(hz.current_workplace, hz.root)
         hz.main()
     except Exception as e:
         print(f"{hz.interface.bcolors.ENDC}")

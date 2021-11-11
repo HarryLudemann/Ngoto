@@ -3,6 +3,8 @@ from ngoto import Plugin
 
 class Plugin(Plugin):
     name = 'URL'
+    version = 0.1
+    description = 'Search URL'
 
     def get_info(self, target_url):
         """ Given target URL returns urls ip

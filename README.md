@@ -49,12 +49,14 @@ Within the configuration folder contains a config.json as shown below, fill in A
 #### 3. Run
 Run the main.py script, which will bring you to the following:
 ```
- _   _                    _
-| | | |                  | |
-| |_| | __ _ __________ _| |__        
-|  _  |/ _` |_  /_  / _` | '_ \       
-| | | | (_| |/ / / / (_| | | | |      
-\_| |_/\__,_/___/___\__,_|_| |_|      
+     _   _             _
+    | \ | |           | |
+    |  \| | __ _  ___ | |_ ___
+    | . ` |/ _` |/ _ \| __/ _ \
+    | |\  | (_| | (_) | || (_) |
+    |_| \_|\__, |\___/ \__\___/
+            __/ |
+           |___/
 
 Workplace: None
 
@@ -73,10 +75,10 @@ pip install ngoto
 ```
 #### 2. Import and Initialize:
 ```python
-from ngoto import ngoto # import the osint class from the hazzah module
+from ngoto import Module # import the osint class from the hazzah module
 
 # initialize the osint class and set my desired functions API's keys (Below are fake API keys)
-hz = ngoto.Module()
+hz = Module()
 ```
 #### 3. Example Calling Functions:
 ```python
