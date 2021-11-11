@@ -9,10 +9,12 @@ import sys
 import os
 import json
 
+from ngoto.utilities.plugin import Plugin
+
 
 class Ngoto:
-    """ Contains API information aswell as OSINT modules """
-    __version__ = '0.0.15'
+    """ Main abstract class, contains api info and tree information """
+    __version__ = '0.0.17'
     clearConsole = lambda self: os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
     api_keys = {} # dict of api keys
     root: Node
@@ -22,6 +24,19 @@ class Ngoto:
         self.api_keys[name] = key
     def get_api(self, name: str):
         return self.api_keys[name]
+
+    def load_plugins(self, curr_node: Node, file_path: str) -> Node:
+        """ Recursive function to traverse plugin directory adding each folder to tree and each plugin to node"""
+        for file in os.listdir(file_path): 
+            if file.endswith(".py"):    # if python script
+                mod = __import__(file_path.replace('/', '.') + file[:-3], fromlist=['Plugin'])
+                plugin = getattr(mod, 'Plugin')()
+                curr_node.add_plugin( plugin )
+            elif '__pycache__' not in file: # if folder
+                new_node = Node(file + '/') # create node of folder
+                new_node = self.load_plugins(new_node, file_path + file + '/') # add children to node
+                curr_node.add_child( new_node )
+        return curr_node
 
 class Module(Ngoto):
     """ Module class """
@@ -42,25 +57,26 @@ class Module(Ngoto):
                 if open_tag in line:
                     modules.append(line.replace(open_tag, '').split('"', 1)[0].strip())
 
-            # download modules
+            # download plugins
             for module in modules:
                 r = requests.get('https://raw.githubusercontent.com/HarryLudemann/Hazzah-OSINT/main/configuration/plugin/' + module.lower())
                 with open(f'configuration/plugin/{module.lower()}.py', 'w') as f:
                     f.write(r.text)
         # load plugins
-        for file in os.listdir("configuration/plugin/"): 
-            if file.endswith(".py"):    # if python script
-                mod = __import__('configuration.plugin.' + file[:-3], fromlist=['Plugin'])
-                plugin = getattr(mod, 'Plugin')()
-                new_node = Node(plugin.name)
-                new_node.set_plugin( plugin )
-                self.root.add_child( new_node )
-            if '.' not in file:         # if folder
-                pass
+        self.root = self.load_plugins(Node('root'), "configuration/plugin/")
+        self.curr_position = self.root
 
-    # def get_plugin_context(self, plugin_name, args):
-    #     """ Get context from plugin, given plugin name & list of args """
-    #     return self.get_plugin(plugin_name)().get_context(args)
+    def get_plugin(self, name: str, node: Node) -> Plugin:
+        """ recursive method given plugins name returns plugin, returns None if not found """
+        for plugin in node.get_plugins():
+            if plugin.name == name:
+                return plugin 
+        for child in node.get_children():
+            self.get_plugin(name, child)
+        
+    def get_plugin_context(self, plugin_name, args):
+        """ Get context from plugin, given plugin name & list of args """
+        return self.get_plugin(plugin_name, self.root).get_context(args)
 
 class CLT(Ngoto):
     """ Command line tool class """
@@ -87,22 +103,16 @@ class CLT(Ngoto):
                     self.add_api(name, data['API'][name])
         else:
             logging.warning("No config.json found")
-
-        self.root = self.load_config_helper(Node('root'), "configuration/plugin/")
+  
+        self.root = self.load_plugins(Node('root'), "configuration/plugin/")
         self.curr_position = self.root
 
-    def load_config_helper(self, curr_node: Node, file_path: str) -> Node:
-        """ load config recursive helper method """
-        for file in os.listdir(file_path): 
-            if file.endswith(".py"):    # if python script
-                mod = __import__(file_path.replace('/', '.') + file[:-3], fromlist=['Plugin'])
-                plugin = getattr(mod, 'Plugin')()
-                curr_node.add_plugin( plugin )
-            elif '__pycache__' not in file: # if folder
-                new_node = Node(file + '/') # create node of folder
-                new_node = self.load_config_helper(new_node, file_path + file + '/') # add children to node
-                curr_node.add_child( new_node )
-        return curr_node
+    # recursive function to print tree
+    def print_tree(self, node: Node, indent: str = '') -> None:
+        for plugin in node.get_plugins():
+            self.interface.output(f'{indent}{plugin.name} - {plugin.version} - {plugin.description}')
+        for child in node.get_children():
+            self.print_tree(child, indent + '   ')
 
     # Workplace command method
     def workplace_command(self, options: list) -> None:
@@ -184,10 +194,12 @@ class CLT(Ngoto):
                 self.clearConsole()
             elif option[0] in ['0', 'q', 'exit']:
                 sys.exit()
+            elif option[0] in ['p', 'plugins']:
+                self.print_tree(self.curr_position)
             else:
                 self.interface.output("Unknown command")
         else:   # must be osint function
-            # load and call plugin
+            # load and call plugin or go into folder
             if int(option)-1 < self.curr_position.num_children: # if folder
                 self.curr_position.get_child(int(option)-1).set_parent(self.curr_position)
                 self.curr_position = self.curr_position.get_child(int(option)-1)
@@ -196,11 +208,13 @@ class CLT(Ngoto):
             elif int(option)-1 < self.curr_position.num_children + self.curr_position.num_plugins: # if plugin
                 plugin = self.curr_position.get_plugin( int(option[0]) - self.curr_position.num_children - 1)
                 context = plugin.main(self)
-                plugin.print_info(self, context, Table())
+                if context:
+                    plugin.print_info(self, context, Table())
             else:
                 self.interface.output(f"Plugin not found\n{self.curr_position.name}\n{self.curr_position.num_plugins}")
 
             if self.workplace: # save if within workplace
-                self.save_to_workplace(context, plugin.name)
+                if context:
+                    self.save_to_workplace(context, plugin.name)
 
         self.main()

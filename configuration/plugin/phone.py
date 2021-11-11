@@ -4,6 +4,8 @@ import logging
 
 class Plugin(Plugin):
     name = 'Phone'
+    version = 0.1
+    description = 'Search Phone'
 
     def get_info(self, target_phone, NUM_VERIFY_API_KEY):
         r = requests.get(f"http://apilayer.net/api/validate?access_key={NUM_VERIFY_API_KEY}&number={target_phone } ").json()

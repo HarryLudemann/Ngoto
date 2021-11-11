@@ -75,10 +75,10 @@ pip install ngoto
 ```
 #### 2. Import and Initialize:
 ```python
-from ngoto import ngoto # import the osint class from the hazzah module
+from ngoto import Module # import the osint class from the hazzah module
 
 # initialize the osint class and set my desired functions API's keys (Below are fake API keys)
-hz = ngoto.Module()
+hz = Module()
 ```
 #### 3. Example Calling Functions:
 ```python

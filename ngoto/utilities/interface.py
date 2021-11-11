@@ -45,7 +45,6 @@ class Interface:
         bcolors = self.bcolors()
         index = 1
         options = f'{bcolors.BOLD}\n0. Exit'
-        print(curr_node.name)
         for folder in curr_node.get_children(): # print folders
             options += f'\n{index}. {folder.name}'
             index += 1

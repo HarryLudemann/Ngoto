@@ -7,6 +7,8 @@ except ImportError:
 
 class Plugin(Plugin):
     name = 'Google2'
+    version = 0.1
+    description = 'Google Search'
 
     def get_info(self, query, types, parameter, max_results=10):
         """ given query, list of websites eg ['twitter.com', 'facebook.com'] or ['pdf', 'xlsx] and parameter eg filetype: or site:

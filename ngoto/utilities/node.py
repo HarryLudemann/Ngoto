@@ -9,13 +9,6 @@ class Node:
     def __str__(self):
         return self.name
 
-    @property
-    def num_children(self): 
-        return len(self.children)
-    @property
-    def num_plugins(self):
-        return len(self.children)
-
     def add_child(self, child):
         self.children.append(child)
     def get_children(self):
@@ -46,3 +39,9 @@ class Node:
             return True
         return False
 
+    @property
+    def num_children(self): 
+        return len(self.children)
+    @property
+    def num_plugins(self):
+        return len(self.plugins)
