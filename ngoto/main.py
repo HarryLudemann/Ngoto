@@ -38,7 +38,7 @@ class Ngoto:
             os.mkdir(self.workplace_path)
         if not exists(self.plugin_path):
             os.mkdir(self.plugin_path)
-            
+
     def set_path(self, path_name: str, path: str): 
         """ Given path name eg. (config, workplace or plugin) sets given path """
         if path_name == 'CONFIG': self.config_path = path
@@ -82,6 +82,9 @@ class Module(Ngoto):
         # load plugins into tree
         self.root = self.load_plugins(Node('root'), self.plugin_path)
         self.curr_pos = self.root
+
+    def get_plugin_urls(self):
+        """ Returns list of URLS of github plugins """
 
     def get_plugin(self, name: str, node: Node) -> Plugin:
         """ recursive method given plugins name returns plugin, returns None if not found """
