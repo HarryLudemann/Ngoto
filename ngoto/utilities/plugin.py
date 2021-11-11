@@ -1,3 +1,5 @@
+# script contains abstract class all plugins inherit from and must use
+
 from abc import ABC, abstractmethod
 
 class Plugin(ABC):

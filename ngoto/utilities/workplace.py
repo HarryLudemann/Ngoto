@@ -1,3 +1,5 @@
+# script contains main functions to save to sqlite3 workplace/database
+
 import logging
 import sqlite3
 from sqlite3 import Error

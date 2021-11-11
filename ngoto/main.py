@@ -1,6 +1,13 @@
-# script contains two main classes:
-# OSINT (controls osint modules and api keys)  
-# HazzahCLT (Controls Command line tool interface)
+# This script contains three main classes:
+
+# Ngoto class contains functions & vars used in both children classes
+# Module class in child of Ngoto containing functions & vars for modularized version
+# CLT class contains functions & vars for Command line tool
+
+__author__ = 'Harry Ludemann'
+__maintainer__  = 'Harry Ludemann'
+__version__ = '0.0.17'
+__license__ = 'GPLv3' 
 
 from ngoto.utilities import Workplace, Interface, Table, Node
 from os.path import exists # check config file exists
@@ -11,16 +18,15 @@ import json
 import requests
 from ngoto.utilities.plugin import Plugin
 
-
 class Ngoto:
     """ Main abstract class, contains api info and tree information """
-    __version__ = '0.0.17'
     clearConsole = lambda self: os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
     api_keys = {} # dict of api keys
     root: Node # root of plugin tree
     curr_pos: Node # current position in plugin tree
 
-    def __init__(self):
+    def __init__(self)
+        """ check and create required folders """
         if not exists('configuration/'):
             os.mkdir('configuration/')
         if not exists('configuration/workplace/'):
@@ -51,6 +57,7 @@ class Ngoto:
 class Module(Ngoto):
     """ Module class, contains Module specific methods """
     def __init__(self):
+        """ Gets list of plugins from github dir, downloads plugins, loads plugins into tree """
         # get list of plugins from github dir
         modules = []
         github_plugins_path = 'https://raw.githubusercontent.com/HarryLudemann/Ngoto/main/configuration/plugin/'
@@ -98,7 +105,7 @@ class CLT(Ngoto):
         self.curr_path = self.curr_path.replace('[' + position.replace('/', '') + ']', '')
 
     def load_config(self) -> None:
-        """ Loads plugins from plugins directory """
+        """ Loads plugins from plugins directory into tree and loads config vars from config.json """
         # load config file of api keys and set
         if exists('configuration/config.json'):
             with open("configuration/config.json") as json_data_file:

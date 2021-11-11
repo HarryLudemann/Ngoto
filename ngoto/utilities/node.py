@@ -1,4 +1,4 @@
-
+# script contains class of node for plugins tree
 class Node:
     def __init__(self, name):
         self.name = name

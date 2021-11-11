@@ -1,3 +1,5 @@
+# script contains interface functions
+
 import sys
 
 class Interface:

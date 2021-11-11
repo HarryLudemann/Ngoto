@@ -1,3 +1,5 @@
+# script contains class to create tables from dynamic information eg.
+
 # +------------+------------+
 # | column 1   | column 2   |
 # +============+============+
