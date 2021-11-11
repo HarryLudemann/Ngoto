@@ -71,7 +71,7 @@ class Module(Ngoto):
         self.curr_pos = self.root
 
     def download_plugins(self):
-        """ Download all plugins from github dir and add to plugins dir (does not create folders) """
+        """ Download/update all plugins from github dir and add to plugins dir (does not create folders) """
         for url in self.get_plugins_urls():
             r = requests.get(url)
             with open(self.plugin_path + url.rsplit('/', 1)[-1], 'w') as f:
