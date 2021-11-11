@@ -6,7 +6,7 @@
 
 __author__ = 'Harry Ludemann'
 __maintainer__  = 'Harry Ludemann'
-__version__ = '0.0.18'
+__version__ = '0.0.19'
 __license__ = 'GPLv3' 
 
 from ngoto.utilities import Workplace, Interface, Table, Node, Plugin
