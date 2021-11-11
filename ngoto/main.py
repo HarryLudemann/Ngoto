@@ -25,7 +25,7 @@ class Ngoto:
     root: Node # root of plugin tree
     curr_pos: Node # current position in plugin tree
 
-    def __init__(self)
+    def __init__(self):
         """ check and create required folders """
         if not exists('configuration/'):
             os.mkdir('configuration/')
