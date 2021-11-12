@@ -142,12 +142,12 @@ class CLT(Ngoto):
         self.root = self.load_plugins(Node('root'), self.plugin_path)
         self.curr_pos = self.root
 
-    def print_tree(self, node: Node, indent: str = '') -> None:
+    def print_tree(self, node: Node) -> None:
         """ recursive function to print tree in format """
         for plugin in node.get_plugins():
-            self.interface.output(f'{indent}{plugin.name} - {plugin.version} - {plugin.description}')
+            self.interface.output(node.name.replace('/', '') + f'/{plugin.name} - {plugin.description} - {plugin.requirements}')
         for child in node.get_children():
-            self.print_tree(child, indent + '   ')
+            self.print_tree(child)
 
     def save_to_workplace(self, context: dict, plugin_name: str) -> None:
         """ Saves context dict to given plugins names table in current workplace,

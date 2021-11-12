@@ -5,6 +5,7 @@ class Plugin(Plugin):
     name = 'URL'
     version = 0.1
     description = 'Search URL'
+    requirements = 'None'
 
     # Returns dict of acquired information, given desired information
     def get_context(self, target_url):

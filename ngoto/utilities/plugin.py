@@ -6,6 +6,7 @@ class Plugin(ABC):
     name: str = ''
     version: str = ''
     description: str = ''
+    requirements: str = ''
 
     def __str__(self) -> str:
         return self.name

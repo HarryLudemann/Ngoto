@@ -5,6 +5,7 @@ class Plugin(Plugin):
     name = 'Port Scanner'
     version = 0.1
     description = 'Port Scanner'
+    requirements = 'None'
 
     def TCP_connect(self, ip, port_number, delay, output):
         TCPsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
