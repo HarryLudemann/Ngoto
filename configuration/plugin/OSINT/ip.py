@@ -6,7 +6,8 @@ class Plugin(Plugin):
     name = 'IP'
     version = 0.1
     description = 'Search IP'
-    requirements = 'IP Quality API Key'
+    req_modules: list = []
+    req_apis: list = ['IPQuality']
 
     def get_context(self, target_ip, IP_QUALITY_API_KEY):
         r = requests.get('http://ip-api.com/json/' + target_ip ).json()

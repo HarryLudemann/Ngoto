@@ -6,7 +6,8 @@ class Plugin(Plugin):
     name = 'Phone'
     version = 0.1
     description = 'Search Phone'
-    requirements = 'Num Verify API Key'
+    req_modules: list = []
+    req_apis: list = ['NumVerify']
 
     def get_context(self, target_phone, NUM_VERIFY_API_KEY):
         r = requests.get(f"http://apilayer.net/api/validate?access_key={NUM_VERIFY_API_KEY}&number={target_phone } ").json()

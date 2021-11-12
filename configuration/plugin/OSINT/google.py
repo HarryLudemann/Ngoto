@@ -9,7 +9,8 @@ class Plugin(Plugin):
     name = 'Google'
     version = 0.1
     description = 'Google Search'
-    requirements = 'googlesearch python module'
+    req_modules: list = ['googlesearch']
+    req_apis: list = []
 
     def get_context(self, query, types, parameter, max_results=10):
         """ given query, list of websites eg ['twitter.com', 'facebook.com'] or ['pdf', 'xlsx] and parameter eg filetype: or site:

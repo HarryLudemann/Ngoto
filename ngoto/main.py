@@ -5,7 +5,6 @@
 # CLT class contains functions & vars for Command line tool
 
 __author__ = 'Harry Ludemann'
-__maintainer__  = 'Harry Ludemann'
 __version__ = '0.0.20'
 __license__ = 'GPLv3' 
 __copyright__ = 'Copyright of Harry Ludemann 2021'
@@ -17,7 +16,7 @@ from os.path import exists
 class Ngoto:
     """ Main abstract class, contains api info and tree information """
     clearConsole = lambda _: os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
-    api_keys = {} # dict of api keys
+    api_keys: dict = {} # dict of api keys
     root: Node # root of plugin tree
     config_path: str = 'configuration/'
     workplace_path: str = ''
@@ -67,8 +66,8 @@ class Module(Ngoto):
         self.plugin_path = 'configuration/plugin/'
         self.check_dirs()
         # load plugins into tree
-        self.root = self.load_plugins(Node('root'), self.plugin_path)
-        self.curr_pos = self.root
+        self.root: Node = self.load_plugins(Node('root'), self.plugin_path)
+        self.curr_pos: Node = self.root
 
     def download_plugins(self) -> None:
         """ Download/update all plugins (does not create folders) stores all plugins in plugin dir """
@@ -142,12 +141,15 @@ class CLT(Ngoto):
         self.root = self.load_plugins(Node('root'), self.plugin_path)
         self.curr_pos = self.root
 
-    def print_tree(self, node: Node) -> None:
-        """ recursive function to print tree in format """
+    def check_modules(self, node: Node) -> None:
+        """ recursive function to check all plugins have required modules """
+        success: str = [] # list of installed modules
         for plugin in node.get_plugins():
-            self.interface.output(node.name.replace('/', '') + f'/{plugin.name} - {plugin.description} - {plugin.requirements}')
+            success.extend(plugin.check_requirements())
         for child in node.get_children():
-            self.print_tree(child)
+            self.check_modules(child)
+        for module in success:
+            self.interface.output(module)
 
     def save_to_workplace(self, context: dict, plugin_name: str) -> None:
         """ Saves context dict to given plugins names table in current workplace,
@@ -218,7 +220,7 @@ class CLT(Ngoto):
             elif b or back, back out of folder into parent node
             elif cls or clear, clear command prompt
             elif if 0, q or exit, quit python script
-            elif p, plugins, print all plugins in tree format
+            elif p, plugins, returns required modules for installed plugins
             else print 'unknown command'
         else (Must be plugin call or to move into child folder/node)
             if plugin, call and print plugin
@@ -252,7 +254,7 @@ class CLT(Ngoto):
             elif option[0] in ['0', 'q', 'exit']:
                 sys.exit()
             elif option[0] in ['p', 'plugins']:
-                self.print_tree(self.curr_pos)
+                self.check_modules(self.curr_pos)
             else:
                 self.interface.output("Unknown command")
         else:   # must be plugin or into folder

@@ -5,7 +5,8 @@ class Plugin(Plugin):
     name = 'Email'
     version = 0.1
     description = 'Search Email'
-    requirements = 'Email Verification API Key'
+    req_modules: list = []
+    req_apis: list = ['Email Verification']
 
     def get_context(self, target_email, api_key):
         r = requests.get(f'https://emailverification.whoisxmlapi.com/api/v1?apiKey={api_key}&emailAddress=' + target_email ).json()
