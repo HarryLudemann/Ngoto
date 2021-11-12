@@ -7,7 +7,7 @@ class Plugin(Plugin):
     version = 0.1
     description = 'Search IP'
 
-    def get_info(self, target_ip, IP_QUALITY_API_KEY):
+    def get_context(self, target_ip, IP_QUALITY_API_KEY):
         r = requests.get('http://ip-api.com/json/' + target_ip ).json()
         response = requests.get(f"https://ipqualityscore.com/api/json/ip/{IP_QUALITY_API_KEY}/{target_ip}").json()
         context = {
@@ -55,9 +55,6 @@ class Plugin(Plugin):
             if type(context[item]) != list:
                 col_values.append( [str(item), str(context[item])] )
         hz.interface.output( '\n' + tables.get_table(col_names, col_widths, col_values) )
-
-    def get_context(self, args):
-        return self.get_info(args[0], args[1])
 
     def create_table(self):
         return '''

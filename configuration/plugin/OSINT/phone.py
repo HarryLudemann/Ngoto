@@ -7,7 +7,7 @@ class Plugin(Plugin):
     version = 0.1
     description = 'Search Phone'
 
-    def get_info(self, target_phone, NUM_VERIFY_API_KEY):
+    def get_context(self, target_phone, NUM_VERIFY_API_KEY):
         r = requests.get(f"http://apilayer.net/api/validate?access_key={NUM_VERIFY_API_KEY}&number={target_phone } ").json()
         context = {
             'valid': r['valid'],
@@ -36,9 +36,6 @@ class Plugin(Plugin):
             if type(context[item]) != list:
                 col_values.append( [str(item), str(context[item])] )
         hz.interface.output( '\n' + tables.get_table(col_names, col_widths, col_values) )
-
-    def get_context(self, args):
-        return self.get_info(args[0], args[1])
 
     def create_table(self):
         return '''

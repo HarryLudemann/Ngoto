@@ -7,7 +7,7 @@ class Plugin(Plugin):
     version = 0.1
     description = 'Search Email'
 
-    def get_info(self, target_email, api_key):
+    def get_context(self, target_email, api_key):
         r = requests.get(f'https://emailverification.whoisxmlapi.com/api/v1?apiKey={api_key}&emailAddress=' + target_email ).json()
         if 'emailAddress' in r:   
             context = {
@@ -30,7 +30,7 @@ class Plugin(Plugin):
     def main(self, hz):
         target = hz.interface.get_input("Target email: ", '[Email]', hz.curr_path)
         if target == 'back': return {}
-        return self.get_info(target, hz.get_api('EMAIL_VERIFICATION_API_KEY'))
+        return self.get_context(target, hz.get_api('EMAIL_VERIFICATION_API_KEY'))
 
     def print_info(self, hz, context, tables):
         col_widths = [20, 50]
@@ -41,9 +41,6 @@ class Plugin(Plugin):
                 col_values.append( [str(item), str(context[item])] )
 
         hz.interface.output( '\n' + tables.get_table(col_names, col_widths, col_values) )
-
-    def get_context(self, args):
-        return self.get_info(args[0], args[1])
 
     def create_table(self):
         return '''

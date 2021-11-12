@@ -97,11 +97,11 @@ class Module(Ngoto):
             if plugin.name == name:
                 return plugin 
         for child in node.get_children():
-            self.get_plugin(name, child)
+            return self.get_plugin(name, child)
         
     def get_plugin_context(self, plugin_name: str, args: list) -> dict:
         """ Get context from plugin, given plugin name & list of args """
-        return self.get_plugin(plugin_name, self.root).get_context(args)
+        return self.get_plugin(plugin_name, self.root).get_context(*args)
 
 class CLT(Ngoto):
     """ Command line tool class, containing CLT specifc methods """

@@ -41,7 +41,7 @@ class Plugin(Plugin):
                 ports.append(i)
         return ports
 
-    def get_info(self, target, timeout):
+    def get_context(self, target, timeout):
         ports = self.scan_ports(target, int(timeout))
         context = {
             'ports': ports
@@ -63,9 +63,6 @@ class Plugin(Plugin):
             col_values.append( [str(item)] )
 
         hz.interface.output( '\n' + tables.get_table(col_names, col_widths, col_values) )
-
-    def get_context(self, args):
-        return self.get_info(args[0], args[1])
 
     def create_table(self):
         return '''
