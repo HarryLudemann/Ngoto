@@ -16,44 +16,46 @@ class Plugin(Plugin):
         except:
             output[port_number] = ''
 
-    def scan_ports(self, host_ip, delay):
+    def scan_ports(self, host_ip: str, delay: int, range_start: int, range_end: int):
 
         ports = []          
         threads = []        # To run TCP_connect concurrently
         output = {}         # For printing purposes
 
         # Spawning threads to scan ports
-        for i in range(10000):
+        for i in range(range_start, range_end):
             t = threading.Thread(target=self.TCP_connect, args=(host_ip, i, delay, output))
             threads.append(t)
 
         # Starting threads
-        for i in range(10000):
-            threads[i].start()
+        for i in range(range_start, range_end):
+            threads[i-range_start].start()
 
         # Locking the main thread until all threads complete
-        for i in range(10000):
-            threads[i].join()
+        for i in range(range_start, range_end):
+            threads[i-range_start].join()
 
         # Printing listening ports from small to large
-        for i in range(10000):
+        for i in range(range_start, range_end):
             if output[i] == 'Listening':
                 ports.append(i)
         return ports
 
-    def get_context(self, target, timeout):
-        ports = self.scan_ports(target, int(timeout))
+    def get_context(self, target: str, timeout: str, range_start: str, range_end: str):
+        ports = self.scan_ports(target, int(timeout), int(range_start), int(range_end))
         context = {
             'ports': ports
         }
         return context
 
-    def main(self, hz):
+    def main(self, hz): # given CLT obj
         target = hz.interface.get_input("Enter host IP: ", '[Portscanner]', hz.curr_path)
         if target == 'back': return {}
         timeout = hz.interface.get_input("How many seconds the socket is going to wait until timeout: ", '[Portscanner]', hz.curr_path)
         if timeout == 'back': return {}
-        return self.get_info(target, timeout)
+        start_range, end_range = hz.interface.get_input("Specify port range eg 50-100: ", '[Portscanner]', hz.curr_path).split('-')
+        hz.interface.output("Please wait scanning ports...")
+        return self.get_context(target, timeout, start_range, end_range)
 
     def print_info(self, hz, context, tables):
         col_widths = [20]

@@ -42,7 +42,7 @@ class Interface:
            |___/                   
         {bcolors.ENDC}''')
 
-    def options(self, curr_workplace, curr_node):
+    def options(self, curr_node, curr_workplace:str = 'N/A'): # given Node in plugin and optionally workplace string
         self.logo()
         bcolors = self.bcolors()
         index = 1

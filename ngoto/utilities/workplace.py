@@ -3,12 +3,15 @@
 import logging
 import sqlite3
 from sqlite3 import Error
+import os
 
 class Workplace():
-    file_path = ''
+    file_path: str = ''
+    name: str = 'N/A'
     
-    def __init__(self, filepath: str):
+    def __init__(self, filepath: str, name: str):
         self.file_path = filepath
+        self.name = name
 
     def set_filepath(self, filepath: str):
         self.file_path = filepath

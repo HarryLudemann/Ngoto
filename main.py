@@ -8,7 +8,7 @@ if __name__ == '__main__':
     try:
         hz.load_config()
         hz.clearConsole()
-        hz.interface.options(hz.curr_workplace, hz.root)
+        hz.interface.options(hz.root)
         hz.main()
     except Exception as e:
         print(f"{hz.interface.bcolors.ENDC}")
