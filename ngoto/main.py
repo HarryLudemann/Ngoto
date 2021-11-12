@@ -74,7 +74,7 @@ class Module(Ngoto):
         """ Download/update all plugins (does not create folders) stores all plugins in plugin dir """
         for url in self.get_plugins_urls():
             r = requests.get(url)
-            with open(self.plugin_path + url.rsplit('/', 1)[-1], 'w') as f:
+            with open(self.plugin_path + url.replace('https://raw.githubusercontent.com/HarryLudemann/Ngoto/main/configuration/plugin/', ''), 'w') as f:
                 f.write(r.text)
 
     def get_plugins_urls(self, path = 'https://github.com/HarryLudemann/Ngoto/tree/main/configuration/plugin/', modules = []):

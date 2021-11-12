@@ -1,7 +1,6 @@
 import requests
 from ngoto import Plugin
 import logging
-
 class Plugin(Plugin):
     name = 'Email'
     version = 0.1
