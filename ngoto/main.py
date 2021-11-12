@@ -6,7 +6,7 @@
 
 __author__ = 'Harry Ludemann'
 __maintainer__  = 'Harry Ludemann'
-__version__ = '0.0.19'
+__version__ = '0.0.20'
 __license__ = 'GPLv3' 
 __copyright__ = 'Copyright of Harry Ludemann 2021'
 
