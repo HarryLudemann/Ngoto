@@ -229,7 +229,7 @@ class CLT(Ngoto):
 
             if within workplace, save result to workplace
         """
-        context = {}                  
+        context = {}                
         option = self.interface.get_input('', '', self.curr_path)
         if not option.isdigit() or option == '0':   # if option is command not plugin/module
             option = option.split()
@@ -238,10 +238,11 @@ class CLT(Ngoto):
             elif option[0] in ['wp', 'workplace']:
                 self.workplace_command(option)
             elif option[0] in ['o', 'options']:
+                self.clearConsole()
                 self.interface.options(self.curr_pos, self.workpace_name)
             elif option[0] in ['c', 'commands']:
                 self.interface.commands()
-            elif option[0] in ['b', 'back']: # !backing out of plugin is within plugin!
+            elif option[0] in ['b', 'back', '&']: # !backing out of plugin is within plugin!
                 if self.curr_pos.has_parent:
                     self.remove_position(self.curr_pos.name) # remove in position cmd
                     self.curr_pos = self.curr_pos.get_parent()
@@ -269,6 +270,9 @@ class CLT(Ngoto):
                 context = plugin.main(self) # run plugin
                 if context: # if context print resulting plugins information
                     plugin.print_info(self, context, Table()) 
+                else: # if a plugin that returns no context print options
+                    self.clearConsole()
+                    self.interface.options(self.curr_pos, self.workpace_name)
             else:
                 self.interface.output(f"Plugin not found\n{self.curr_pos.name}\n{self.curr_pos.num_plugins}")
 

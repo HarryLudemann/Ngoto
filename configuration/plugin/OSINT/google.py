@@ -40,7 +40,7 @@ class Plugin(Plugin):
             if websites == 'back': return {}
             maxcount = hz.interface.get_input("Optionally enter max results: ", '[Google]', hz.curr_path)
             if maxcount == 'back': return {}
-            return self.get_info(target, websites, 'site:', int(maxcount))
+            return self.get_context(target, websites, 'site:', int(maxcount))
 
     def print_info(self, hz, context, tables):
         col_names = ['URL']

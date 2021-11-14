@@ -2,7 +2,50 @@
 
 import sys
 
-class Interface:
+class ColourText:
+    colors = {
+        '[head]' : '\033[95m',
+        '[blue]' : '\033[94m',
+        '[cyan]' : '\033[96m',
+        '[gren]' : '\033[92m',
+        '[warn]' : '\033[93m',
+        '[fail]' : '\033[91m',
+        'clear' : '\033[0m',
+        '[bold]' : '\033[1m',
+        '[line]' : '\033[4m'
+        }
+
+    open_tags = ['[bold]', '[line]', '[cyan]', '[blue]', '[gren]', '[warn]', '[fail]', '[head]']
+    close_tags = ['[/bold]', '[/line]', '[/cyan]', '[/blue]', '[/gren]', '[/warn]', '[/fail]', '[/head]']
+
+    def color_text(self, output):
+        final_string: str = ''
+        curr_style: list = []
+        curr_string: str = ''
+        for char in output: 
+            curr_string += char
+            if len(curr_string) > 5: # if open tag
+                for tag in self.open_tags:
+                    if tag == (found_tag := curr_string[-6:]):
+                        final_string += curr_string.replace(found_tag, self.colors[found_tag])
+                        curr_style.append(tag)
+                        curr_string = ''
+            if len(curr_string) > 6: # if closing tag
+                for tag in self.close_tags:
+                    if tag == (found_tag := curr_string[-7:]):
+                        final_string += curr_string.replace(found_tag, '')
+                        final_string += self.colors['clear']
+                        curr_style.pop()
+                        for style in curr_style:
+                            final_string += self.colors[style]
+                        curr_string = ''
+
+        final_string += curr_string
+        return final_string
+
+        
+
+class Interface(ColourText):
     class bcolors:
         """ Stores colours """
         HEADER = '\033[95m'
@@ -15,23 +58,24 @@ class Interface:
         BOLD = '\033[1m'
         UNDERLINE = '\033[4m'
 
-    def output(self, output):
+    def output(self, output, color_safe=False):
         """ Print Method """
-        bcolors = self.bcolors()
-        print(f"{bcolors.BOLD} > ", output, f"{bcolors.ENDC}")
+        if not color_safe:
+            print(self.color_text(f"[bold]> {output}[/bold]"))
+        else:
+            cl = ColourText()
+            print(cl.color_text(output) )
 
     def get_input(self, text='', position='', current_position=''):
         """ Input Method """
-        bcolors = self.bcolors()
-        user_input = str( input(f"{bcolors.OKCYAN}{bcolors.BOLD}" + current_position + position + f'{bcolors.ENDC}{bcolors.BOLD} > ' + str(text)) )
+        user_input = str( input(self.color_text(f"[cyan][bold]{current_position}{position}[/cyan][/cyan][bold] > {str(text)}")))
         if user_input in ['exit']:  
             sys.exit()
         return user_input
 
     # UI Methods
     def logo(self):
-        bcolors = self.bcolors()
-        print(f'''{bcolors.BOLD}{bcolors.HEADER}
+        self.output(f'''[bold][head]
      _   _             _        
     | \ | |           | |       
     |  \| | __ _  ___ | |_ ___  
@@ -40,34 +84,38 @@ class Interface:
     |_| \_|\__, |\___/ \__\___/ 
             __/ |               
            |___/                   
-        {bcolors.ENDC}''')
+        [/bold][/head]''', True)
 
     def options(self, curr_node, curr_workplace:str = 'N/A'): # given Node in plugin and optionally workplace string
         self.logo()
-        bcolors = self.bcolors()
         index = 1
-        options = f'{bcolors.BOLD}\n0. Exit'
+        options = self.color_text(f'[bold]\n0. Exit[/bold]')
         for folder in curr_node.get_children(): # print folders
-            options += f'\n{index}. {folder.name}'
+            options += self.color_text(f'[bold]\n{index}. [cyan]{folder.name}[/cyan][/bold]')
             index += 1
         for plugin in curr_node.get_plugins(): # print plugins
-            options += f'\n{index}. {plugin.name}'
+            options += self.color_text(f'[bold]\n{index}. [cyan]{plugin.name}[/cyan][/bold]')
             index += 1
-        print(options + f'\n\nWorkplace: {curr_workplace}\n{bcolors.ENDC}')
+        self.output(f'\n[bold]Workplace: {curr_workplace}\n{options}\n[/bold]', True)
 
     def commands(self):
         self.logo()
-        print(f'''
-    {self.bcolors.HEADER}[Basic]{self.bcolors.ENDC}{self.bcolors.BOLD}
+        self.output(f'''
+    [head][Basic][/head][bold]
     o/options                   --  Returns osint options
     c/commands                  --  Returns this list of commands
     cls/clear                   --  Clear console
     b/back                      --  Back out of plugin for folder
     0/exit                      --  closes program
 
-    {self.bcolors.HEADER}[Workplace]{self.bcolors.ENDC}{self.bcolors.BOLD}
+    [head][Workplace][/head]
     wp/workshop create (NAME)   --  Creates (NAME) workplace
     wp/workshop join (NAME)     --  Joins (NAME) workplace
     wp/workshop delete (NAME)   --  Deletes (NAME) workplace
     wp/workshop leave           --  Leave current workplace
-        {self.bcolors.ENDC}''')
+        [/bold]''', True)
+
+
+if __name__ == '__main__':
+    ui = Interface()
+    ui.output("[bold][gren]test test[/bold][/gren]", True)

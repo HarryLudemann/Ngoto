@@ -68,14 +68,13 @@ class Plugin(Plugin):
     def run_tree(self, node, hz):
         hz.clearConsole()
         child_count: str = 0
-        hz.interface.logo()
-        hz.interface.output('0. Exit')
+        hz.interface.output('[bold]0. Exit[/bold]', True)
         for index, child in enumerate(node.get_children()):
-            hz.interface.output(str(index + 1) + '. ' + child.name)
+            hz.interface.output(f'[bold]{str(index + 1)}. [cyan]' + child.name + '[/cyan][/bold]', True)
             child_count = index
         print('\n')
         option = hz.interface.get_input('', hz.curr_path)
-        if option not in ['b', 'back']: 
+        if option not in ['b', 'back', '0']: 
             if int(option) <= child_count + 1:
                 sel_child = node.get_child(int(option)-1)
                 if sel_child.type == 'folder':

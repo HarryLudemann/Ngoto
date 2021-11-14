@@ -64,9 +64,9 @@ class Plugin(Plugin):
         col_names = ['Port']
         col_values = []
         for item in context['ports']:
-            col_values.append( [str(item)] )
+            col_values.append( ['[gren]' + str(item) + '[/gren]'] )
 
-        hz.interface.output( '\n' + tables.get_table(col_names, col_widths, col_values) )
+        hz.interface.output(f'\n[bold]{tables.get_table(col_names, col_widths, col_values)}[/bold]', True )
 
     def create_table(self):
         return '''
