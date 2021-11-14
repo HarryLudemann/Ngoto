@@ -8,17 +8,17 @@
 
 # Warning :warning:
 
-<p align="center"><b>This tool is solely for educational purposes. Developer will not be reponsible for any misuse of the tool</b></p>    
+<p align="center"><b>This tool is solely for educational purposes. Developer will not be responsible for any misuse of the tool</b></p>    
     
 
 # Features:
-* Currently 5 inbuilt plugins (Email, Phone, IP, URL, Google)  
+* Inbuilt pentesting plugins
 * Easily create/add plugins.
 * Use as command line tool or as module.
 * Easily create/store received data into workplaces/databases
 
 # Command line tool commands:
-    o/options                   --  Returns osint options
+    o/options                   --  Returns plugin options
     c/commands                  --  Returns this list of commands
     cls/clear                   --  Clear console
     back                        --  back out of plugin

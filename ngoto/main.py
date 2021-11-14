@@ -44,6 +44,24 @@ class Ngoto:
         if not exists(self.plugin_path):
             os.mkdir(self.plugin_path)
 
+    def load_config(self) -> None:
+        """ loads config vars from config.json, then calls load plugins command and sets to self.root """
+        try: 
+            with open(f"{self.config_path}config.json") as json_data_file:
+                data = json.load(json_data_file)
+                # load apis
+                for name in data['API']:
+                    self.add_api(name, data['API'][name])
+                # load paths
+                for name in data['PATHS']:
+                    self.set_path(name, data['PATHS'][name])
+                self.check_dirs()
+        except Exception as e:
+            logging.error(e)
+        # load plugins into tree
+        self.root = self.load_plugins(Node('root'), self.plugin_path)
+        self.curr_pos = self.root
+
     def load_plugins(self, curr_node: Node, file_path: str) -> Node:
         """ Recursive function to traverse plugin directory adding each folder as node to tree and each plugin to node"""
         for file in os.listdir(file_path): 
@@ -56,6 +74,16 @@ class Ngoto:
                 new_node = self.load_plugins(new_node, file_path + file + '/') # add children to node
                 curr_node.add_child( new_node )
         return curr_node
+
+    def check_modules(self, node: Node) -> None:
+        """ recursive function to check all plugins have required modules """
+        success: str = [] # list of installed modules
+        for plugin in node.get_plugins():
+            success.extend(plugin.check_requirements())
+        for child in node.get_children():
+            self.check_modules(child)
+        for module in success:
+            self.interface.output(module)
 
 class Module(Ngoto):
     """ Module class, contains Module specific methods """
@@ -122,34 +150,6 @@ class CLT(Ngoto):
     def remove_position(self, position: str): # remove path displayed in cmd input
         """ Remove position from current path """
         self.curr_path = self.curr_path.replace('[' + position.replace('/', '') + ']', '')
-
-    def load_config(self) -> None:
-        """ loads config vars from config.json, then calls load plugins command and sets to self.root """
-        try: 
-            with open(f"{self.config_path}config.json") as json_data_file:
-                data = json.load(json_data_file)
-                # load apis
-                for name in data['API']:
-                    self.add_api(name, data['API'][name])
-                # load paths
-                for name in data['PATHS']:
-                    self.set_path(name, data['PATHS'][name])
-                self.check_dirs()
-        except Exception as e:
-            logging.error(e)
-        # load plugins into tree
-        self.root = self.load_plugins(Node('root'), self.plugin_path)
-        self.curr_pos = self.root
-
-    def check_modules(self, node: Node) -> None:
-        """ recursive function to check all plugins have required modules """
-        success: str = [] # list of installed modules
-        for plugin in node.get_plugins():
-            success.extend(plugin.check_requirements())
-        for child in node.get_children():
-            self.check_modules(child)
-        for module in success:
-            self.interface.output(module)
 
     def save_to_workplace(self, context: dict, plugin_name: str) -> None:
         """ Saves context dict to given plugins names table in current workplace,
