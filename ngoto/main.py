@@ -10,7 +10,7 @@ __license__ = 'GPLv3'
 __copyright__ = 'Copyright of Harry Ludemann 2021'
 
 from ngoto.utilities import Workplace, Interface, Table, Node, Plugin, workplace
-import logging, sys, os, json, requests
+import logging, sys, os, json, requests, pathlib
 from os.path import exists 
 
 class Ngoto:
@@ -47,7 +47,8 @@ class Ngoto:
     def load_config(self) -> None:
         """ loads config vars from config.json, then calls load plugins command and sets to self.root """
         try: 
-            with open(f"{self.config_path}config.json") as json_data_file:
+            path = f"{pathlib.Path(__file__).parent.resolve()}\\{self.config_path}config.json".replace('ngoto\\', '')
+            with open(path) as json_data_file:
                 data = json.load(json_data_file)
                 # load apis
                 for name in data['API']:

@@ -11,7 +11,6 @@ if __name__ == '__main__':
         hz.interface.options(hz.root)
         hz.main()
     except Exception as e:
-        print(f"{hz.interface.bcolors.ENDC}")
         logging.error(traceback.format_exc())
     finally:
         print(f"{hz.interface.bcolors.ENDC}")
