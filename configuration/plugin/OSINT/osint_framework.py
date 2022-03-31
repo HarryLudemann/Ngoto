@@ -2,7 +2,7 @@
 # the main method allowing to traverse the load tree
 
 
-from ngoto import Plugin
+from ngoto.util import Plugin
 import requests, os, webbrowser
 
 class Plugin(Plugin):

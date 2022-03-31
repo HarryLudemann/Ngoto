@@ -1,136 +1,17 @@
-# This script contains three main classes:
 
-# Ngoto class contains functions & vars used in both children classes
-# Module class in child of Ngoto containing functions & vars for modularized version
-# CLT class contains functions & vars for Command line tool
+# Script contains functions to handle the clt input output paired with utils instance class
 
 __author__ = 'Harry Ludemann'
 __version__ = '0.0.20'
 __license__ = 'GPLv3' 
-__copyright__ = 'Copyright of Harry Ludemann 2021'
+__copyright__ = 'Copyright of Harry Ludemann 2022'
 
-from ngoto.utilities import Workplace, Interface, Table, Node, Plugin, workplace
-import logging, sys, os, json, requests, pathlib
+from ngoto.util import Workplace, Interface, Table, Node
+from ngoto.instances.ngotoBase import NgotoBase 
+import logging, sys, os
 from os.path import exists 
 
-class Ngoto:
-    """ Main abstract class, contains api info and tree information """
-    clearConsole = lambda _: os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
-    api_keys: dict = {} # dict of api keys
-    root: Node # root of plugin tree
-    config_path: str = 'configuration/'
-    workplace_path: str = ''
-    plugin_path: str = ''
-
-    def add_api(self, name: str, key: str):
-        """ Add api by name and key """
-        self.api_keys[name] = key
-    def get_api(self, name: str) -> str:
-        """ returns api string of name """
-        return self.api_keys[name]
-
-    def set_path(self, path_name: str, path: str): 
-        """ Given path name eg. (config, workplace or plugin) sets given path """
-        if path_name == 'CONFIG': self.config_path = path
-        elif path_name == 'WORKPLACE': self.workplace_path = path
-        elif path_name == 'PLUGIN': self.plugin_path = path
-
-    def check_dirs(self):
-        """ check and create required folders """
-        if not exists(self.config_path):
-            os.mkdir(self.config_path)
-        if not exists(self.workplace_path):
-            os.mkdir(self.workplace_path)
-        if not exists(self.plugin_path):
-            os.mkdir(self.plugin_path)
-
-    def load_config(self) -> None:
-        """ loads config vars from config.json, then calls load plugins command and sets to self.root """
-        try: 
-            path = f"{pathlib.Path(__file__).parent.resolve()}\\{self.config_path}config.json".replace('ngoto\\', '')
-            with open(path) as json_data_file:
-                data = json.load(json_data_file)
-                # load apis
-                for name in data['API']:
-                    self.add_api(name, data['API'][name])
-                # load paths
-                for name in data['PATHS']:
-                    self.set_path(name, data['PATHS'][name])
-                self.check_dirs()
-        except Exception as e:
-            logging.error(e)
-        # load plugins into tree
-        self.root = self.load_plugins(Node('root'), self.plugin_path)
-        self.curr_pos = self.root
-
-    def load_plugins(self, curr_node: Node, file_path: str) -> Node:
-        """ Recursive function to traverse plugin directory adding each folder as node to tree and each plugin to node"""
-        for file in os.listdir(file_path): 
-            if file.endswith(".py"):    # if python script
-                mod = __import__(file_path.replace('/', '.') + file[:-3], fromlist=['Plugin'])
-                plugin = getattr(mod, 'Plugin')()
-                curr_node.add_plugin( plugin )
-            elif '__pycache__' not in file: # if folder
-                new_node = Node(file + '/') # create node of folder
-                new_node = self.load_plugins(new_node, file_path + file + '/') # add children to node
-                curr_node.add_child( new_node )
-        return curr_node
-
-    def check_modules(self, node: Node) -> None:
-        """ recursive function to check all plugins have required modules """
-        success: str = [] # list of installed modules
-        for plugin in node.get_plugins():
-            success.extend(plugin.check_requirements())
-        for child in node.get_children():
-            self.check_modules(child)
-        for module in success:
-            self.interface.output(module)
-
-class Module(Ngoto):
-    """ Module class, contains Module specific methods """
-    def __init__(self):
-        """ Gets list of plugins from github dir, downloads plugins, loads plugins into tree """
-        self.config_path = 'configuration/'
-        self.workplace_path ='configuration/workplace/' # workplace file path
-        self.plugin_path = 'configuration/plugin/'
-        self.check_dirs()
-        # load plugins into tree
-        self.root: Node = self.load_plugins(Node('root'), self.plugin_path)
-        self.curr_pos: Node = self.root
-
-    def download_plugins(self) -> None:
-        """ Download/update all plugins (does not create folders) stores all plugins in plugin dir """
-        for url in self.get_plugins_urls():
-            r = requests.get(url)
-            with open(self.plugin_path + url.replace('https://raw.githubusercontent.com/HarryLudemann/Ngoto/main/configuration/plugin/', ''), 'w') as f:
-                f.write(r.text)
-
-    def get_plugins_urls(self, path = 'https://github.com/HarryLudemann/Ngoto/tree/main/configuration/plugin/', modules = []):
-        """ Recursive function Given string of plugin directory from github returns list of plugin URLS """
-        open_tag = '<span class="css-truncate css-truncate-target d-block width-fit"><a class="js-navigation-open Link--primary" title="'
-        r = requests.get(path)
-        for line in r.text.split('\n'):
-            if open_tag in line:
-                plugin_name = line.replace(open_tag, '').split('"', 1)[0].strip()
-                if plugin_name[0].isupper():
-                    self.get_plugins_urls(path + plugin_name + '/', modules)
-                else:
-                    modules.append(path.replace('https://github.com/HarryLudemann/Ngoto/tree', 'https://raw.githubusercontent.com/HarryLudemann/Ngoto') + plugin_name)
-        return modules
-
-    def get_plugin(self, name: str, node: Node) -> Plugin:
-        """ recursive method given plugins name returns plugin, returns None if not found """
-        for plugin in node.get_plugins():
-            if plugin.name == name:
-                return plugin 
-        for child in node.get_children():
-            return self.get_plugin(name, child)
-        
-    def get_plugin_context(self, plugin_name: str, args: list) -> dict:
-        """ Get context from plugin, given plugin name & list of args """
-        return self.get_plugin(plugin_name, self.root).get_context(*args)
-
-class CLT(Ngoto):
+class CLT(NgotoBase):
     """ Command line tool class, containing CLT specifc methods """
     curr_path: str = "[Ngoto]" # string displayed in input prompt
     curr_pos: Node # current position in plugin tree
@@ -151,23 +32,6 @@ class CLT(Ngoto):
     def remove_position(self, position: str): # remove path displayed in cmd input
         """ Remove position from current path """
         self.curr_path = self.curr_path.replace('[' + position.replace('/', '') + ']', '')
-
-    def save_to_workplace(self, context: dict, plugin_name: str) -> None:
-        """ Saves context dict to given plugins names table in current workplace,
-        either adds all vars in context to array, or if item is array creates row of that array """
-        values = []
-        added_row = False
-        first_var = True
-        for name in context:
-            if first_var and type(context[name]) == list: # if first var is list, add all vars in list
-                added_row = True
-                for item in context[name]:
-                    self.workplace.add_row(self.workplace.name, plugin_name, [item])
-            else:
-                values.append(context[name]) # else add value
-            first_var = False
-        if not added_row:
-            self.workplace.add_row(self.workplace.name, plugin_name, values)
 
     # Workplace command method
     def workplace_command(self, options: list) -> None:
@@ -241,7 +105,7 @@ class CLT(Ngoto):
             elif option[0] in ['o', 'options']:
                 self.clearConsole()
                 self.interface.options(self.curr_pos, self.workpace_name)
-            elif option[0] in ['c', 'commands']:
+            elif option[0] in ['c', 'commands', 'h', 'help']:
                 self.interface.commands()
             elif option[0] in ['b', 'back', '&']: # !backing out of plugin is within plugin!
                 if self.curr_pos.has_parent:

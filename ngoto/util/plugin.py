@@ -3,6 +3,9 @@
 from abc import ABC, abstractmethod
 import logging
 
+__author__ = 'Harry Ludemann'
+__version__ = '0.1.0'
+
 class Plugin(ABC):
     name: str = ''
     version: str = ''

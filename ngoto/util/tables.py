@@ -8,7 +8,12 @@
 # | value3     | value4     |
 # +------------+------------+
 
+__author__ = 'Harry Ludemann'
+__version__ = '0.1.0'
+
 class Table():
+    
+
     col_widths = []
     def set_col_widths(self, col_widths):
         self.col_widths = col_widths

@@ -1,4 +1,4 @@
-from ngoto import Plugin
+from ngoto.util import Plugin
 import socket, threading
 
 class Plugin(Plugin):
@@ -52,9 +52,9 @@ class Plugin(Plugin):
 
     def main(self, hz): # given CLT obj
         target = hz.interface.get_input("Enter host IP: ", '[Portscanner]', hz.curr_path)
-        if target == 'back': return {}
+        if target in ['b', 'back']: return {}
         timeout = hz.interface.get_input("How many seconds the socket is going to wait until timeout: ", '[Portscanner]', hz.curr_path)
-        if timeout == 'back': return {}
+        if timeout == ['b', 'back']: return {}
         start_range, end_range = hz.interface.get_input("Specify port range eg 50-100: ", '[Portscanner]', hz.curr_path).split('-')
         hz.interface.output("Please wait scanning ports...")
         return self.get_context(target, timeout, start_range, end_range)

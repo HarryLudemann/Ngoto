@@ -3,7 +3,9 @@
 import logging
 import sqlite3
 from sqlite3 import Error
-import os
+
+__author__ = 'Harry Ludemann'
+__version__ = '0.1.0'
 
 class Workplace():
     file_path: str = ''
@@ -131,3 +133,21 @@ class Workplace():
     def delete_row(self, workplace, name, id):
         self.run_command(workplace, f'DELETE from {name} where id = {id};')
         logging.info(f'Dropped {id} row in {name} table')
+
+
+    def save_to_workplace(self, context: dict, plugin_name: str) -> None:
+        """ Saves context dict to given plugins names table in current workplace,
+        either adds all vars in context to array, or if item is array creates row of that array """
+        values = []
+        added_row = False
+        first_var = True
+        for name in context:
+            if first_var and type(context[name]) == list: # if first var is list, add all vars in list
+                added_row = True
+                for item in context[name]:
+                    self.add_row(self.name, plugin_name, [item])
+            else:
+                values.append(context[name]) # else add value
+            first_var = False
+        if not added_row:
+            self.add_row(self.name, plugin_name, values)

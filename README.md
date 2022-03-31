@@ -12,7 +12,6 @@
     
 
 # Features:
-* Inbuilt pentesting plugins
 * Easily create/add plugins.
 * Use as command line tool or as module.
 * Easily create/store received data into workplaces/databases
@@ -35,17 +34,10 @@
 git clone https://github.com/HarryLudemann/Hazzah-OSINT
 ```
 #### 2. Optionally add API keys
-Within the configuration folder contains a config.json as shown below, fill in API key if you require that function.
-* **NUM_VERIFY_API_KEY**: for phone plugin
-* **IP_QUALITY_API_KEY**: for ip plugin
-* **EMAIL_VERIFICATION_API_KEY**: for email plugin
+Within the configuration folder contains a config.json as shown below
 ```json
 {
-    "API": {
-        "NUM_VERIFY_API_KEY": "",
-        "IP_QUALITY_API_KEY": "",
-        "EMAIL_VERIFICATION_API_KEY": ""
-        },
+    "API": {},
     "PATHS": {
         "WORKPLACE": "configuration/workplace/",
         "PLUGIN": "configuration/plugin/"
@@ -68,60 +60,6 @@ Run the main.py script, which will bring you to the following:
 Workplace: None
 
 0. Exit
-1. Phone
-2. Email
-3. IP
-4. URL
-5. Google Dorks
-```
-
-## Using Ngoto as module:
-#### 1. Install PIP Module:
-```
-pip install ngoto
-```
-#### 2. Import and Initialize:
-```python
-from ngoto import Module # import the osint class from the hazzah module
-
-# initialize the osint class and set my desired functions API's keys (Below are fake API keys)
-hz = Module()
-```
-#### 3. Example Calling Functions:
-```python
-print( hz.get_plugin_context('IP', ['142.250.71.78', 'ai6aofcKK1zF87XUMPzoN1s8Nx07r5Rr']) )
-```
-##### Result:
-```
-{
-   "query":"142.250.71.78",
-   "status":"success",
-   "country":"Australia",
-   "countryCode":"AU",
-   "region":"NSW",
-   "regionName":"New South Wales",
-   "city":"Sydney",
-   "zip":"1001",
-   "lat":-33.8688,
-   "lon":151.209,
-   "timezone":"Australia/Sydney",
-   "isp":"Google LLC",
-   "org":"Google LLC",
-   "as":"AS15169 Google LLC",
-   "success":true,
-   "message":"Success",
-   "fraud_score":75,
-   "is_crawler":false,
-   "mobile":false,
-   "host":"syd15s17-in-f14.1e100.net",
-   "proxy":true,
-   "vpn":true,
-   "tor":false,
-   "active_vpn":false,
-   "active_tor":false,
-   "recent_abuse":false,
-   "bot_status":false
-}
 ```
 
 ## Create Plugin:
@@ -132,7 +70,7 @@ pip install ngoto
 ```
 Import Plugin from ngoto, create a class named Plugin inheriting from Plugin class. eg.
 ```python
-from ngoto import Plugin
+from ngoto.util import Plugin
 class Plugin(Plugin):
     name = ''
 ``` 
@@ -150,7 +88,7 @@ There are 5 functions to complete:
 ```python
 # Script returns ip of given url
 import socket
-from ngoto import Plugin
+from ngoto.util import Plugin
 
 class Plugin(Plugin):
     name = 'URL'

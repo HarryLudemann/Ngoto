@@ -1,8 +1,5 @@
 {
     "API": {
-        "NUM_VERIFY_API_KEY": "",
-        "IP_QUALITY_API_KEY": "",
-        "EMAIL_VERIFICATION_API_KEY": ""
         },
     "PATHS": {
         "WORKPLACE": "configuration/workplace/",

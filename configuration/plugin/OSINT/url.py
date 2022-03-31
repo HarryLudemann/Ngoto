@@ -1,5 +1,5 @@
 import socket
-from ngoto import Plugin
+from ngoto.util import Plugin
 
 class Plugin(Plugin):
     name = 'URL'

@@ -1,7 +1,7 @@
 # this script is to launch command line tool
 import logging
 import traceback
-from ngoto import CLT
+from ngoto.instances.clt import CLT
 
 if __name__ == '__main__':
     hz = CLT()

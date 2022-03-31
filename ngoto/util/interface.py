@@ -2,6 +2,9 @@
 
 import sys
 
+__author__ = 'Harry Ludemann'
+__version__ = '0.1.0'
+
 class ColourText:
     colors = {
         '[head]' : '\033[95m',
@@ -105,7 +108,7 @@ class Interface(ColourText):
     o/options                   --  Returns osint options
     c/commands                  --  Returns this list of commands
     cls/clear                   --  Clear console
-    b/back                      --  Back out of plugin for folder
+    b/back                      --  Back out of plugin or folder
     0/exit                      --  closes program
 
     [head][Workplace][/head]

@@ -1,4 +1,8 @@
 # script contains class of node for plugins tree
+
+__author__ = 'Harry Ludemann'
+__version__ = '0.1.0'
+
 class Node:
     def __init__(self, name):
         self.name = name
