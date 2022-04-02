@@ -3,6 +3,7 @@
 
 
 from ngoto.util import Plugin
+from ngoto.util import interface
 import requests, os, webbrowser
 
 class Plugin(Plugin):
@@ -65,28 +66,28 @@ class Plugin(Plugin):
             
         return node
 
-    def run_tree(self, node, hz):
-        hz.clearConsole()
+    def run_tree(self, node):
+        # clear screen
         child_count: str = 0
-        hz.interface.output('[bold]0. Exit[/bold]', True)
+        interface.output('[bold]0. Exit[/bold]', True)
         for index, child in enumerate(node.get_children()):
-            hz.interface.output(f'[bold]{str(index + 1)}. [cyan]' + child.name + '[/cyan][/bold]', True)
+            interface.output(f'[bold]{str(index + 1)}. [cyan]' + child.name + '[/cyan][/bold]', True)
             child_count = index
         print('\n')
-        option = hz.interface.get_input('', hz.curr_path)
-        if option not in ['b', 'back', '0']: 
+        option = interface.get_input('', '')
+        if option not in ['b', 'back', '0', 'q']: 
             if int(option) <= child_count + 1:
                 sel_child = node.get_child(int(option)-1)
                 if sel_child.type == 'folder':
-                    self.run_tree(sel_child, hz)
+                    self.run_tree(sel_child)
                 else:
                     webbrowser.open(sel_child.url)
-                    self.run_tree(node, hz)
+                    self.run_tree(node)
             else: # option out of bounds
-                hz.interface.output('Option out of bounds')
+                interface.output('Option out of bounds')
         else: # move back in dir
             if node.has_parent:
-                self.run_tree(node.parent, hz)
+                self.run_tree(node.parent)
             else:
                 pass # stop
 
@@ -96,9 +97,9 @@ class Plugin(Plugin):
         return {}
 
     # main function to handle input, then calls and return get_context method
-    def main(self, hz):
+    def main(self):
         root = self.load_nodes()
-        self.run_tree(root, hz)
+        self.run_tree(root)
         return {}
 
     # given context of information prints information

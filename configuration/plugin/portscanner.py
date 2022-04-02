@@ -1,5 +1,6 @@
 from ngoto.util import Plugin
 import socket, threading
+from ngoto.util import interface
 
 class Plugin(Plugin):
     name = 'Port Scanner'
@@ -50,23 +51,23 @@ class Plugin(Plugin):
         }
         return context
 
-    def main(self, hz): # given CLT obj
-        target = hz.interface.get_input("Enter host IP: ", '[Portscanner]', hz.curr_path)
+    def main(self): # given CLT obj
+        target = interface.get_input("Enter host IP: ", '[Portscanner]', '')
         if target in ['b', 'back']: return {}
-        timeout = hz.interface.get_input("How many seconds the socket is going to wait until timeout: ", '[Portscanner]', hz.curr_path)
+        timeout = interface.get_input("How many seconds the socket is going to wait until timeout: ", '[Portscanner]', '')
         if timeout == ['b', 'back']: return {}
-        start_range, end_range = hz.interface.get_input("Specify port range eg 50-100: ", '[Portscanner]', hz.curr_path).split('-')
-        hz.interface.output("Please wait scanning ports...")
+        start_range, end_range = interface.get_input("Specify port range eg 50-100: ", '[Portscanner]', '').split('-')
+        interface.output("Please wait scanning ports...")
         return self.get_context(target, timeout, start_range, end_range)
 
-    def print_info(self, hz, context, tables):
+    def print_info(self, context, tables):
         col_widths = [20]
         col_names = ['Port']
         col_values = []
         for item in context['ports']:
             col_values.append( ['[gren]' + str(item) + '[/gren]'] )
 
-        hz.interface.output(f'\n[bold]{tables.get_table(col_names, col_widths, col_values)}[/bold]', True )
+        interface.output(f'\n[bold]{tables.get_table(col_names, col_widths, col_values)}[/bold]', True )
 
     def create_table(self):
         return '''

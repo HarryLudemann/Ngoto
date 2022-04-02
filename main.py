@@ -1,17 +1,17 @@
 # this script is to launch command line tool
 import logging
 import traceback
-from ngoto.instances.clt import CLT
+from ngoto import CLT
+from ngoto.util import interface
 
 if __name__ == '__main__':
-    hz = CLT()
+    ngotoCLT = CLT()
     try:
-        hz.load_config()
-        hz.clearConsole()
-        hz.interface.options(hz.root)
-        hz.main()
+        ngotoCLT.run_command('clear')
+        interface.options(ngotoCLT.getCurrentNode())
+        ngotoCLT.main()
     except Exception as e:
         logging.error(traceback.format_exc())
     finally:
-        print(f"{hz.interface.bcolors.ENDC}")
+        print(f"{interface.bcolors.ENDC}")
         

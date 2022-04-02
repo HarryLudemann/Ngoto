@@ -1,8 +1,0 @@
-{
-    "API": {
-        },
-    "PATHS": {
-        "WORKPLACE": "configuration/workplace/",
-        "PLUGIN": "configuration/plugin/"
-        }
-}
