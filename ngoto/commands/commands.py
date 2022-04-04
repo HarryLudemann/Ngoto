@@ -1,5 +1,5 @@
 # contains function to check modules are installed
-from ngoto.commands.command import Command
+from ngoto.util.command import Command 
 from ngoto.util import interface
 import os
 

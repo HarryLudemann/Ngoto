@@ -1,5 +1,5 @@
 # contains function open folder
-from ngoto.commands.command import Command
+from ngoto.util.command import Command 
 from ngoto.util import interface
 import os
 

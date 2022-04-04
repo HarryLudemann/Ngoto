@@ -17,10 +17,13 @@ class Plugin(Plugin):
         return context
 
     # main function to handle input, then calls and return get_context method
-    def main(self):
+    def main(self, logger):
         target = interface.get_input("Target URL: ", '[URL]', '')
         if target in ['back', 'b']: return {}
-        return self.get_context(target)
+        logger.info(f'[URL] Getting IP for URL {target}')
+        context = self.get_context(target)
+        logger.info(f'[URL] IP for URL {target} is {context["ip"]}')
+        return context
 
     # given context of information prints information
     def print_info(self, context, tables):

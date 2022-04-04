@@ -101,6 +101,13 @@ def options(curr_node): # given Node in plugin and optionally workplace string
         index += 1
     output(f'\n[bold]{options}\n[/bold]', True)
 
+def divider():
+    print(bcolors.BOLD + '-'*50 + bcolors.ENDC)
+
+def short_log(logs: str) -> None:
+    """ print styled logs """
+    print(logs)
+
 
 def commands():
     logo()

@@ -8,3 +8,5 @@ from ngoto.commands.back import Back
 from ngoto.commands.paths import Paths
 from ngoto.commands.openPlugin import OpenPlugin
 from ngoto.commands.openFolder import OpenFolder
+from ngoto.commands.restart import Restart
+from ngoto.commands.logs import Logs 

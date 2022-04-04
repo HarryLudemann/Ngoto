@@ -51,13 +51,14 @@ class Plugin(Plugin):
         }
         return context
 
-    def main(self): # given CLT obj
+    def main(self, logger):
         target = interface.get_input("Enter host IP: ", '[Portscanner]', '')
         if target in ['b', 'back']: return {}
         timeout = interface.get_input("How many seconds the socket is going to wait until timeout: ", '[Portscanner]', '')
         if timeout == ['b', 'back']: return {}
         start_range, end_range = interface.get_input("Specify port range eg 50-100: ", '[Portscanner]', '').split('-')
         interface.output("Please wait scanning ports...")
+        logger.info(f'[Portscanner] Scanned ports {start_range}-{end_range}')
         return self.get_context(target, timeout, start_range, end_range)
 
     def print_info(self, context, tables):

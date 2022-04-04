@@ -1,5 +1,5 @@
 # contains function to handle workplace commands
-from ngoto.commands.command import Command
+from ngoto.util.command import Command  
 from ngoto.util import interface, Workplace
 from ngoto import constants as const
 import os

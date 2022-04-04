@@ -3,7 +3,7 @@
 
 
 from ngoto.util import Plugin
-from ngoto.util import interface
+from ngoto.util import interface, Logging
 import requests, os, webbrowser
 
 class Plugin(Plugin):
@@ -45,6 +45,7 @@ class Plugin(Plugin):
     req_modules: list = []
     req_apis: list = []
     root: Node = None # Root Node
+    logger: Logging = None
 
     
     def load_nodes(self):
@@ -74,22 +75,28 @@ class Plugin(Plugin):
             interface.output(f'[bold]{str(index + 1)}. [cyan]' + child.name + '[/cyan][/bold]', True)
             child_count = index
         print('\n')
-        option = interface.get_input('', '')
-        if option not in ['b', 'back', '0', 'q']: 
+        option = interface.get_input()
+        if option in ['b', 'back', '0', 'q']: # move back in dir
+            if node.has_parent:
+                self.run_tree(node.parent)
+            else:
+                pass # stop
+        elif option.isdigit(): 
             if int(option) <= child_count + 1:
                 sel_child = node.get_child(int(option)-1)
                 if sel_child.type == 'folder':
                     self.run_tree(sel_child)
                 else:
+                    self.logger.info('[OSINT Framework] Opening url' + sel_child.url)
                     webbrowser.open(sel_child.url)
                     self.run_tree(node)
             else: # option out of bounds
                 interface.output('Option out of bounds')
-        else: # move back in dir
-            if node.has_parent:
-                self.run_tree(node.parent)
-            else:
-                pass # stop
+                self.logger.error('[OSINT Framework] Option out of bounds')
+                self.run_tree(node)
+        else:
+            self.logger.error('[OSINT Framework] Invalid option')
+            interface.output('Invalid option')
 
 
     # Returns dict of acquired information, given desired information
@@ -97,9 +104,14 @@ class Plugin(Plugin):
         return {}
 
     # main function to handle input, then calls and return get_context method
-    def main(self):
+    def main(self, logger):
+        self.logger = logger
+        logger.info('[OSINT Framework] Starting OSINT Framework')
+        logger.debug('[OSINT Framework] Loading Nodes')
         root = self.load_nodes()
+        logger.debug('[OSINT Framework] Showing Tree')
         self.run_tree(root)
+        logger.info('[OSINT Framework] Exited OSINT Framework')
         return {}
 
     # given context of information prints information

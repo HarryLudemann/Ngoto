@@ -3,19 +3,18 @@ __version__ = '0.0.20'
 __license__ = 'GPLv3' 
 __copyright__ = 'Copyright of Harry Ludemann 2021'
 
-from ngoto.util import Node
+from ngoto.util import Node, Logging
 from ngoto import constants as const
 import os
 
 class NgotoBase:
     """ Main abstract class, contains api info and tree information """
     curr_pos: Node = None # current position in plugin tree
+    logger: Logging
 
-    def getCurrentNode(self) -> Node:
-        """ returns current node """
-        if not self.curr_pos:
-            self.curr_pos = self.load_plugins(Node('root'), const.plugin_path)
-        return self.curr_pos
+    def setLoggerLevel(self, level: str) -> None:
+        """ Set logger level """
+        self.logger.setLevel(level)
 
     def load_plugins(self, curr_node: Node, file_path: str) -> Node:
         """ Recursive function to traverse plugin directory adding each folder as node to tree and each plugin to node"""

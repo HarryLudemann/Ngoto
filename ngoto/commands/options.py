@@ -1,5 +1,5 @@
-# contains function to show options
-from ngoto.commands.command import Command
+# contains function to show options 
+from ngoto.util.command import Command 
 from ngoto.util import interface
 import os
 
