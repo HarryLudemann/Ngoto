@@ -5,9 +5,16 @@ sys.path.append(
 
 from ngoto.util import Logging
 
-def test_logger():
+def test_logger_add():
+    """ Test logger by adding debug message and checking in logs"""
     logger: Logging = Logging()
     logger.setLevel('CRITICAL')
     logger.debug('debug')
-    print(repr(logger.get_log()))
     assert(logger.get_log() == '\n\x1b[0m\x1b[94m[DEBUG]debug\x1b[0m\n')
+
+def test_logger_level():
+    """ Checks logger if on lower level message is not in log"""
+    logger: Logging = Logging()
+    logger.setLevel('DEBUG')
+    logger.error('info')
+    assert(logger.get_log().strip() == '\x1b[0m')
