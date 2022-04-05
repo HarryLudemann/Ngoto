@@ -7,7 +7,7 @@ __license__ = 'GPLv3'
 __copyright__ = 'Copyright of Harry Ludemann 2022'
 
 from ngoto.util import interface, Node, Logging
-from ngoto.instances.ngotoBase import NgotoBase 
+from ngoto.util.ngotoBase import NgotoBase  
 from ngoto.commands import *
 from ngoto import constants as const
 
@@ -45,7 +45,7 @@ class CLT(NgotoBase):
 
     def main(self) -> None:  
         """ Main loop of CLT """  
-        option = interface.get_input().split()
+        option = interface.get_input('\n[Ngoto] > ').split()
         if not option:
             pass
         elif (isDigit := option[0].isdigit()) and (num := int(option[0])-1) < self.curr_pos.num_children: # move into folder

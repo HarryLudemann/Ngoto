@@ -1,6 +1,5 @@
 # contains function to exit program
 from ngoto.util.command import Command 
-from ngoto.util import interface
 import sys
 
 class Exit(Command):
@@ -11,6 +10,6 @@ class Exit(Command):
         return ["q", "exit", "0"]
 
     def performAction(self, *args):
-        print(f"{interface.bcolors.ENDC}") # reset colors
         args[2].info("Exiting ngoto")
+        args[2].debug(f'Exiting ngoto', program='Exit')
         sys.exit()

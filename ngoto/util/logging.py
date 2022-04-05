@@ -1,57 +1,63 @@
 from ngoto.util import interface
+from rich.style import Style
+from rich.table import Table
+import time
 
 class Logging():
-    levels: list = ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']
-    level: int = 2 # position in levels of selected level
-    log: str = f'\n{interface.bcolors.ENDC}' # current log
+    log: str = '\n' # current log
+    table: Table = None
 
-    def __init__(self, level: str = 'INFO'):
-        self.setLevel(level)
+    title_style = Style(color="blue", blink=True, bold=True)
+    border_style = Style(color="black", blink=True, bold=True)
+    header_style = Style(color="black", blink=True, bold=True)
+    
+    danger_style = Style(color="red", blink=True, bold=True)
+    success_style = Style(color="green", blink=True, bold=True)
+    warning_style = Style(color="yellow", blink=True, bold=True)
+    debug_style = Style(color="blue", blink=True, bold=True)
 
-    def setLevel(self, level: str) -> None:
-        if level in self.levels:
-            self.level = self.levels.index(level) + 1
+    def __init__(self) -> None:
+        self.table = Table(title="Ngoto Logs", title_style=self.title_style, border_style = self.border_style)   
+        self.table.add_column("Time", justify="center", header_style=self.header_style)
+        self.table.add_column("Level", justify="center", header_style=self.header_style)
+        self.table.add_column("Program", justify="center", header_style=self.header_style)
+        self.table.add_column("Message", justify="left", header_style=self.header_style)
 
-    def getLevel(self) -> str:
-        return self.level
+    def get_log(self) -> Table:
+        return self.table
 
-    def get_log(self, lines: int = -1) -> str:
-        if lines == -1:
-            return self.log
-        # if less then lines in lines, return all
-        if lines < len((split_log := self.log.split('\n'))):
-            return self.log
-        else:
-            return '\n'.join(split_log[-lines:])
+    def print_log(self) -> None:
+        interface.output(self.table)
 
-    def logging_print(self, msg: str, level: int) -> None:
+    def logging_print(self, msg: str, level: int, program:str = '') -> None:
+        # add row
         if level == 1: # debug
-            self.log += f'{interface.bcolors.OKBLUE}[DEBUG]{msg}{interface.bcolors.ENDC}\n'
+            self.log += f'[DEBUG]{msg}\n'
+            self.table.add_row(time.strftime("%H:%M:%S"), 'DEBUG', program, msg, style=self.debug_style)
         elif level == 2: # info
-            self.log += f'{interface.bcolors.OKGREEN}[INFO]{msg}{interface.bcolors.ENDC}\n'
+            self.log += f'[INFO]{msg}\n'
+            self.table.add_row(time.strftime("%H:%M:%S"), 'INFO', program, msg, style=self.success_style)
         elif level == 3: # warning 
-            self.log += f'{interface.bcolors.WARNING}[WARNING]{msg}{interface.bcolors.ENDC}\n'
+            self.log += f'[WARNING]{msg}\n'
+            self.table.add_row(time.strftime("%H:%M:%S"), 'WARNING', program, msg, style=self.warning_style)
         elif level == 4: # error
-            self.log += f'{interface.bcolors.FAIL}[ERROR]{msg}{interface.bcolors.ENDC}\n'
+            self.log += f'[ERROR]{msg}\n'
+            self.table.add_row(time.strftime("%H:%M:%S"), 'ERROR', program, msg, style=self.danger_style)
         elif level == 5: # critical
-            self.log += f'{interface.bcolors.FAIL}[CRITICAL]{msg}{interface.bcolors.ENDC}\n'
+            self.log += f'[CRITICAL]{msg}\n'
+            self.table.add_row(time.strftime("%H:%M:%S"), 'CRITICAL', program, msg, style=self.danger_style)
 
-    def debug(self, msg: str) -> None:
-        if self.level >= 1:
-            self.logging_print(msg, 1)
+    def debug(self, msg: str, program: str = '') -> None:
+        self.logging_print(msg, 1, program)
     
-    def info(self, msg: str) -> None:
-        if self.level >= 2:
-            self.logging_print(msg, 2)
+    def info(self, msg: str, program: str = '') -> None:
+        self.logging_print(msg, 2, program)
     
-    def warning(self, msg: str) -> None:
-        if self.level >= 3:
-            self.logging_print(msg, 3)
+    def warning(self, msg: str, program: str = '') -> None:
+        self.logging_print(msg, 3, program)
     
-    def error(self, msg: str) -> None:
-        if self.level >= 4:
-            self.logging_print(msg, 4)
+    def error(self, msg: str, program: str = '') -> None:
+        self.logging_print(msg, 4, program)
     
-    def critical(self, msg: str) -> None:
-        if self.level >= 5:
-            self.logging_print(msg, 5)
+    def critical(self, msg: str, program: str = '') -> None:
+        self.logging_print(msg, 5, program)

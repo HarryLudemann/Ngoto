@@ -70,9 +70,9 @@ class Plugin(Plugin):
     def run_tree(self, node):
         # clear screen
         child_count: str = 0
-        interface.output('[bold]0. Exit[/bold]', True)
+        interface.output('0. Exit')
         for index, child in enumerate(node.get_children()):
-            interface.output(f'[bold]{str(index + 1)}. [cyan]' + child.name + '[/cyan][/bold]', True)
+            interface.output(f'{str(index + 1)}. ' + child.name)
             child_count = index
         print('\n')
         option = interface.get_input()
@@ -87,15 +87,15 @@ class Plugin(Plugin):
                 if sel_child.type == 'folder':
                     self.run_tree(sel_child)
                 else:
-                    self.logger.info('[OSINT Framework] Opening url' + sel_child.url)
+                    self.logger.info('Opening url' + sel_child.url, program='OSINT Framework')
                     webbrowser.open(sel_child.url)
                     self.run_tree(node)
             else: # option out of bounds
                 interface.output('Option out of bounds')
-                self.logger.error('[OSINT Framework] Option out of bounds')
+                self.logger.warning('Option out of bounds', program='OSINT Framework')
                 self.run_tree(node)
         else:
-            self.logger.error('[OSINT Framework] Invalid option')
+            self.logger.warning('Invalid option', program='OSINT Framework')
             interface.output('Invalid option')
 
 
@@ -106,12 +106,12 @@ class Plugin(Plugin):
     # main function to handle input, then calls and return get_context method
     def main(self, logger):
         self.logger = logger
-        logger.info('[OSINT Framework] Starting OSINT Framework')
-        logger.debug('[OSINT Framework] Loading Nodes')
+        logger.info('Starting OSINT Framework', program='OSINT Framework')
+        logger.debug('Loading Nodes', program='OSINT Framework')
         root = self.load_nodes()
-        logger.debug('[OSINT Framework] Showing Tree')
+        logger.debug('Showing Tree', program='OSINT Framework')
         self.run_tree(root)
-        logger.info('[OSINT Framework] Exited OSINT Framework')
+        logger.info('Exited OSINT Framework', program='OSINT Framework')
         return {}
 
     # given context of information prints information

@@ -20,5 +20,6 @@ class Plugins(Command):
         return ['p', 'plugins']
 
     def performAction(self, *args):
+        args[2].debug(f'Checking plugins modules', program='Plugins')
         self.check_modules(args[0])
         return args[0]

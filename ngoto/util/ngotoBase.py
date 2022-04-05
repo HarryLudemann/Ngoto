@@ -1,14 +1,14 @@
 __author__ = 'Harry Ludemann'
 __version__ = '0.0.20'
 __license__ = 'GPLv3' 
-__copyright__ = 'Copyright of Harry Ludemann 2021'
+__copyright__ = 'Copyright of Harry Ludemann 2022'
 
 from ngoto.util import Node, Logging
 from ngoto import constants as const
 import os
 
 class NgotoBase:
-    """ Main abstract class, contains api info and tree information """
+    """ Base ngoto class for implementations of ngoto """
     curr_pos: Node = None # current position in plugin tree
     logger: Logging
 

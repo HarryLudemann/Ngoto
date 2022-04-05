@@ -15,4 +15,5 @@ class OpenFolder(Command):
         pos.set_parent(args[0])
         os.system('cls' if os.name in ('nt', 'dos') else 'clear')
         interface.options(pos)
+        args[2].debug(f'Opening folder {pos.get_name()}', program='OpenFolder')
         return pos

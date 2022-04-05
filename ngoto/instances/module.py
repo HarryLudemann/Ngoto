@@ -6,7 +6,7 @@ __license__ = 'GPLv3'
 __copyright__ = 'Copyright of Harry Ludemann 2022'
 
 from ngoto.util import Node, Plugin
-from ngoto.instances.ngotoBase import NgotoBase 
+from ngoto.util.ngotoBase import NgotoBase 
 
 class Module(NgotoBase):
     """ Module class, contains Module specific methods """

@@ -13,6 +13,9 @@ class Node:
     def __str__(self):
         return self.name
 
+    def get_name(self):
+        return self.name
+
     def add_child(self, child): # given Node obj
         self.children.append(child)
     def get_children(self) -> list:

@@ -12,15 +12,19 @@
     
 
 # Features:
+* Pre Installed Plugins
 * Easily create/add plugins.
 * Use as command line tool or as module.
 * Easily create/store received data into workplaces/databases
 
-# Command line tool commands:
+# Commands:
     o/options                   --  Returns plugin options
     c/commands                  --  Returns this list of commands
     cls/clear                   --  Clear console
     back                        --  back out of plugin
+    r/restart                   --  Restart Ngoto (Windows Only)
+    paths                       --  Check paths for plugins wp exist
+    l/logs                      --  Show Logs
     0/exit                      --  closes program
 
     wp/workshop create (NAME)   --  Creates (NAME) workplace
@@ -31,25 +35,30 @@
 ## Using as Command line tool:
 #### 1. Clone Repo:
 ```
-git clone https://github.com/HarryLudemann/Hazzah-OSINT
+git clone https://github.com/HarryLudemann/Ngoto
 ```
 
-#### 2. Run
-Run the main.py script, which will bring you to the following:
+#### 2. Pip Install Rich:
+```
+pip install rich
+```
+
+#### 4. Run
+Run 'python/python3 main.py' script, which will bring you to the following:
 ```python
- _   _             _
-| \ | |           | |
-|  \| | __ _  ___ | |_ ___
-| . ` |/ _` |/ _ \| __/ _ \
-| |\  | (_| | (_) | || (_) |
-|_| \_|\__, |\___/ \__\___/
-        __/ |
-        |___/
+ ██████   █████                    █████
+░░██████ ░░███                    ░░███
+ ░███░███ ░███   ███████  ██████  ███████    ██████ 
+ ░███░░███░███  ███░░███ ███░░███░░░███░    ███░░███
+ ░███ ░░██████ ░███ ░███░███ ░███  ░███    ░███ ░███
+ ░███  ░░█████ ░███ ░███░███ ░███  ░███ ███░███ ░███
+ █████  ░░█████░░███████░░██████   ░░█████ ░░██████ 
+░░░░░    ░░░░░  ░░░░░███ ░░░░░░     ░░░░░   ░░░░░░  
+                ███ ░███
+               ░░██████
 
-
-
-0. Exit
 1. OSINT/
-2. Port Scanner
+
+[Ngoto] > 
 ```
 

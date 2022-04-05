@@ -1,6 +1,6 @@
 # contains function open plugin
 from ngoto.util.command import Command 
-from ngoto.util import interface, Table
+from ngoto.util import interface
 import os
 
 class OpenPlugin(Command):
@@ -14,8 +14,9 @@ class OpenPlugin(Command):
         os.system('cls' if os.name in ('nt', 'dos') else 'clear')
         plugin = args[0].get_plugin( int(args[1][1]) - args[0].num_children - 1) # get chosen plugin
         if context := plugin.main(args[2]): # if context print resulting plugins information
-            plugin.print_info(context, Table()) 
+            plugin.print_info(context) 
         else: # if a plugin that returns no context print options
             os.system('cls' if os.name in ('nt', 'dos') else 'clear')
             interface.options(args[0])
+        args[2].debug(f'Opening plugin {plugin.get_name()}', program='OpenPlugin')
         return args[0]

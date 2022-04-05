@@ -12,6 +12,7 @@ class Paths(Command):
         return ['paths']
 
     def performAction(self, *args):
+        args[2].debug(f'Checking paths', program='Paths')
         if not exists(const.workplace_path):
             os.mkdir(const.workplace_path)
         if not exists(const.plugin_path):

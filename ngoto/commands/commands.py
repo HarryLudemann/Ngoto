@@ -13,4 +13,5 @@ class Commands(Command):
     def performAction(self, *args):
         os.system('cls' if os.name in ('nt', 'dos') else 'clear')
         interface.commands() 
+        args[2].debug(f'Showing commands', program='Commands')
         return args[0]

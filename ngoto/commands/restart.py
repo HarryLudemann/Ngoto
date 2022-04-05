@@ -11,6 +11,7 @@ class Restart(Command):
         return ["restart", "r", "&"]
 
     def performAction(self, *args):
+        args[2].debug(f'Restarting clt', program='Restart')
         args[2].info("Restarting ngoto")
         os.system("python main.py") # restart script
         exit() # exit this script

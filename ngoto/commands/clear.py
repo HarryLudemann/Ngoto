@@ -12,4 +12,5 @@ class Clear(Command):
 
     def performAction(self, *args):
         os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
+        args[2].debug(f'Clearing screen', program='Clear')
         return args[0]
