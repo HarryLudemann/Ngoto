@@ -10,9 +10,3 @@ def test_logger_add():
     logger: Logging = Logging()
     logger.debug('debug')
     assert(logger.get_log() == '\n\x1b[0m\x1b[94m[DEBUG]debug\x1b[0m\n')
-
-def test_logger_level():
-    """ Checks logger if on lower level message is not in log"""
-    logger: Logging = Logging()
-    logger.error('info')
-    assert(logger.get_log() == '\x1b[0m')
