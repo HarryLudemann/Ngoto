@@ -7,14 +7,14 @@ class Logging():
     log: str = '\n' # current log
     table: Table = None
 
-    title_style = Style(color="blue", blink=True, bold=True)
-    border_style = Style(color="black", blink=True, bold=True)
-    header_style = Style(color="black", blink=True, bold=True)
+    title_style = Style(color="blue", blink=False, bold=True)
+    border_style = Style(color="black", blink=False, bold=True)
+    header_style = Style(color="black", blink=False, bold=True)
     
-    danger_style = Style(color="red", blink=True, bold=True)
-    success_style = Style(color="green", blink=True, bold=True)
-    warning_style = Style(color="yellow", blink=True, bold=True)
-    debug_style = Style(color="blue", blink=True, bold=True)
+    danger_style = Style(color="red", blink=False, bold=True)
+    success_style = Style(color="green", blink=False, bold=True)
+    warning_style = Style(color="yellow", blink=False, bold=True)
+    debug_style = Style(color="blue", blink=False, bold=True)
 
     def __init__(self) -> None:
         self.table = Table(title="Ngoto Logs", title_style=self.title_style, border_style = self.border_style)   

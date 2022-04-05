@@ -7,7 +7,7 @@ __author__ = 'Harry Ludemann'
 __version__ = '0.1.0'
 
 console : Console = Console()
-logo_style = Style(color="blue", blink=True, bold=True)
+logo_style = Style(color="blue", blink=False, bold=True)
 exit_style = Style(color="blue", blink=False, bold=True)
 folder_style = Style(color="yellow", blink=False, bold=True)
 plugin_style = Style(color="magenta", blink=False, bold=True)
