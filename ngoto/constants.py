@@ -1,3 +1,3 @@
 
 workplace_path: str = 'configuration/workplace/'
-plugin_path: str = 'configuration/plugin/'
+plugin_path: str = 'ngoto/plugins/'

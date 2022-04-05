@@ -2,7 +2,7 @@
 # Script contains functions to handle the clt input output paired with utils instance class
 
 __author__ = 'Harry Ludemann'
-__version__ = '0.0.20'
+__version__ = '0.0.21'
 __license__ = 'GPLv3' 
 __copyright__ = 'Copyright of Harry Ludemann 2022'
 

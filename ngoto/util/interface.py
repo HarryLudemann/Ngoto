@@ -8,10 +8,10 @@ __version__ = '0.1.0'
 
 console : Console = Console()
 logo_style = Style(color="blue", blink=True, bold=True)
-exit_style = Style(color="blue", blink=True, bold=True)
-folder_style = Style(color="yellow", blink=True, bold=True)
-plugin_style = Style(color="magenta", blink=True, bold=True)
-input_style = Style(color="cyan", blink=True, bold=True)
+exit_style = Style(color="blue", blink=False, bold=True)
+folder_style = Style(color="yellow", blink=False, bold=True)
+plugin_style = Style(color="magenta", blink=False, bold=True)
+input_style = Style(color="cyan", blink=False, bold=True)
 
 def output(output, style=Style()):
     console.print(output, style=style, highlight=False)
