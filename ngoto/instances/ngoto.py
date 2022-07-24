@@ -4,13 +4,26 @@ __license__ = 'GPLv3'
 __copyright__ = 'Copyright of Harry Ludemann 2022'
 
 from ngoto.util import Node, Logging
-from ngoto import constants as const
 import os
+from sys import platform
+from ngoto import constants as const
 
 class NgotoBase:
     """ Base ngoto class for implementations of ngoto """
     curr_pos: Node = None # current position in plugin tree
     logger: Logging
+    os: str = None # eg 'Linux', 'Windows', 'MacOS'
+
+    def __init__(self):
+        if platform == "linux" or platform == "linux2":
+            self.os = "Linux"
+        elif platform == "darwin":
+            self.os = "MacOS"
+        elif platform == "win32":
+            self.os = "Windows"
+
+        self.curr_pos = self.load_plugins(Node('root'), const.plugin_path) # load plugins
+        self.logger = Logging()
 
     def setLoggerLevel(self, level: str) -> None:
         """ Set logger level """
@@ -22,10 +35,10 @@ class NgotoBase:
             if file.endswith(".py"):    # if python script
                 mod = __import__(file_path.replace('/', '.') + file[:-3], fromlist=['Plugin'])
                 plugin = getattr(mod, 'Plugin')()
-                curr_node.add_plugin( plugin )
+                if self.os in plugin.os:
+                    curr_node.add_plugin( plugin )
             elif '__pycache__' not in file: # if folder
                 new_node = Node(file + '/') # create node of folder
                 new_node = self.load_plugins(new_node, file_path + file + '/') # add children to node
                 curr_node.add_child( new_node )
         return curr_node
-

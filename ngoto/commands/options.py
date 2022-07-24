@@ -8,7 +8,7 @@ class Options(Command):
         return "Command to show options"
 
     def getActions(self):
-        return ['o', 'options']
+        return ['o', 'options', 'ls']
 
     def performAction(self, *args):
         os.system('cls' if os.name in ('nt', 'dos') else 'clear')

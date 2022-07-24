@@ -6,34 +6,34 @@ __version__ = '0.0.21'
 __license__ = 'GPLv3' 
 __copyright__ = 'Copyright of Harry Ludemann 2022'
 
-from ngoto.util import interface, Node, Logging
-from ngoto.util.ngotoBase import NgotoBase  
-from ngoto.commands import *
+import importlib
+from ngoto.util import interface
+from ngoto.instances.ngoto import NgotoBase  
 from ngoto import constants as const
+from ngoto.commands import *
+import os
 
 class CLT(NgotoBase):
     """ Command line tool class, containing CLT specifc methods """
     commands = []
 
     def __init__(self):
-        """ Instansiate and loads commands, plugins and logger """
-        self.commands = [
-            Commands(),
-            Clear(),
-            Options(),
-            Back(),
-            Plugins(),
-            OpenPlugin(),
-            OpenFolder(),
-            Logs(),
-            Exit(),
-            Paths(),
-            Restart(),
-            WP(),
-        ]
-        self.curr_pos = self.load_plugins(Node('root'), const.plugin_path) # load plugins
-        self.logger = Logging()
+        super().__init__()
+        self.commands = self.load_commands()
 
+    def load_commands(self) -> list:
+        """ Returns list of instantiated command objects in folder """
+        commands = []
+        # get command file paths
+        command_paths = [c for c in os.listdir(const.command_path) if c.endswith('.py') and not c.startswith('__')]
+        for command_path in command_paths:
+            module = const.command_path.replace('/', '.') + '.' + command_path[:-3]
+            mod = importlib.import_module(module)
+            # get module name from path and capitalize first letter to get class name
+            module_name = module.split(".")[2] 
+            class_ = getattr(mod, module_name[0].upper() + module_name[1:])
+            commands.append(class_())
+        return commands
 
     def run_command(self, command: str, options: list = []) -> bool:
         for cmd in self.commands:
@@ -59,6 +59,6 @@ class CLT(NgotoBase):
     def start(self) -> None:
         """ Start CLT """
         self.run_command('clear') # clear screen
-        self.run_command('options') # clear screen
+        self.run_command('options') # options screen
         self.main()
         

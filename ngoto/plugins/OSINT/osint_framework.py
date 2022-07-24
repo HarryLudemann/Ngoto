@@ -46,6 +46,8 @@ class Plugin(Plugin):
     req_apis: list = []
     root: Node = None # Root Node
     logger: Logging = None
+    parameters: list = []
+    os: list = ['Linux', 'Windows', 'MacOS']
 
     
     def load_nodes(self):

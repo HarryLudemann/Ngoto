@@ -5,7 +5,7 @@ from ngoto import constants as const
 import os
 from os.path import exists
 
-class WP(Command):
+class Wp(Command):
     workplace: Workplace = None
 
     # Workplace command method

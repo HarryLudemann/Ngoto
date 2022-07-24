@@ -6,14 +6,11 @@ __license__ = 'GPLv3'
 __copyright__ = 'Copyright of Harry Ludemann 2022'
 
 from ngoto.util import Node, Plugin
-from ngoto.util.ngotoBase import NgotoBase 
+from ngoto.instances.ngoto import NgotoBase 
 from ngoto import constants as const
 
 class Module(NgotoBase):
     """ Module class, contains Module specific methods """
-    def __init__(self):
-        self.curr_pos = self.load_plugins(Node('root'), const.plugin_path) # load pluginsins into tree
-
     def get_plugin(self, name: str, node: Node) -> Plugin:
         """ recursive method given plugins name returns plugin, returns None if not found """
         for plugin in node.get_plugins():

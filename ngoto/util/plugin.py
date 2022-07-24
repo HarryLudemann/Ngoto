@@ -10,8 +10,10 @@ class Plugin(ABC):
     name: str = ''
     version: str = ''
     description: str = ''
-    req_modules: list = []
-    req_apis: list = []
+    req_modules: list = [] # given in the pip install name
+    req_apis: list = [] 
+    parameters: list = [] # for get context
+    os: list = [] # stores working os eg. Windows, Linux, MacOS
 
     def __str__(self) -> str:
         return self.name
