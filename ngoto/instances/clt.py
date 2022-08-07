@@ -7,33 +7,41 @@ __license__ = 'GPLv3'
 __copyright__ = 'Copyright of Harry Ludemann 2022'
 
 import importlib
+import os
+from concurrent.futures import ThreadPoolExecutor
+from time import sleep, time
+from datetime import datetime
 from ngoto.util import interface
 from ngoto.instances.ngoto import NgotoBase  
 from ngoto import constants as const
 from ngoto.commands import *
+from ngoto.tasks import *
 import os
 
 class CLT(NgotoBase):
     """ Command line tool class, containing CLT specifc methods """
     commands = []
+    tasks = []
+    tasks_running = []
 
     def __init__(self):
         super().__init__()
-        self.commands = self.load_commands()
+        self.commands = self.load_from_folder(const.command_path)
+        self.tasks = self.load_from_folder(const.task_path)
 
-    def load_commands(self) -> list:
-        """ Returns list of instantiated command objects in folder """
-        commands = []
+    def load_from_folder(self, folder: str) -> list:
+        """ Loads all py files in folder as classes except init files, returns list of obj"""
+        files = []
         # get command file paths
-        command_paths = [c for c in os.listdir(const.command_path) if c.endswith('.py') and not c.startswith('__')]
-        for command_path in command_paths:
-            module = const.command_path.replace('/', '.') + '.' + command_path[:-3]
+        files_paths = [c for c in os.listdir(folder) if c.endswith('.py') and not c.startswith('__')]
+        for files_path in files_paths:
+            module = folder.replace('/', '.') + '.' + files_path[:-3]
             mod = importlib.import_module(module)
             # get module name from path and capitalize first letter to get class name
             module_name = module.split(".")[2] 
             class_ = getattr(mod, module_name[0].upper() + module_name[1:])
-            commands.append(class_())
-        return commands
+            files.append(class_()) 
+        return files
 
     def run_command(self, command: str, options: list = []) -> bool:
         for cmd in self.commands:
@@ -43,8 +51,8 @@ class CLT(NgotoBase):
                 return True
         return False
 
-    def main(self) -> None:  
-        """ Main loop of CLT """  
+    def clt(self):
+        """ CLT loop"""
         option = interface.get_input('\n[Ngoto] > ').split()
         if not option:
             pass
@@ -54,7 +62,28 @@ class CLT(NgotoBase):
             option = ['openP', option[0]]
         if option != [] and not self.run_command(option[0], option): # check in commands
             interface.output("Unknown command")
-        self.main()
+        self.clt()
+
+    def main(self) -> None:  
+        """ Main loop """ 
+        with ThreadPoolExecutor(max_workers=3) as executor: 
+            clt_loop = executor.submit(self.clt)
+            while True:
+                curr_time = time()
+                for task in self.tasks:
+                    if (curr_time - task.last_run) > task.delay:
+                        self.tasks_running.append(executor.submit(task))
+                        task.last_run = curr_time
+                for task in self.tasks_running:
+                    if task.done():
+                        self.logger.info(task.result()[0], task.result()[1])
+                        self.tasks_running.remove(task)
+                if clt_loop.done():
+                    break
+                # sleep 1 second - time taken to run tasks
+                sleep(1 - (time() - curr_time))
+            
+               
 
     def start(self) -> None:
         """ Start CLT """

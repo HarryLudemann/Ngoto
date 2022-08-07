@@ -1,3 +1,4 @@
 pytest
 rich
-Scrapy
+pypiwin32
+pycrypto

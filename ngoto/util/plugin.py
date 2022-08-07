@@ -35,11 +35,6 @@ class Plugin(ABC):
         return success
 
     @abstractmethod  
-    def create_table(self):
-        """ function that returns string of sqlite query to create appropriate table """
-        pass
-
-    @abstractmethod  
     def get_context(self):
         """ function that returns context dict of information, given required args """
         pass

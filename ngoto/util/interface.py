@@ -2,6 +2,8 @@
 from rich import print
 from rich.console import Console
 from rich.style import Style
+import os
+from ngoto.util.node import Node
 
 __author__ = 'Harry Ludemann'
 __version__ = '0.1.0'
@@ -55,14 +57,7 @@ c/commands                  --  Returns this list of commands
 cls/clear                   --  Clear console
 b/back                      --  Back out of plugin or folder
 0/exit                      --  closes program
-
-[Workplace]
-wp/workshop create (NAME)   --  Creates (NAME) workplace
-wp/workshop join (NAME)     --  Joins (NAME) workplace
-wp/workshop delete (NAME)   --  Deletes (NAME) workplace
-wp/workshop leave           --  Leave current workplace
 ''')
 
 
-if __name__ == '__main__':
-    output("test test")
+

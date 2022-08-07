@@ -3,7 +3,6 @@ from ngoto.commands.exit import Exit
 from ngoto.commands.options import Options
 from ngoto.commands.plugins import Plugins
 from ngoto.commands.commands import Commands
-from ngoto.commands.wp import Wp
 from ngoto.commands.back import Back
 from ngoto.commands.paths import Paths
 from ngoto.commands.openPlugin import OpenPlugin

@@ -70,7 +70,7 @@ class Plugin(Plugin):
         return node
 
     def run_tree(self, node):
-        # clear screen
+        os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
         child_count: str = 0
         interface.output('0. Exit')
         for index, child in enumerate(node.get_children()):
