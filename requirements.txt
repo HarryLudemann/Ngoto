@@ -1,4 +1,4 @@
 pytest
 rich
 pycrypto
-pywin32
+pypiwin32
