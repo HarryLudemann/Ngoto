@@ -1,5 +1,6 @@
-from ngoto.util import Plugin
-from ngoto.util import interface, Logging
+from ngoto.core.util.plugin import Plugin
+from ngoto.core.util.logging import Logging
+from ngoto.core.util.interface import output
 from rich.table import Table # used in this plugin
 from rich.style import Style # used in this plugin
 import subprocess
@@ -10,7 +11,7 @@ class Plugin(Plugin):
     description = 'Get stored wifi passwords'
     req_modules: list = []
     req_apis: list = []
-    logger: Logging = None
+    logger = None
     parameters: list = []
     os: list = ['Windows']
 
@@ -46,7 +47,7 @@ class Plugin(Plugin):
                     self.table.add_row(i, "")
             except subprocess.CalledProcessError:
                 self.table.add_row(i, "ENCODING ERROR")
-        interface.output(self.table)
+        output(self.table)
 
     # holds sqlite3 create table query to store information
     def create_table(self):

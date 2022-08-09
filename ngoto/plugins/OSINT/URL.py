@@ -1,7 +1,7 @@
-from inspect import Parameter
 import socket
-from ngoto.util import Plugin
-from ngoto.util import interface, Logging
+from ngoto.core.util.plugin import Plugin
+from ngoto.core.util.logging import Logging 
+from ngoto.core.util.interface import output, get_input
 from rich.table import Table # used in this plugin
 from rich.style import Style # used in this plugin
 
@@ -33,7 +33,7 @@ class Plugin(Plugin):
     # main function to handle input, then calls and return get_context method
     def main(self, logger):
         self.logger = logger
-        target = interface.get_input("[URL] Target URL eg. thaturl.com: ")
+        target = get_input("[URL] Target URL eg. thaturl.com: ")
         if target in ['back', 'b']: return {}
         logger.info(f'Getting IP for URL {target}', program='OSINT URL')
         context = self.get_context(target)
@@ -48,4 +48,4 @@ class Plugin(Plugin):
         for item in context:
             if type(context[item]) != list:
                 self.table.add_row(item, context[item], style=self.title_style)
-        interface.output(self.table)
+        output(self.table)

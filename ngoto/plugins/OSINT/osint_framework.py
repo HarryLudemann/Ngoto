@@ -2,8 +2,9 @@
 # the main method allowing to traverse the load tree
 
 
-from ngoto.util import Plugin
-from ngoto.util import interface, Logging
+from ngoto.core.util.plugin import Plugin
+from ngoto.core.util.logging import Logging
+from ngoto.core.util.interface import output, get_input
 import requests, os, webbrowser
 
 class Plugin(Plugin):
@@ -72,12 +73,12 @@ class Plugin(Plugin):
     def run_tree(self, node):
         os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
         child_count: str = 0
-        interface.output('0. Exit')
+        output('0. Exit')
         for index, child in enumerate(node.get_children()):
-            interface.output(f'{str(index + 1)}. ' + child.name)
+            output(f'{str(index + 1)}. ' + child.name)
             child_count = index
         print('\n')
-        option = interface.get_input()
+        option = get_input()
         if option in ['b', 'back', '0', 'q']: # move back in dir
             if node.has_parent:
                 self.run_tree(node.parent)
@@ -93,12 +94,12 @@ class Plugin(Plugin):
                     webbrowser.open(sel_child.url)
                     self.run_tree(node)
             else: # option out of bounds
-                interface.output('Option out of bounds')
+                output('Option out of bounds')
                 self.logger.warning('Option out of bounds', program='OSINT Framework')
                 self.run_tree(node)
         else:
             self.logger.warning('Invalid option', program='OSINT Framework')
-            interface.output('Invalid option')
+            output('Invalid option')
 
 
     # Returns dict of acquired information, given desired information
@@ -120,8 +121,5 @@ class Plugin(Plugin):
     def print_info(*_):
         pass
 
-    # holds sqlite3 create table query to store information
-    def create_table(_):
-        return ''
 
 

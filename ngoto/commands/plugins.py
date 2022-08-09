@@ -1,6 +1,6 @@
 # contains function to check plugins modules are installed
-from ngoto.util.command import Command 
-from ngoto.util import interface
+from ngoto.core.util.command import Command 
+from ngoto.core.util.interface import output
 
 class Plugins(Command):
     def check_modules(self, node) -> None:
@@ -11,7 +11,7 @@ class Plugins(Command):
         for child in node.get_children():
             self.check_modules(child)
         for module in success:
-            interface.output(module)
+            output(module)
 
     def get_description(self):
         return "Check required modules are installed"

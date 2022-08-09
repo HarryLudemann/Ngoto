@@ -1,5 +1,6 @@
-from ngoto.util import Plugin
-from ngoto.util import interface, Logging
+from ngoto.core.util.plugin import Plugin
+from ngoto.core.util.logging import Logging
+from ngoto.core.util.interface import output
 from rich.table import Table # used in this plugin
 from rich.style import Style # used in this plugin
 
@@ -144,7 +145,7 @@ class Plugin(Plugin):
         self.table.add_column("Last Used", style=self.header_style)
         for password in context["passwords"]:
             self.table.add_row(password.origin_url, password.action_url, password.username_value, password.password_value, password.date_created, password.date_last_used)
-        interface.output(self.table)
+        output(self.table)
 
     # holds sqlite3 create table query to store information
     def create_table(self):

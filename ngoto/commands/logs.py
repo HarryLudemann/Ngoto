@@ -1,6 +1,6 @@
 # contains function to show logs
-from ngoto.util.command import Command
-from ngoto.util import interface
+from ngoto.core.util.command import Command
+from ngoto.core.util.interface import output
 class Logs(Command):
 
     def get_description(self):
@@ -10,4 +10,4 @@ class Logs(Command):
         return ["logs", "l"]
 
     def perform_action(self, *args):
-        interface.output(args[2].get_log())
+        output(args[2].get_log())

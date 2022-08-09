@@ -1,6 +1,6 @@
 # contains function to check plugins modules are installed
-from ngoto.util.command import Command 
-from ngoto import constants as const
+from ngoto.core.util.command import Command 
+from ngoto.core import constants as const
 import os
 from os.path import exists
 

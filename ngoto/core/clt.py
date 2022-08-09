@@ -10,15 +10,15 @@ import importlib
 import os
 from concurrent.futures import ThreadPoolExecutor
 from time import sleep, time
-from ngoto.util import interface
-from ngoto.util.ngoto import NgotoBase  
-from ngoto import constants as const
-from ngoto.commands import *
+from ngoto.core.util.interface import commands, tasks, output, get_input
+from ngoto.core.ngoto import Ngoto  
+from ngoto.core import constants as const
+from ngoto.core.util import command
 from ngoto.tasks import *
 import os
-from ngoto.util.clear import clear_screen
+from ngoto.core.util.clear import clear_screen
 
-class CLT(NgotoBase):
+class CLT(Ngoto):
     """ Command line tool class, containing CLT specifc methods """
     commands = []
     tasks = []
@@ -46,7 +46,7 @@ class CLT(NgotoBase):
     def run_command(self, command: str, options: list = []) -> bool:
         if command.lower() in ['c', 'commands', 'h', 'help']: # display commands
             clear_screen()
-            interface.commands(self.commands)
+            commands(self.commands)
             return True
         elif len(options) == 4 and command.lower() in ['t', 'task']: # toggle tasks
             if command.lower() in ['t', 'tasks'] and options[1] == 'delay':
@@ -61,7 +61,7 @@ class CLT(NgotoBase):
                 return True
         elif command.lower() in ['t', 'task']: # display tasks
             clear_screen()
-            interface.tasks(self.tasks)
+            tasks(self.tasks)
             return True
         for cmd in self.commands:
             if command in cmd.get_actions():
@@ -98,7 +98,7 @@ class CLT(NgotoBase):
 
     def clt(self):
         """ CLT loop"""
-        option = interface.get_input('\n[Ngoto] > ').split()
+        option = get_input('\n[Ngoto] > ').split()
         if not option:
             pass
         elif (isDigit := option[0].isdigit()) and (num := int(option[0])-1) < self.curr_pos.num_children: # move into folder
@@ -106,7 +106,7 @@ class CLT(NgotoBase):
         elif isDigit and  num < self.curr_pos.num_children + self.curr_pos.num_plugins: # open plugin
             option = ['openP', option[0]]
         if option != [] and not self.run_command(option[0], option): # check in commands
-            interface.output("Unknown command")
+            output("Unknown command")
         self.clt()
 
     def main(self) -> None:  

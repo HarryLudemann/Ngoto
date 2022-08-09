@@ -3,12 +3,13 @@ __version__ = '0.0.20'
 __license__ = 'GPLv3' 
 __copyright__ = 'Copyright of Harry Ludemann 2022'
 
-from ngoto.util import Node, Logging
+from ngoto.core.util.node import Node
+from ngoto.core.util.logging import Logging
 import os
 from sys import platform
-from ngoto import constants as const
+from ngoto.core import constants as const 
 
-class NgotoBase:
+class Ngoto:
     """ Base ngoto class for implementations of ngoto """
     curr_pos: Node = None # current position in plugin tree
     logger: Logging

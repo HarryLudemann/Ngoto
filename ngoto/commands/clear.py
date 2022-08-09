@@ -1,6 +1,6 @@
 # contains function to clear screen
-from ngoto.util.command import Command
-from ngoto.util.clear import clear_screen
+from ngoto.core.util.command import Command
+from ngoto.core.util.clear import clear_screen
 
 class Clear(Command):
 

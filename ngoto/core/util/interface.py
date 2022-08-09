@@ -2,7 +2,7 @@
 from rich.console import Console
 from rich.table import Table # used in this plugin
 from rich.style import Style # used in this plugin
-from ngoto.util.clear import clear_screen
+from ngoto.core.util.clear import clear_screen
 
 __author__ = 'Harry Ludemann'
 __version__ = '0.1.0'

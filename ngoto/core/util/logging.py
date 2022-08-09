@@ -1,4 +1,4 @@
-from ngoto.util import interface
+from ngoto.core.util.interface import output
 from rich.style import Style
 from rich.table import Table
 import time
@@ -27,7 +27,7 @@ class Logging():
         return self.table
 
     def print_log(self) -> None:
-        interface.output(self.table)
+        output(self.table)
 
     def logging_print(self, msg: str, level: int, program:str = '') -> None:
         # add row

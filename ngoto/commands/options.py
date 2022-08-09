@@ -1,6 +1,6 @@
 # contains function to show options 
-from ngoto.util.command import Command 
-from ngoto.util import interface
+from ngoto.core.util.command import Command 
+from ngoto.core.util.interface import options
 import os
 
 class Options(Command):
@@ -12,6 +12,6 @@ class Options(Command):
 
     def perform_action(self, *args):
         os.system('cls' if os.name in ('nt', 'dos') else 'clear')
-        interface.options(args[0])
+        options(args[0])
         args[2].debug(f'Showing options', program='Options')
         return args[0]
