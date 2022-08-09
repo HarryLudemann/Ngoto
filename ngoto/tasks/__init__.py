@@ -1,1 +1,0 @@
-from ngoto.tasks.test import Test
