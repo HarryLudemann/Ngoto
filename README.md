@@ -1,5 +1,5 @@
 # Ngoto
-[![](https://github.com/harryludemann/ngoto/workflows/pytests/badge.svg)]()
+[![](https://github.com/HarryLudemann/Ngoto/workflows/pytests/badge.svg)]()
 [![version-1.3](https://img.shields.io/badge/version-0.0.20-blue)](https://github.com/Datalux/Osintgram/releases/tag/1.3)
 [![GPLv3](https://img.shields.io/badge/license-MIT-blue)](https://img.shields.io/badge/license-GPLv3-blue)
 [![Python3](https://img.shields.io/badge/language-Python3-blue)](https://img.shields.io/badge/language-Python3-red)
