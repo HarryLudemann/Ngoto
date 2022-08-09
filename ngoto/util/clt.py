@@ -11,7 +11,7 @@ import os
 from concurrent.futures import ThreadPoolExecutor
 from time import sleep, time
 from ngoto.util import interface
-from ngoto.instances.ngoto import NgotoBase  
+from ngoto.util.ngoto import NgotoBase  
 from ngoto import constants as const
 from ngoto.commands import *
 from ngoto.tasks import *

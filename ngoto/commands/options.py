@@ -8,7 +8,7 @@ class Options(Command):
         return "Show plugins/options"
 
     def get_actions(self):
-        return ['o', 'options', 'ls', 'p']
+        return ['o', 'options', 'ls']
 
     def perform_action(self, *args):
         os.system('cls' if os.name in ('nt', 'dos') else 'clear')
