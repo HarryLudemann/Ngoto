@@ -4,4 +4,3 @@ if __name__ == '__main__':
     from ngoto import CLT
     ngotoCLT = CLT() 
     ngotoCLT.start()
-                

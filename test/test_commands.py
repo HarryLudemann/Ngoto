@@ -11,7 +11,7 @@ from ngoto import CLT
 def test_command_names():
     """Test there are no conflicting command names"""
     # Get list of commands
-    cmd_names: list = [cmd for cmd_list in [cmd.getActions() for cmd in CLT().commands] for cmd in cmd_list]
+    cmd_names: list = [cmd for cmd_list in [cmd.get_actions() for cmd in CLT().commands] for cmd in cmd_list]
     # return if any duplicates are found return false
     assert len(cmd_names) == len(set(cmd_names))
     return len(cmd_names) == len(set(cmd_names))
