@@ -15,7 +15,9 @@
 * Pre Installed Plugins
 * Easily create/add plugins.
 * Use as command line tool or as module.
+* Easily add commands
 * Easily create/store received data into workplaces/databases
+* Tasks that run every set delay
 
 # Commands:
     o/options                   --  Returns plugin options
@@ -26,11 +28,6 @@
     paths                       --  Check paths for plugins wp exist
     l/logs                      --  Show Logs
     0/exit                      --  closes program
-
-    wp/workshop create (NAME)   --  Creates (NAME) workplace
-    wp/workshop join (NAME)     --  Joins (NAME) workplace
-    wp/workshop delete (NAME)   --  Deletes (NAME) workplace
-    wp/workshop leave           --  Leave current workplace
 # Setup:
 ## Using as Command line tool:
 #### 1. Clone Repo:
@@ -39,12 +36,21 @@ git clone https://github.com/HarryLudemann/Ngoto
 ```
 
 #### 2. Pip Install Rich:
+Move into Ngoto directory then:
 ```
-pip install rich
+pip install -r requirements.txt
 ```
 
 #### 4. Run
-Run 'python/python3 main.py' script, which will bring you to the following:
+Run 'python/python3 main.py' script:
+```
+python main.py
+```
+or
+```
+python3 main.py
+```
+Which will bring you to the following:
 ```python
  ██████   █████                    █████
 ░░██████ ░░███                    ░░███
