@@ -10,24 +10,6 @@
 
 <p align="center"><b>This tool is solely for educational purposes. Developer will not be responsible for any misuse of the tool</b></p>    
     
-
-# Features:
-* Pre Installed Plugins
-* Easily create/add plugins.
-* Use as command line tool or as module.
-* Easily add commands
-* Easily create/store received data into workplaces/databases
-* Tasks that run every set delay
-
-# Commands:
-    o/options                   --  Returns plugin options
-    c/commands                  --  Returns this list of commands
-    cls/clear                   --  Clear console
-    back                        --  back out of plugin
-    r/restart                   --  Restart Ngoto (Windows Only)
-    paths                       --  Check paths for plugins wp exist
-    l/logs                      --  Show Logs
-    0/exit                      --  closes program
 # Setup:
 ## Using as Command line tool:
 #### 1. Clone Repo:
@@ -35,10 +17,14 @@
 git clone https://github.com/HarryLudemann/Ngoto
 ```
 
-#### 2. Pip Install Rich:
-Move into Ngoto directory then:
+#### 2. Install Required Modules:
+Move into downloaded Ngoto folder then run:
 ```
 pip install -r requirements.txt
+```
+or
+```
+pip3 install -r requirements.txt
 ```
 
 #### 4. Run
@@ -51,20 +37,84 @@ or
 python3 main.py
 ```
 Which will bring you to the following:
+
+![](.github/LaunchScreen.png)
+
+# Examples:
+
+## Plugin:
 ```python
- ██████   █████                    █████
-░░██████ ░░███                    ░░███
- ░███░███ ░███   ███████  ██████  ███████    ██████ 
- ░███░░███░███  ███░░███ ███░░███░░░███░    ███░░███
- ░███ ░░██████ ░███ ░███░███ ░███  ░███    ░███ ░███
- ░███  ░░█████ ░███ ░███░███ ░███  ░███ ███░███ ░███
- █████  ░░█████░░███████░░██████   ░░█████ ░░██████ 
-░░░░░    ░░░░░  ░░░░░███ ░░░░░░     ░░░░░   ░░░░░░  
-                ███ ░███
-               ░░██████
+from ngoto.util import Plugin, interface
+from rich.table import Table # used in this plugin
 
-1. OSINT/
+class Plugin(Plugin):
+    name = 'IP'
+    version = 0.1
+    description = 'Get IP'
+    req_modules: list = []
+    req_apis: list = []
+    parameters: list = []
+    os: list = ['Linux', 'Windows', 'MacOS']
 
-[Ngoto] > 
+    # Returns dict of acquired information, given desired information
+    def get_context(self, target_url):
+        return {"ip": "192.181.1.1"}
+
+    # main function to handle input, then calls and return get_context method
+    def main(self, logger):
+        target = interface.get_input("[URL] Target URL eg. thaturl.com: ")
+        context = self.get_context(target)
+        return context
+
+    # given context of information prints information
+    def print_info(self, context):
+        table = Table(title="Ngoto URL Plugin")   
+        self.table.add_column("Description", justify="center")
+        self.table.add_column("Value", justify="center")
+        table.add_row("IP", context['ip'])
+        interface.output(self.table)
+```
+## Command:
+```python
+# contains function to clear screen
+from ngoto.util.command import Command
+from ngoto.util.clear import clear_screen
+
+class Clear(Command):
+
+    def get_description(self):
+        return "Clear console"
+
+    def get_actions(self):
+        return ["cls", "clear"]
+
+    def perform_action(self, *args):
+        clear_screen()
+        args[2].debug(f'Clearing screen', program='Clear')
+        return args[0]
 ```
 
+## Task:
+```python
+from ngoto.util.task import Task
+from notifier import notify
+import psutil
+import os
+
+class PCUsage(Task):
+    id = "PCUsage"
+    delay = 60 # show every 60 seconds
+    description = "Notifcation of Computer Usage"
+    last_output = ""
+    iteration = 0 
+    active = True
+
+    def __call__(self) -> bool:
+        """ Returns list of first item return information and second of task id"""
+        ram_usage = psutil.virtual_memory()[2]
+        cpu_usage = psutil.cpu_percent()
+        self.last_output = f"RAM used: {ram_usage}\nCPU used: {cpu_usage}"
+        self.iteration += 1
+        notify("Computer Usage", f"RAM used: {ram_usage}\nCPU used: {cpu_usage}")
+        return [f"RAM used: {ram_usage}\nCPU used: {cpu_usage}", self.id]
+```

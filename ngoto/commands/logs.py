@@ -3,11 +3,11 @@ from ngoto.util.command import Command
 from ngoto.util import interface
 class Logs(Command):
 
-    def getDescription(self):
-        return "Command to prints logs"
+    def get_description(self):
+        return "Show logs"
 
-    def getActions(self):
+    def get_actions(self):
         return ["logs", "l"]
 
-    def performAction(self, *args):
+    def perform_action(self, *args):
         interface.output(args[2].get_log())

@@ -4,13 +4,13 @@ from abc import ABC, abstractmethod
 class Command(ABC):
  
     @abstractmethod
-    def getDescription(self):
+    def get_description(self):
         pass
 
     @abstractmethod
-    def getActions(self):
+    def get_actions(self):
         pass
 
     @abstractmethod
-    def performAction(self, *args):
+    def perform_action(self, *args):
         pass

@@ -5,13 +5,13 @@ import os
 
 class Back(Command):
 
-    def getDescription(self):
-        return "Command to go back"
+    def get_description(self):
+        return "Back out of folder"
 
-    def getActions(self):
+    def get_actions(self):
         return ['b', 'back']
 
-    def performAction(self, *args):
+    def perform_action(self, *args):
         if args[0].has_parent:
             os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
             interface.options(args[0].get_parent())

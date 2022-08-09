@@ -1,16 +1,16 @@
 # contains function to clear screen
 from ngoto.util.command import Command
-import os
+from ngoto.util.clear import clear_screen
 
 class Clear(Command):
 
-    def getDescription(self):
-        return "Command to clear screen"
+    def get_description(self):
+        return "Clear console"
 
-    def getActions(self):
+    def get_actions(self):
         return ["cls", "clear"]
 
-    def performAction(self, *args):
-        os.system('cls' if os.name in ('nt', 'dos') else 'clear') 
+    def perform_action(self, *args):
+        clear_screen()
         args[2].debug(f'Clearing screen', program='Clear')
         return args[0]

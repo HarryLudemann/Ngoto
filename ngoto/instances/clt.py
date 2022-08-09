@@ -10,13 +10,13 @@ import importlib
 import os
 from concurrent.futures import ThreadPoolExecutor
 from time import sleep, time
-from datetime import datetime
 from ngoto.util import interface
 from ngoto.instances.ngoto import NgotoBase  
 from ngoto import constants as const
 from ngoto.commands import *
 from ngoto.tasks import *
 import os
+from ngoto.util.clear import clear_screen
 
 class CLT(NgotoBase):
     """ Command line tool class, containing CLT specifc methods """
@@ -44,12 +44,57 @@ class CLT(NgotoBase):
         return files
 
     def run_command(self, command: str, options: list = []) -> bool:
+        if command.lower() in ['c', 'commands', 'h', 'help']: # display commands
+            clear_screen()
+            interface.commands(self.commands)
+            return True
+        elif len(options) == 4 and command.lower() in ['t', 'task']: # toggle tasks
+            if command.lower() in ['t', 'tasks'] and options[1] == 'delay':
+                self.set_delay(options[2], int(options[3]))
+                return True
+        elif len(options) == 3 and command.lower() in ['t', 'task']: # toggle tasks
+            if command.lower() in ['t', 'task'] and options[1] in ['e', 'enable']:
+                self.enable_task(options[2])
+                return True
+            elif command.lower() in ['t', 'task'] and options[1] in ['d', 'disable']:
+                self.disable_task(options[2])
+                return True
+        elif command.lower() in ['t', 'task']: # display tasks
+            clear_screen()
+            interface.tasks(self.tasks)
+            return True
         for cmd in self.commands:
-            if command in cmd.getActions():
-                if (pos := cmd.performAction(self.curr_pos, options, self.logger)) != None:
+            if command in cmd.get_actions():
+                if (pos := cmd.perform_action(self.curr_pos, options, self.logger)) != None:
                     self.curr_pos = pos
                 return True
         return False
+
+    def enable_task(self, task_id: str) -> None:
+        """ Enable task """
+        for task in self.tasks:
+            if task.id == task_id or task_id == 'all':
+                task.active = True
+                self.logger.info('Enabled task: ' + task.id)
+                return
+        self.logger.info('Task not found: ' + task_id)
+
+    def disable_task(self, task_id: str) -> None:
+        """ Disable task """
+        for task in self.tasks:
+            if task.id == task_id or task_id == 'all':
+                task.active = False
+                self.logger.info('Disabled task: ' + task.id)
+                return
+        self.logger.info('Task not found: ' + task_id)
+
+    def set_delay(self, task_id: str, delay: int) -> None:
+        for task in self.tasks:
+            if task.id == task_id or task_id == 'all':
+                task.delay = delay
+                self.logger.info('Set delay of: ' + task.id + ' to ' + str(delay))
+                return
+        self.logger.info('Task not found: ' + task_id)
 
     def clt(self):
         """ CLT loop"""
@@ -71,7 +116,7 @@ class CLT(NgotoBase):
             while True:
                 curr_time = time()
                 for task in self.tasks:
-                    if (curr_time - task.last_run) > task.delay:
+                    if (curr_time - task.last_run) > task.delay and task.active:
                         self.tasks_running.append(executor.submit(task))
                         task.last_run = curr_time
                 for task in self.tasks_running:
@@ -80,7 +125,6 @@ class CLT(NgotoBase):
                         self.tasks_running.remove(task)
                 if clt_loop.done():
                     break
-                # sleep 1 second - time taken to run tasks
                 sleep(1 - (time() - curr_time))
             
                

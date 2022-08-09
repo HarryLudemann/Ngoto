@@ -11,7 +11,7 @@ class Plugin(Plugin):
     req_apis: list = []
     logger: Logging = None
     parameters: list = []
-    os: list = ['Linux', 'Windows', 'MacOS']
+    os: list = ['Windows']
 
     table: Table = None # used in this plugin 
     title_style = Style(color="blue", blink=False, bold=True) # used in this plugin

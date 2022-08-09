@@ -4,13 +4,13 @@ from ngoto.util import interface
 import os
 
 class Options(Command):
-    def getDescription(self):
-        return "Command to show options"
+    def get_description(self):
+        return "Show plugins/options"
 
-    def getActions(self):
-        return ['o', 'options', 'ls']
+    def get_actions(self):
+        return ['o', 'options', 'ls', 'p']
 
-    def performAction(self, *args):
+    def perform_action(self, *args):
         os.system('cls' if os.name in ('nt', 'dos') else 'clear')
         interface.options(args[0])
         args[2].debug(f'Showing options', program='Options')

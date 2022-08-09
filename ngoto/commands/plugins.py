@@ -13,13 +13,13 @@ class Plugins(Command):
         for module in success:
             interface.output(module)
 
-    def getDescription(self):
-        return "Command to check plugins modules are installed"
+    def get_description(self):
+        return "Check required modules are installed"
 
-    def getActions(self):
+    def get_actions(self):
         return ['p', 'plugins']
 
-    def performAction(self, *args):
+    def perform_action(self, *args):
         args[2].debug(f'Checking plugins modules', program='Plugins')
         self.check_modules(args[0])
         return args[0]

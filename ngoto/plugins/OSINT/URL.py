@@ -49,11 +49,3 @@ class Plugin(Plugin):
             if type(context[item]) != list:
                 self.table.add_row(item, context[item], style=self.title_style)
         interface.output(self.table)
-
-    # holds sqlite3 create table query to store information
-    def create_table(self):
-        return '''
-        CREATE TABLE IF NOT EXISTS url (
-        id integer PRIMARY KEY AUTOINCREMENT,
-        ip text );
-        '''

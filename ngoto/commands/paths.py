@@ -5,16 +5,17 @@ import os
 from os.path import exists
 
 class Paths(Command):
-    def getDescription(self):
-        return "Command to check plugins and workplace paths exist, if not create them."
+    def get_description(self):
+        return "Check paths in for plugins, commands and tasks exists"
 
-    def getActions(self):
+    def get_actions(self):
         return ['paths']
 
-    def performAction(self, *args):
+    def perform_action(self, *args):
         args[2].debug(f'Checking paths', program='Paths')
-        if not exists(const.workplace_path):
-            os.mkdir(const.workplace_path)
         if not exists(const.plugin_path):
             os.mkdir(const.plugin_path)
-        return args[0]
+        if not exists(const.command_path):
+            os.mkdir(const.command_path)
+        if not exists(const.task_path):
+            os.mkdir(const.task_path)
