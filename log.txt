@@ -1,2 +1,0 @@
-15:05:41 DEBUG Clear Clearing screen
-15:05:41 DEBUG Options Showing options

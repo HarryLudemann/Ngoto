@@ -1,7 +1,7 @@
 from ngoto.core.util.task import Task
 
 class BasicPCUsage(Task):
-    id = "PCUsage"
+    id = "BasicPCUsage"
     delay = 30
     description = "RAM and CPU Usage Notifier, Req winsdk module"
     last_output = ""

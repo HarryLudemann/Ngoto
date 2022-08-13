@@ -1,7 +1,7 @@
 from ngoto.core.util.task import Task
 
 class CPUTemp(Task):
-    id = "PCUsage"
+    id = "CPUTemp"
     delay = 30
     description = "CPU Temp"
     last_output = ""
