@@ -28,9 +28,10 @@ class NvidiaGPUUsage(Task):
     def __call__(self) -> bool:
         from ngoto.core.util.notify import notify
         usage = self.get_gpu_memory_map()
+        if len(usage) == 4:
         # if free memory less than 1gb, notify
-        if int(usage[2]) < 2048:
-            notify("Nivida GPU Usage", "Less than 1gb gpu memory free")
-        self.last_output = f"GPU Memory Used: {usage[0]}\nTotal Memory: {usage[1]}\nFree Memory: {usage[2]}\nPower Draw: {usage[3]}"
-        self.iteration += 1
-        return [self.last_output, self.id]
+            if int(usage[2]) < 2048:
+                notify("Nivida GPU Usage", "Less than 1gb gpu memory free")
+            self.last_output = f"GPU Memory Used: {usage[0]}\nTotal Memory: {usage[1]}\nFree Memory: {usage[2]}\nPower Draw: {usage[3]}"
+            self.iteration += 1
+            return [self.last_output, self.id]
