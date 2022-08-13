@@ -6,6 +6,7 @@ __version__ = '0.0.21'
 __license__ = 'GPLv3' 
 __copyright__ = 'Copyright of Harry Ludemann 2022'
 
+from asyncio.log import logger
 import importlib
 import os
 from concurrent.futures import ThreadPoolExecutor
@@ -30,7 +31,7 @@ class CLT(Ngoto):
         self.tasks = self.load_from_folder(const.task_path)
 
     def load_from_folder(self, folder: str) -> list:
-        """ Loads all py files in folder as classes except init files, returns list of obj"""
+        """ Loads all py files in folder as classes except init files, returns list of instansiated obj"""
         files = []
         # get command file paths
         files_paths = [c for c in os.listdir(folder) if c.endswith('.py') and not c.startswith('__')]
@@ -44,24 +45,24 @@ class CLT(Ngoto):
         return files
 
     def run_command(self, command: str, options: list = []) -> bool:
-        if command.lower() in ['c', 'commands', 'h', 'help']: # display commands
+        if command in ['c', 'commands', 'h', 'help']: # display commands
             clear_screen()
             commands(self.commands)
-            return True
-        elif len(options) == 4 and command.lower() in ['t', 'task']: # toggle tasks
-            if command.lower() in ['t', 'tasks'] and options[1] == 'delay':
+            return True 
+        elif len(options) == 4 and command in ['t', 'task']: # toggle tasks
+            if command in ['t', 'tasks'] and options[1] == 'delay':
                 self.set_delay(options[2], int(options[3]))
                 return True
-        elif len(options) == 3 and command.lower() in ['t', 'task']: # toggle tasks
-            if command.lower() in ['t', 'task'] and options[1] in ['e', 'enable']:
+        elif len(options) == 3 and command in ['t', 'task']: # toggle tasks
+            if command in ['t', 'task'] and options[1] in ['e', 'enable']:
                 self.enable_task(options[2])
                 return True
-            elif command.lower() in ['t', 'task'] and options[1] in ['d', 'disable']:
+            elif command in ['t', 'task'] and options[1] in ['d', 'disable']:
                 self.disable_task(options[2])
                 return True
-        elif command.lower() in ['t', 'task']: # display tasks
+        elif command in ['t', 'task']: # display tasks
             clear_screen()
-            tasks(self.tasks)
+            tasks(self.tasks, self.os, self.logger)
             return True
         for cmd in self.commands:
             if command in cmd.get_actions():
@@ -116,7 +117,7 @@ class CLT(Ngoto):
             while True:
                 curr_time = time()
                 for task in self.tasks:
-                    if (curr_time - task.last_run) > task.delay and task.active:
+                    if (curr_time - task.last_run) > task.delay and task.active and self.os in task.os:
                         self.tasks_running.append(executor.submit(task))
                         task.last_run = curr_time
                 for task in self.tasks_running:

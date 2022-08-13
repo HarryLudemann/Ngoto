@@ -76,45 +76,44 @@ class Plugin(Plugin):
 ```
 ## Command:
 ```python
-# contains function to clear screen
-from ngoto.util.command import Command
-from ngoto.util.clear import clear_screen
-
-class Clear(Command):
+from ngoto.core.util.command import Command
+from ngoto.core.util.interface import output
+class Logs(Command):
 
     def get_description(self):
-        return "Clear console"
+        return "Show logs"
 
     def get_actions(self):
-        return ["cls", "clear"]
+        return ["logs", "l"]
 
-    def perform_action(self, *args):
-        clear_screen()
-        args[2].debug(f'Clearing screen', program='Clear')
-        return args[0]
+    def perform_action(self, curr_pos, options, logger):
+        if len(options) == 2:
+            output(logger.get_logs(options[1]))
+        else:
+            output(logger.get_log())
 ```
 
 ## Task:
 ```python
-from ngoto.util.task import Task
-from notifier import notify
+from ngoto.core.util.task import Task
 import psutil
-import os
 
 class PCUsage(Task):
     id = "PCUsage"
-    delay = 60 # show every 60 seconds
-    description = "Notifcation of Computer Usage"
+    delay = 10
+    description = "Windows Notifcation of Computer Usage, Req winsdk module"
     last_output = ""
-    iteration = 0 
+    iteration = 0
     active = True
+    os: list = ['Windows']
 
     def __call__(self) -> bool:
-        """ Returns list of first item return information and second of task id"""
+        from ngoto.core.util.notify import notify
         ram_usage = psutil.virtual_memory()[2]
         cpu_usage = psutil.cpu_percent()
         self.last_output = f"RAM used: {ram_usage}\nCPU used: {cpu_usage}"
         self.iteration += 1
-        notify("Computer Usage", f"RAM used: {ram_usage}\nCPU used: {cpu_usage}")
-        return [f"RAM used: {ram_usage}\nCPU used: {cpu_usage}", self.id]
+        if ram_usage > 80 or cpu_usage > 80:
+            notify("Computer Usage", self.last_output)
+        return [self.last_output, self.id]
 ```
