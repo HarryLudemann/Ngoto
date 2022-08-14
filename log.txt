@@ -1,38 +1,28 @@
-13:16:21 DEBUG Clear Clearing screen
-13:16:21 DEBUG Options Showing options
-13:16:22 INFO BasicPCUsage RAM used: 44.6
+23:17:16 DEBUG Clear Clearing screen
+23:17:16 DEBUG Options Showing options
+23:17:17 INFO BasicPCUsage RAM used: 50.5
 CPU used: 0.0
-13:16:23 INFO NvidiaGPUUsage GPU Memory Used: 191MB
+23:17:18 DEBUG OpenFolder Opening folder Passwords/
+23:17:18 INFO NvidiaGPUUsage GPU Memory Used: 187MB
 Total Memory:  6144MB
-Free Memory:  5799MB
-Power Draw:  6.55
-13:16:32 INFO NvidiaGPUUsage GPU Memory Used: 192MB
-Total Memory:  6144MB
-Free Memory:  5798MB
-Power Draw:  3.82
-13:16:43 INFO NvidiaGPUUsage GPU Memory Used: 192MB
-Total Memory:  6144MB
-Free Memory:  5798MB
-Power Draw:  3.37
-13:16:53 INFO BasicPCUsage RAM used: 44.5
-CPU used: 6.5
-13:16:54 INFO NvidiaGPUUsage GPU Memory Used: 192MB
-Total Memory:  6144MB
-Free Memory:  5798MB
-Power Draw:  5.28
-13:17:03 INFO NvidiaGPUUsage GPU Memory Used: 192MB
-Total Memory:  6144MB
-Free Memory:  5798MB
-Power Draw:  5.32
-13:17:13 INFO NvidiaGPUUsage GPU Memory Used: 192MB
-Total Memory:  6144MB
-Free Memory:  5798MB
-Power Draw:  3.41
-13:17:23 INFO BasicPCUsage RAM used: 44.6
-CPU used: 2.7
-13:17:24 INFO NvidiaGPUUsage GPU Memory Used: 192MB
-Total Memory:  6144MB
-Free Memory:  5798MB
-Power Draw:  3.35
-13:17:30 INFO  Exiting ngoto
-13:17:30 DEBUG Exit Exiting ngoto
+Free Memory:  5803MB
+Power Draw:  10.16
+23:17:19 INFO Chrome Passwords Getting Chrome Passwords
+23:17:19 INFO Chrome Passwords Successfully Got Passwords
+23:17:19 DEBUG OpenPlugin Opening plugin Chrome Passwords
+23:17:20 DEBUG Back Going back to root
+23:17:21 DEBUG OpenFolder Opening folder Passwords/
+23:17:22 INFO Wifi Passwords Getting Wifi Passwords
+23:17:22 INFO Wifi Passwords Successfully Got Wifi Passwords
+23:17:23 DEBUG OpenPlugin Opening plugin Wifi Passwords
+23:17:24 DEBUG Back Going back to root
+23:17:25 DEBUG OpenFolder Opening folder OSINT/
+23:17:26 INFO OSINT Framework Starting OSINT Framework
+23:17:26 DEBUG OSINT Framework Loading Nodes
+23:17:26 DEBUG OSINT Framework Showing Tree
+23:17:27 INFO OSINT Framework Exited OSINT Framework
+23:17:27 DEBUG OpenPlugin Opening plugin OSINT Framework
+23:17:31 INFO OSINT URL Getting IP for URL google.com
+23:17:31 INFO OSINT URL IP for URL google.com is 142.250.71.78
+23:17:31 DEBUG OpenPlugin Opening plugin URL
+23:17:33 DEBUG Back Going back to root

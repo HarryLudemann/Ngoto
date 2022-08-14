@@ -11,7 +11,7 @@ class Row:
         self.message = message
 
 class Logging():
-    log: list[Row] = [] # current log
+    log: list = [] # current log
     table: Table = None
 
     title_style = Style(color="blue", blink=False, bold=True)
@@ -23,7 +23,7 @@ class Logging():
     warning_style = Style(color="yellow", blink=False, bold=True)
     debug_style = Style(color="blue", blink=False, bold=True)
 
-    def __del__(self) -> None:
+    def save_log(self) -> None:
         with open("log.txt", "w") as f:
             for row in self.log:
                 f.write(row.time + " " + row.level + " " + row.program + " " + row.message + "\n")

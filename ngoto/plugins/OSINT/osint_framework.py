@@ -17,7 +17,7 @@ class Plugin(Plugin):
             self.children: list = [] # list of children nodes
             self.parent = None
 
-        def __str__(self) -> str:
+        def get_name(self) -> str:
             return self.name
 
         def set_parent(self, parent) -> None:
@@ -66,8 +66,7 @@ class Plugin(Plugin):
                 loaded_child.set_parent(node)
                 node.add_child( loaded_child )
         else:
-            node = self.Node(name=json['name'], url=json['url'], type=json['type'])
-            
+            node = self.Node(name=json['name'], type=json['type'], url=json['url'])
         return node
 
     def run_tree(self, node):
@@ -75,13 +74,13 @@ class Plugin(Plugin):
         child_count: str = 0
         output('0. Exit')
         for index, child in enumerate(node.get_children()):
-            output(f'{str(index + 1)}. ' + child.name)
+            output(f'{str(index + 1)}. ' + child.get_name())
             child_count = index
         print('\n')
         option = get_input()
         if option in ['b', 'back', '0', 'q']: # move back in dir
             if node.has_parent:
-                self.run_tree(node.parent)
+                self.run_tree(node.get_parent())
             else:
                 pass # stop
         elif option.isdigit(): 
@@ -111,7 +110,13 @@ class Plugin(Plugin):
         self.logger = logger
         logger.info('Starting OSINT Framework', program='OSINT Framework')
         logger.debug('Loading Nodes', program='OSINT Framework')
-        root = self.load_nodes()
+        try:  
+            root = self.load_nodes()
+        except Exception as e:
+            import traceback, sys
+            logger.error(f'Error loading nodes: {e}', program='OSINT Framework')
+            traceback.print_exc(file=sys.stdout)
+            return {}
         logger.debug('Showing Tree', program='OSINT Framework')
         self.run_tree(root)
         logger.info('Exited OSINT Framework', program='OSINT Framework')

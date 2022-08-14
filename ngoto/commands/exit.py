@@ -12,6 +12,7 @@ class Exit(Command):
 
     def perform_action(self, *args):
         output("Exiting...")
+        args[2].save_log()
         args[2].info("Exiting ngoto")
         args[2].debug(f'Exiting ngoto', program='Exit')
         sys.exit()
