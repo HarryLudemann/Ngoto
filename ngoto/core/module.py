@@ -1,10 +1,5 @@
 # still needs to be flushed out
 
-__author__ = 'Harry Ludemann'
-__version__ = '0.0.21'
-__license__ = 'GPLv3' 
-__copyright__ = 'Copyright of Harry Ludemann 2022'
-
 from ngoto.core.util import Node, Plugin
 from ngoto.core.ngoto import Ngoto 
 

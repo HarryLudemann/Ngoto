@@ -1,6 +1,38 @@
-00:37:22 DEBUG Clear Clearing screen
-00:37:22 DEBUG Options Showing options
-00:37:54 INFO BasicPCUsage RAM used: 46.6
+13:16:21 DEBUG Clear Clearing screen
+13:16:21 DEBUG Options Showing options
+13:16:22 INFO BasicPCUsage RAM used: 44.6
 CPU used: 0.0
-00:38:29 INFO  Exiting ngoto
-00:38:29 DEBUG Exit Exiting ngoto
+13:16:23 INFO NvidiaGPUUsage GPU Memory Used: 191MB
+Total Memory:  6144MB
+Free Memory:  5799MB
+Power Draw:  6.55
+13:16:32 INFO NvidiaGPUUsage GPU Memory Used: 192MB
+Total Memory:  6144MB
+Free Memory:  5798MB
+Power Draw:  3.82
+13:16:43 INFO NvidiaGPUUsage GPU Memory Used: 192MB
+Total Memory:  6144MB
+Free Memory:  5798MB
+Power Draw:  3.37
+13:16:53 INFO BasicPCUsage RAM used: 44.5
+CPU used: 6.5
+13:16:54 INFO NvidiaGPUUsage GPU Memory Used: 192MB
+Total Memory:  6144MB
+Free Memory:  5798MB
+Power Draw:  5.28
+13:17:03 INFO NvidiaGPUUsage GPU Memory Used: 192MB
+Total Memory:  6144MB
+Free Memory:  5798MB
+Power Draw:  5.32
+13:17:13 INFO NvidiaGPUUsage GPU Memory Used: 192MB
+Total Memory:  6144MB
+Free Memory:  5798MB
+Power Draw:  3.41
+13:17:23 INFO BasicPCUsage RAM used: 44.6
+CPU used: 2.7
+13:17:24 INFO NvidiaGPUUsage GPU Memory Used: 192MB
+Total Memory:  6144MB
+Free Memory:  5798MB
+Power Draw:  3.35
+13:17:30 INFO  Exiting ngoto
+13:17:30 DEBUG Exit Exiting ngoto

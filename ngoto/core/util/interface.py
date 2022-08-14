@@ -4,9 +4,6 @@ from rich.table import Table # used in this plugin
 from rich.style import Style # used in this plugin
 from ngoto.core.util.clear import clear_screen
 
-__author__ = 'Harry Ludemann'
-__version__ = '0.1.0'
-
 console : Console = Console()
 logo_style = Style(color="blue", blink=False, bold=True)
 exit_style = Style(color="blue", blink=False, bold=True)

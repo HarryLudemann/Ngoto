@@ -9,6 +9,7 @@ class NvidiaGPUUsage(Task):
     iteration = 0
     active = True
     os: list = ['Windows']
+    
 
     def get_gpu_memory_map(self) -> list:
         """ 
@@ -23,15 +24,17 @@ class NvidiaGPUUsage(Task):
                 'nvidia-smi', '--query-gpu=memory.used,memory.total,memory.free,power.draw',
                 '--format=csv,nounits,noheader'
             ])
-        return result.decode('utf-8').strip().split('\n')
+        return result.decode('utf-8').strip().split(',')
 
     def __call__(self) -> bool:
         from ngoto.core.util.notify import notify
         usage = self.get_gpu_memory_map()
-        if len(usage) == 4:
-        # if free memory less than 1gb, notify
+        if len(usage) > 3:
             if int(usage[2]) < 2048:
                 notify("Nivida GPU Usage", "Less than 1gb gpu memory free")
-            self.last_output = f"GPU Memory Used: {usage[0]}\nTotal Memory: {usage[1]}\nFree Memory: {usage[2]}\nPower Draw: {usage[3]}"
+            self.last_output = f"GPU Memory Used: {usage[0]}MB\nTotal Memory: {usage[1]}MB\nFree Memory: {usage[2]}MB\nPower Draw: {usage[3]}"
             self.iteration += 1
             return [self.last_output, self.id]
+        self.last_output = "Failed to get gpu memory map, usage: " + str(usage)
+        self.iteration += 1
+        return [self.last_output, self.id]

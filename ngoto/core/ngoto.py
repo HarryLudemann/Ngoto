@@ -1,7 +1,4 @@
-__author__ = 'Harry Ludemann'
-__version__ = '0.0.20'
-__license__ = 'GPLv3' 
-__copyright__ = 'Copyright of Harry Ludemann 2022'
+
 
 from ngoto.core.util.node import Node
 from ngoto.core.util.logging import Logging

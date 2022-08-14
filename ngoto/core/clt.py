@@ -46,7 +46,6 @@ class CLT(Ngoto):
 
     def run_command(self, command: str, options: list = []) -> bool:
         if command in ['c', 'commands', 'h', 'help']: # display commands
-            clear_screen()
             commands(self.commands)
             return True 
         elif len(options) == 4 and command in ['t', 'task']: # toggle tasks
