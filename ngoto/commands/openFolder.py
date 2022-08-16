@@ -1,9 +1,10 @@
 # contains function open folder
-from ngoto.core.util.command import Command 
+from ngoto.core.util.command import CommandBase
 from ngoto.core.util.interface import options
 import os
 
-class OpenFolder(Command):
+
+class OpenFolder(CommandBase):
     def get_description(self):
         return "Open folder"
 

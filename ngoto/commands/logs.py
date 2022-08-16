@@ -1,7 +1,9 @@
 # contains function to show logs
-from ngoto.core.util.command import Command
+from ngoto.core.util.command import CommandBase
 from ngoto.core.util.interface import output
-class Logs(Command):
+
+
+class Logs(CommandBase):
 
     def get_description(self):
         return "Show logs"

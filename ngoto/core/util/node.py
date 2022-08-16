@@ -2,8 +2,9 @@
 
 class Node:
     """
-    A abstract class used to represent a plugin node, this is used to display and navigate a tree
-    of plugins in the clt version. 
+    A abstract class used to represent a plugin node,
+    this is used to display and navigate a tree
+    of plugins in the clt version.
 
     ...
 
@@ -37,7 +38,7 @@ class Node:
         returns the plugin at the given index
     get_parent() --> Node
         returns the parent of the current node
-    set_parent(parent: Node)   
+    set_parent(parent: Node)
         sets the parent of the current node
     is_parent() --> bool
         returns True if the current node is a parent, False otherwise
@@ -50,9 +51,9 @@ class Node:
     """
     def __init__(self, name):
         self.name = name
-        self.children = [] # list of children nodes
-        self.plugins = [] # List Plugin objs
-        self.parent = None # Parent node
+        self.children = []  # list of children nodes
+        self.plugins = []  # List Plugin objs
+        self.parent = None  # Parent node
 
     def __str__(self) -> str:
         return self.name
@@ -60,23 +61,28 @@ class Node:
     def get_name(self):
         return self.name
 
-    def add_child(self, child) -> None: # given Node 
+    def add_child(self, child) -> None:  # given Node
         self.children.append(child)
+
     def get_children(self) -> list:
         return self.children
-    def get_child(self, index: int): # returns Node obj
+
+    def get_child(self, index: int):  # returns Node obj
         return self.children[index]
 
-    def add_plugin(self, plugin): # given Plugin obj
+    def add_plugin(self, plugin):  # given Plugin obj
         self.plugins.append(plugin)
+
     def get_plugins(self) -> list:
         return self.plugins
-    def get_plugin(self, index): # returns Plugin obj
+
+    def get_plugin(self, index):  # returns Plugin obj
         return self.plugins[index]
 
     def get_parent(self):
-        return self.parent # returns Node
-    def set_parent(self, parent): # given Node
+        return self.parent  # returns Node
+
+    def set_parent(self, parent):  # given Node
         self.parent = parent
 
     @property
@@ -84,8 +90,9 @@ class Node:
         if self.children:
             return True
         return False
+
     @property
-    def has_parent(self) -> bool: 
+    def has_parent(self) -> bool:
         if self.parent:
             return True
         return False
@@ -93,6 +100,7 @@ class Node:
     @property
     def num_children(self) -> int:
         return len(self.children)
+
     @property
     def num_plugins(self) -> int:
         return len(self.plugins)

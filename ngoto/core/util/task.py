@@ -1,6 +1,7 @@
 # Base command class for all tasks
 from abc import ABC, abstractmethod
 
+
 class Task(ABC):
     """
     A abstract class used to represent an Task, a task is run every set delay

@@ -1,11 +1,12 @@
 # script contains abstract class all plugins inherit from and must use
 
 from abc import ABC, abstractmethod
-import logging
 
-class Plugin(ABC):
+
+class PluginBase(ABC):
     """
-    A abstract class used to represent an Plugin, a plugin is a function run once
+    A abstract class used to represent an Plugin,
+    a plugin is a function run once.
 
     ...
 
@@ -25,6 +26,7 @@ class Plugin(ABC):
         the parameters for the plugin main function
     os : list[str]
         the operating systems the plugin is compatible with
+
     Methods
     -------
     get_context() -> dict
@@ -33,28 +35,29 @@ class Plugin(ABC):
         Abstract method to print base information context
     main()
         Abstract method for clt gets user input, retrieves and prints context
-    
+
     """
 
     name: str = ''
     description: str = ''
     version: str = ''
-    req_modules: list = [] # given in the pip install name
-    req_apis: list = [] 
-    parameters: list = [] # for get context
-    os: list = [] # stores working os eg. Windows, Linux, MacOS
+    req_modules: list = []  # given in the pip install name
+    req_apis: list = []
+    parameters: list = []  # for get context
+    os: list = []  # stores working os eg. Windows, Linux, MacOS
 
-    @abstractmethod  
+    @abstractmethod
     def get_context(self):
-        """ function that returns context dict of information, given required args """
+        """ function that returns context dict of information,
+            given required args """
         pass
 
-    @abstractmethod  
+    @abstractmethod
     def print_info(self, context):
         """ given context dictionary, prints results """
         pass
 
-    @abstractmethod 
-    def main(self): 
-        """ Main function to handle input and call get_context method """ 
+    @abstractmethod
+    def main(self):
+        """ Main function to handle input and call get_context method """
         pass

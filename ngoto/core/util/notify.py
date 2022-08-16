@@ -1,18 +1,23 @@
 
-import os,sys,time
+import os
+from re import A
+import sys
+import time
 import subprocess
 import threading
 
+
 # this is not called on the main thread!
 def handle_activated(sender, _):
-    path = os.path.expanduser("~\Documents")
-    subprocess.Popen('explorer "{}"'.format(path))
+    path = os.path.expanduser("~\\Documents")
+    subprocess.Popen('explorer ' + path)
+
 
 def notify(title, message, button_name=None):
     """ Send a windows notification"""
     import winsdk.windows.ui.notifications as notifications
     import winsdk.windows.data.xml.dom as dom
-    #define your notification as
+    # define your notification as
     if button_name:
         tString = f"""
     <toast duration="short">
@@ -42,9 +47,8 @@ def notify(title, message, button_name=None):
         </visual>
     </toast>
     """
-    
 
-    #convert notification to an XmlDocument
+    # convert notification to an XmlDocument
     xDoc = dom.XmlDocument()
     xDoc.load_xml(tString)
     notification = notifications.ToastNotification(xDoc)
@@ -53,19 +57,21 @@ def notify(title, message, button_name=None):
     if button_name:
         notification.add_activated(handle_activated)
 
-    #create notifier
+    # create notifier
     nManager = notifications.ToastNotificationManager
-    #link it to your Python executable (or whatever you want I guess?)
+    # link it to your Python executable (or whatever you want I guess?)
     notifier = nManager.create_toast_notifier(sys.executable)
 
-    #display notification
+    # display notification
     notifier.show(notification)
-    duration = 7 # "short" duration for Toast notifications
+    duration = 7  # "short" duration for Toast notifications
 
     # We have to wait for the results from the notification
-    # If we don't, the program will just continue and maybe even end before a button is clicked
+    # If we don't, the program will just continue and maybe
+    # even end before a button is clicked
     thread = threading.Thread(target=lambda: time.sleep(duration))
     thread.start()
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     notify("Hello", "World", "Click me")

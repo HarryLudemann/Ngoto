@@ -1,8 +1,9 @@
 # contains function to clear screen
-from ngoto.core.util.command import Command
+from ngoto.core.util.command import CommandBase
 from ngoto.core.util.clear import clear_screen
 
-class Clear(Command):
+
+class Clear(CommandBase):
 
     def get_description(self):
         return "Clear console"

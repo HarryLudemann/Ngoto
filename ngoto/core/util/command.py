@@ -1,8 +1,9 @@
 # Base command class for all commands
 from abc import ABC, abstractmethod
 
-class Command(ABC):
- 
+
+class CommandBase(ABC):
+
     @abstractmethod
     def get_description(self):
         pass

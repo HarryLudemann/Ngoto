@@ -1,5 +1,6 @@
 from ngoto.core.util.task import Task
 
+
 class BasicPCUsage(Task):
     id = "BasicPCUsage"
     delay = 30

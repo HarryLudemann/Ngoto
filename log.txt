@@ -1,28 +1,24 @@
-23:17:16 DEBUG Clear Clearing screen
-23:17:16 DEBUG Options Showing options
-23:17:17 INFO BasicPCUsage RAM used: 50.5
+20:17:39 DEBUG Clear Clearing screen
+20:17:39 DEBUG Options Showing options
+20:17:40 INFO BasicPCUsage RAM used: 48.0
 CPU used: 0.0
-23:17:18 DEBUG OpenFolder Opening folder Passwords/
-23:17:18 INFO NvidiaGPUUsage GPU Memory Used: 187MB
+20:17:41 INFO NvidiaGPUUsage GPU Memory Used: 172MB
 Total Memory:  6144MB
-Free Memory:  5803MB
-Power Draw:  10.16
-23:17:19 INFO Chrome Passwords Getting Chrome Passwords
-23:17:19 INFO Chrome Passwords Successfully Got Passwords
-23:17:19 DEBUG OpenPlugin Opening plugin Chrome Passwords
-23:17:20 DEBUG Back Going back to root
-23:17:21 DEBUG OpenFolder Opening folder Passwords/
-23:17:22 INFO Wifi Passwords Getting Wifi Passwords
-23:17:22 INFO Wifi Passwords Successfully Got Wifi Passwords
-23:17:23 DEBUG OpenPlugin Opening plugin Wifi Passwords
-23:17:24 DEBUG Back Going back to root
-23:17:25 DEBUG OpenFolder Opening folder OSINT/
-23:17:26 INFO OSINT Framework Starting OSINT Framework
-23:17:26 DEBUG OSINT Framework Loading Nodes
-23:17:26 DEBUG OSINT Framework Showing Tree
-23:17:27 INFO OSINT Framework Exited OSINT Framework
-23:17:27 DEBUG OpenPlugin Opening plugin OSINT Framework
-23:17:31 INFO OSINT URL Getting IP for URL google.com
-23:17:31 INFO OSINT URL IP for URL google.com is 142.250.71.78
-23:17:31 DEBUG OpenPlugin Opening plugin URL
-23:17:33 DEBUG Back Going back to root
+Free Memory:  5818MB
+Power Draw:  3.75
+20:17:50 DEBUG Options Showing options
+20:17:54 DEBUG OpenFolder Opening folder Passwords/
+20:17:55 INFO Chrome Passwords Getting Chrome Passwords
+20:17:55 WARNING Chrome Passwords Could not get Chrome Passwords, 'list' object has no attribute 'join'
+20:17:55 INFO Chrome Passwords Successfully Got Passwords
+20:17:55 DEBUG OpenPlugin Opening plugin Chrome Passwords
+20:17:57 INFO Chrome Passwords Getting Chrome Passwords
+20:17:57 WARNING Chrome Passwords Could not get Chrome Passwords, 'list' object has no attribute 'join'
+20:17:57 INFO Chrome Passwords Successfully Got Passwords
+20:17:57 DEBUG OpenPlugin Opening plugin Chrome Passwords
+20:18:10 INFO BasicPCUsage RAM used: 48.0
+CPU used: 5.8
+20:18:11 INFO NvidiaGPUUsage GPU Memory Used: 188MB
+Total Memory:  6144MB
+Free Memory:  5802MB
+Power Draw:  3.78

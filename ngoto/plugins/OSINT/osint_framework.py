@@ -2,12 +2,15 @@
 # the main method allowing to traverse the load tree
 
 
-from ngoto.core.util.plugin import Plugin
+from ngoto.core.util.plugin import PluginBase
 from ngoto.core.util.logging import Logging
 from ngoto.core.util.interface import output, get_input
-import requests, os, webbrowser
+import requests
+import os
+import  webbrowser
 
-class Plugin(Plugin):
+
+class Plugin(PluginBase):
     class Node:
         """ Node of each item in OSINT framework tree """
         def __init__(self, name: str, type: str, url: str= None):

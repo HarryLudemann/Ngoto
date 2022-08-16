@@ -1,9 +1,10 @@
 # contains function to exit program
-from ngoto.core.util.command import Command 
-from ngoto.core.util.interface import output 
+from ngoto.core.util.command import CommandBase
+from ngoto.core.util.interface import output
 import sys
 
-class Exit(Command):
+
+class Exit(CommandBase):
     def get_description(self):
         return "Exit program"
 
@@ -14,5 +15,5 @@ class Exit(Command):
         output("Exiting...")
         args[2].save_log()
         args[2].info("Exiting ngoto")
-        args[2].debug(f'Exiting ngoto', program='Exit')
+        args[2].debug('Exiting ngoto', program='Exit')
         sys.exit()
