@@ -1,24 +1,28 @@
-20:17:39 DEBUG Clear Clearing screen
-20:17:39 DEBUG Options Showing options
-20:17:40 INFO BasicPCUsage RAM used: 48.0
+22:31:58 DEBUG Clear Clearing screen
+22:31:58 DEBUG Options Showing options
+22:31:59 INFO BasicPCUsage RAM used: 45.8
 CPU used: 0.0
-20:17:41 INFO NvidiaGPUUsage GPU Memory Used: 172MB
-Total Memory:  6144MB
-Free Memory:  5818MB
-Power Draw:  3.75
-20:17:50 DEBUG Options Showing options
-20:17:54 DEBUG OpenFolder Opening folder Passwords/
-20:17:55 INFO Chrome Passwords Getting Chrome Passwords
-20:17:55 WARNING Chrome Passwords Could not get Chrome Passwords, 'list' object has no attribute 'join'
-20:17:55 INFO Chrome Passwords Successfully Got Passwords
-20:17:55 DEBUG OpenPlugin Opening plugin Chrome Passwords
-20:17:57 INFO Chrome Passwords Getting Chrome Passwords
-20:17:57 WARNING Chrome Passwords Could not get Chrome Passwords, 'list' object has no attribute 'join'
-20:17:57 INFO Chrome Passwords Successfully Got Passwords
-20:17:57 DEBUG OpenPlugin Opening plugin Chrome Passwords
-20:18:10 INFO BasicPCUsage RAM used: 48.0
-CPU used: 5.8
-20:18:11 INFO NvidiaGPUUsage GPU Memory Used: 188MB
-Total Memory:  6144MB
-Free Memory:  5802MB
-Power Draw:  3.78
+22:31:59 DEBUG OpenFolder Opening folder OSINT/
+22:32:00 INFO NvidiaGPUUsage GPU Memory Used: 177MB
+Total Memory: {usage[1]}MB
+Free Memory: {usage[2]}MB
+Power Draw: {usage[3]}
+22:32:02 INFO OSINT URL Getting IP for URL google.com
+22:32:02 INFO OSINT URL IP for URL google.com is 142.250.71.78
+22:32:02 DEBUG OpenPlugin Opening plugin URL
+22:32:04 INFO OSINT Framework Starting OSINT Framework
+22:32:04 DEBUG OSINT Framework Loading Nodes
+22:32:05 DEBUG OSINT Framework Showing Tree
+22:32:06 INFO OSINT Framework Exited OSINT Framework
+22:32:06 DEBUG OpenPlugin Opening plugin OSINT Framework
+22:32:07 DEBUG Back Going back to root
+22:32:08 DEBUG OpenFolder Opening folder Passwords/
+22:32:08 INFO Chrome Passwords Getting Chrome Passwords
+22:32:09 INFO Chrome Passwords Successfully Got Passwords
+22:32:09 DEBUG OpenPlugin Opening plugin Chrome Passwords
+22:32:10 DEBUG Back Going back to root
+22:32:11 DEBUG OpenFolder Opening folder Passwords/
+22:32:11 INFO Wifi Passwords Getting Wifi Passwords
+22:32:11 INFO Wifi Passwords Successfully Got Wifi Passwords
+22:32:13 DEBUG OpenPlugin Opening plugin Wifi Passwords
+22:32:13 DEBUG Back Going back to root
