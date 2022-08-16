@@ -13,5 +13,5 @@ class Clear(CommandBase):
 
     def perform_action(self, *args):
         clear_screen()
-        args[2].debug(f'Clearing screen', program='Clear')
+        args[2].debug('Clearing screen', program='Clear')
         return args[0]
