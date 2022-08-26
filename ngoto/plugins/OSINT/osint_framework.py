@@ -111,7 +111,7 @@ class Plugin(PluginBase):
             output('Invalid option')
 
     # Returns dict of acquired information, given desired information
-    def get_context(_):
+    def get_context(self):
         return {}
 
     # main function to handle input, then calls and return get_context method

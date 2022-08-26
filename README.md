@@ -1,10 +1,12 @@
 # Ngoto
 [![](https://github.com/HarryLudemann/Ngoto/workflows/pytests/badge.svg)]()
+[![Maintainability](https://api.codeclimate.com/v1/badges/08e4dc1f109aaa6c4f75/maintainability)](https://codeclimate.com/github/HarryLudemann/Ngoto/maintainability)
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/HarryLudemann/Ngoto.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/HarryLudemann/Ngoto/context:python)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/HarryLudemann/Ngoto.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/HarryLudemann/Ngoto/alerts/)
 [![version-1.3](https://img.shields.io/badge/version-0.0.20-blue)](https://github.com/Datalux/Osintgram/releases/tag/1.3)
 [![GPLv3](https://img.shields.io/badge/license-MIT-blue)](https://img.shields.io/badge/license-GPLv3-blue)
-[![Python3](https://img.shields.io/badge/language-Python3-blue)](https://img.shields.io/badge/language-Python3-red)
-[![](https://img.shields.io/badge/Built%20with-❤-blue.svg?style=flat-square)]()
 [![platforms](https://img.shields.io/badge/platform-windows%20%7C%20linux-blue)](https://github.com/loseys/Oblivion/)
+
 
 # Warning :warning:
 

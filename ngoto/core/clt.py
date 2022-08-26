@@ -115,7 +115,7 @@ class CLT(Ngoto):
             output("Unknown command")
         self.clt()
 
-    def update_task(self, task, curr_time):
+    def update_task(self, task, curr_time) -> bool:
         if ((curr_time - task.last_run) > task.delay and
                 task.active and self.os in task.os and (
                 curr_time - task.last_run) > task.delay):
