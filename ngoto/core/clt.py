@@ -43,31 +43,34 @@ class CLT(Ngoto):
         return files
 
     def run_command(self, command: str, options: list = []) -> bool:
+        check_commands = True
         if command in ['c', 'commands', 'h', 'help']:  # display commands
             commands(self.commands)
-            return True
+            check_commands = False
         elif len(options) == 4 and command in ['t', 'task']:  # toggle tasks
             if command in ['t', 'tasks'] and options[1] == 'delay':
                 self.set_delay(options[2], int(options[3]))
-                return True
+                check_commands = False
         elif len(options) == 3 and command in ['t', 'task']:  # toggle tasks
             if command in ['t', 'task'] and options[1] in ['e', 'enable']:
                 self.enable_task(options[2])
-                return True
+                check_commands = False
             elif command in ['t', 'task'] and options[1] in ['d', 'disable']:
                 self.disable_task(options[2])
-                return True
+                check_commands = False
         elif command in ['t', 'task']:  # display tasks
             clear_screen()
             tasks(self.tasks, self.os, self.logger)
-            return True
-        for cmd in self.commands:
-            if command in cmd.get_actions():
-                if (pos := cmd.perform_action(
+            check_commands = False
+        if check_commands:
+            for cmd in self.commands:
+                if command in cmd.get_actions() and (pos := cmd.perform_action(
                         self.curr_pos, options, self.logger)):
                     self.curr_pos = pos
-                return True
-        return False
+                    return True
+            return False
+        else:
+            return True
 
     def enable_task(self, task_id: str) -> None:
         """ Enable task """
@@ -112,6 +115,13 @@ class CLT(Ngoto):
             output("Unknown command")
         self.clt()
 
+    def update_task(self, task, curr_time):
+        if ((curr_time - task.last_run) > task.delay and
+                task.active and self.os in task.os and (
+                curr_time - task.last_run) > task.delay):
+            return True
+        return False
+
     def main(self) -> None:
         """ Main loop """
         with ThreadPoolExecutor(max_workers=3) as executor:
@@ -119,10 +129,9 @@ class CLT(Ngoto):
             while True:
                 curr_time = time()
                 for task in self.tasks:
-                    if (curr_time - task.last_run) > task.delay:
-                        if task.active and self.os in task.os:
-                            self.tasks_running.append(executor.submit(task))
-                            task.last_run = curr_time
+                    if self.update_task(task, curr_time):
+                        self.tasks_running.append(executor.submit(task))
+                        task.last_run = curr_time
                 for task in self.tasks_running:
                     if task.done():
                         self.logger.info(task.result()[0], task.result()[1])

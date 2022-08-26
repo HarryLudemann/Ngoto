@@ -35,9 +35,9 @@ class NvidiaGPUUsage(Task):
                 notify("Nivida GPU Usage", "Less than 1gb gpu memory free")
             self.last_output = ''.join([
                 f"GPU Memory Used: {usage[0]}MB",
-                "\nTotal Memory: {usage[1]}MB",
-                "\nFree Memory: {usage[2]}MB",
-                "\nPower Draw: {usage[3]}"])
+                f"\nTotal Memory: {usage[1]}MB",
+                f"\nFree Memory: {usage[2]}MB",
+                f"\nPower Draw: {usage[3]}"])
             self.iteration += 1
             return [self.last_output, self.id]
         self.last_output = "Failed to get gpu memory map, usage: "

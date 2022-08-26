@@ -35,33 +35,33 @@ class Logging():
 
     def convert_level(self, level: str) -> str:
         level = level.upper()
+        result = -1
         if level == "DEBUG":
-            return 1
+            result = 1
         elif level == "INFO":
-            return 2
+            result = 2
         elif level == "WARNING":
-            return 3
+            result = 3
         elif level == "ERROR":
-            return 4
+            result = 4
         elif level == "CRITICAL":
-            return 5
-        else:
-            return -1
+            result = 5
+        return result
 
     def level_style(self, level: str) -> Style:
         level = level.upper()
+        result = self.debug_style
         if level == "DEBUG":
-            return self.debug_style
+            result = self.debug_style
         elif level == "INFO":
-            return self.success_style
+            result = self.success_style
         elif level == "WARNING":
-            return self.warning_style
+            result = self.warning_style
         elif level == "ERROR":
-            return self.danger_style
+            result = self.danger_style
         elif level == "CRITICAL":
-            return self.danger_style
-        else:
-            return self.debug_style
+            result = self.danger_style
+        return result
 
     def get_log(self, level) -> Table:
         self.table = Table(
