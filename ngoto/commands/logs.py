@@ -11,8 +11,9 @@ class Logs(CommandBase):
     def get_actions(self):
         return ["logs", "l"]
 
-    def perform_action(self, _, options, logger):
+    def perform_action(self, pos, options, logger):
         if len(options) == 2:
             output(logger.get_log(options[1]))
         else:
             output(logger.get_log("1"))
+        return pos

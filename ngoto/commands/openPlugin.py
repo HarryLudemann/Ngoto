@@ -20,3 +20,4 @@ class OpenPlugin(CommandBase):
             options(args[0])
 
         args[2].debug(f'Opening plugin {plugin.name}', program='OpenPlugin')
+        return args[0]

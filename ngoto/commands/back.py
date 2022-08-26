@@ -12,14 +12,14 @@ class Back(CommandBase):
     def get_actions(self):
         return ['b', 'back']
 
-    def perform_action(self, *args):
-        if args[0].has_parent:
+    def perform_action(self, pos, _, logger):
+        if pos.has_parent:
             os.system('cls' if os.name in ('nt', 'dos') else 'clear')
-            options(args[0].get_parent())
-            args[2].debug(
-                f'Going back to {args[0].get_parent().get_name()}',
+            options(pos.get_parent())
+            logger.debug(
+                f'Going back to {pos.get_parent().get_name()}',
                 'Back')
-            return args[0].get_parent()
+            return pos.get_parent()
         else:
             output("You are already in root")
-            args[2].debug('Cannot go back, in root dir', program='Back')
+            logger.debug('Cannot go back, in root dir', program='Back')

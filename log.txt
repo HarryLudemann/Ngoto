@@ -1,8 +1,26 @@
-11:46:31 DEBUG Clear Clearing screen
-11:46:32 DEBUG Options Showing options
-11:46:33 INFO BasicPCUsage RAM used: 40.3
+13:18:33 DEBUG Clear Clearing screen
+13:18:33 DEBUG Options Showing options
+13:18:34 INFO BasicPCUsage RAM used: 46.4
 CPU used: 0.0
-11:46:34 INFO NvidiaGPUUsage GPU Memory Used: 1177MB
-Total Memory: {usage[1]}MB
-Free Memory: {usage[2]}MB
-Power Draw: {usage[3]}
+13:18:34 DEBUG OpenFolder Opening folder OSINT/
+13:18:35 INFO NvidiaGPUUsage GPU Memory Used: 398MB
+Total Memory:  6144MB
+Free Memory:  5592MB
+Power Draw:  22.32
+13:18:39 INFO OSINT URL Getting IP for URL google.com
+13:18:40 INFO OSINT URL IP for URL google.com is 142.250.204.14
+13:18:40 DEBUG OpenPlugin Opening plugin URL
+13:18:42 DEBUG Back Going back to root
+13:18:43 DEBUG Options Showing options
+13:18:52 DEBUG Clear Clearing screen
+13:19:04 INFO BasicPCUsage RAM used: 46.3
+CPU used: 1.4
+13:19:05 INFO NvidiaGPUUsage GPU Memory Used: 397MB
+Total Memory:  6144MB
+Free Memory:  5593MB
+Power Draw:  3.17
+13:19:12 DEBUG Clear Clearing screen
+13:19:13 DEBUG Options Showing options
+13:19:17 DEBUG OpenFolder Opening folder OSINT/
+13:19:19 DEBUG Back Going back to root
+13:19:21 DEBUG Back Cannot go back, in root dir

@@ -11,9 +11,10 @@ class Exit(CommandBase):
     def get_actions(self):
         return ["q", "exit", "0", "&"]
 
-    def perform_action(self, *args):
+    def perform_action(self, pos, _, logger):
         output("Exiting...")
-        args[2].save_log()
-        args[2].info("Exiting ngoto")
-        args[2].debug('Exiting ngoto', program='Exit')
+        logger.save_log()
+        logger.info("Exiting ngoto")
+        logger.debug('Exiting ngoto', program='Exit')
         sys.exit()
+        return pos

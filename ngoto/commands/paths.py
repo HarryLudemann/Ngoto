@@ -20,3 +20,4 @@ class Paths(CommandBase):
             os.mkdir(const.command_path)
         if not exists(const.task_path):
             os.mkdir(const.task_path)
+        return args[0]
