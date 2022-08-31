@@ -7,7 +7,7 @@ from time import sleep, time
 from ngoto.core.util.interface import commands, output, get_input
 from ngoto.core.ngoto import Ngoto
 from ngoto.core import constants as const
-from ngoto.core.util.tasks import TaskController
+from ngoto.core.util.task_controller import TaskController
 from ngoto.core.util.load_scripts import load_scripts
 
 
