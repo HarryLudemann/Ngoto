@@ -70,7 +70,7 @@ def commands(commands: list):
     output(table)
 
 
-def tasks(tasks: list, thisOS: str, logger):
+def tasks(tasks: list, thisOS: str):
     table = Table(
         title="Ngoto Tasks",
         title_style=title_style,
