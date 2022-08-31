@@ -1,5 +1,5 @@
 from ngoto.core import constants as const
-from ngoto.core.util.interface import tasks
+from ngoto.core.util.interface import show_tasks
 from ngoto.core.util.clear import clear_screen
 from ngoto.core.util.load_scripts import load_scripts
 
@@ -66,4 +66,4 @@ class TaskController:
             self.disable_task(options[2])
         else:  # show tasks status
             clear_screen()
-            tasks(self.tasks, os)
+            show_tasks(self.tasks, os)
