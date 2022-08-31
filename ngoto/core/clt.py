@@ -26,7 +26,7 @@ class CLT(Ngoto):
             commands(self.commands)
             check_commands = False
         elif command in ['t', 'task']:
-            self.tasks.run_command(options, self.os)
+            self.tasks.run_command(options, self.os, self.logger)
             check_commands = False
         if check_commands:
             for cmd in self.commands:

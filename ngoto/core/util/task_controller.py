@@ -16,7 +16,7 @@ class TaskController:
         for task in self.tasks:
             if task.id == task_id or task_id == 'all':
                 task.active = True
-                self.logger.info('Enabled task: ' + task.id)
+                logger.info('Enabled task: ' + task.id)
                 return
         logger.info('Task not found: ' + task_id)
 
@@ -57,13 +57,13 @@ class TaskController:
                 logger.info(task.result()[0], task.result()[1])
                 self.tasks_running.remove(task)
 
-    def run_command(self, options: list[str], os: str):
+    def run_command(self, options: list[str], os: str, logger):
         if len(options) == 4 and options[1] == 'delay':
-            self.set_delay(options[2], int(options[3]))
+            self.set_delay(options[2], int(options[3]), logger)
         elif len(options) == 3 and options[1] in ['e', 'enable']:
-            self.enable_task(options[2])
+            self.enable_task(options[2], logger)
         elif len(options) == 3 and options[1] in ['d', 'disable']:
-            self.disable_task(options[2])
+            self.disable_task(options[2], logger)
         else:  # show tasks status
             clear_screen()
             show_tasks(self.tasks, os)
