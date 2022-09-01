@@ -23,10 +23,10 @@ class CLT(Ngoto):
     def run_command(self, command: str, options: list = []) -> bool:
         check_commands = True
         if command.isdigit():
-            if(num := int(options[0])-1) < self.curr_pos.num_children:
-                options = ['openF', options[0]]
+            if (num := int(options[0])-1) < self.curr_pos.num_children:
+                command = 'openFolder'
             elif num < self.curr_pos.num_children + self.curr_pos.num_plugins:
-                options = ['openP', options[0]]
+                command = 'openPlugin'
         elif command in ['c', 'commands', 'h', 'help']:  # display commands
             show_commands(self.commands)
             check_commands = False

@@ -41,7 +41,7 @@ def logo():
 ''', logo_style)
 
 
-def options(curr_node):  # given Node in plugin and optionally workplace string
+def show_options(curr_node):  # given Node in plugin
     logo()
     index = 1
     for folder in curr_node.get_children():  # print folders

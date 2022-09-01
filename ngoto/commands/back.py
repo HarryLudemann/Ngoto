@@ -1,6 +1,6 @@
 # contains function to go back
 from ngoto.core.util.command import CommandBase
-from ngoto.core.util.interface import options, output
+from ngoto.core.util.interface import show_options, output
 import os
 
 
@@ -15,7 +15,7 @@ class Back(CommandBase):
     def perform_action(self, pos, _, logger):
         if pos.has_parent:
             os.system('cls' if os.name in ('nt', 'dos') else 'clear')
-            options(pos.get_parent())
+            show_options(pos.get_parent())
             logger.debug(
                 f'Going back to {pos.get_parent().get_name()}',
                 'Back')
