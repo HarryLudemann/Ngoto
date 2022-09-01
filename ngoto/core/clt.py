@@ -4,7 +4,7 @@
 
 from concurrent.futures import ThreadPoolExecutor
 from time import sleep, time
-from ngoto.core.util.interface import commands, output, get_input
+from ngoto.core.util.interface import show_commands, output, get_input
 from ngoto.core.ngoto import Ngoto
 from ngoto.core import constants as const
 from ngoto.core.util.task_controller import TaskController
@@ -22,8 +22,13 @@ class CLT(Ngoto):
 
     def run_command(self, command: str, options: list = []) -> bool:
         check_commands = True
-        if command in ['c', 'commands', 'h', 'help']:  # display commands
-            commands(self.commands)
+        if command.isdigit():
+            if(num := int(options[0])-1) < self.curr_pos.num_children:
+                options = ['openF', options[0]]
+            elif num < self.curr_pos.num_children + self.curr_pos.num_plugins:
+                options = ['openP', options[0]]
+        elif command in ['c', 'commands', 'h', 'help']:  # display commands
+            show_commands(self.commands)
             check_commands = False
         elif command in ['t', 'task']:
             self.tasks.run_command(options, self.os, self.logger)
@@ -43,19 +48,14 @@ class CLT(Ngoto):
         option = get_input('\n[Ngoto] > ').split()
         if not option:
             pass
-        elif (isDigit := option[0].isdigit()) and (
-                    num := int(option[0])-1) < self.curr_pos.num_children:
-            option = ['openF', option[0]]
-        elif isDigit and (
-                    num < self.curr_pos.num_children +
-                    self.curr_pos.num_plugins):
-            option = ['openP', option[0]]
-        if option != [] and not self.run_command(option[0], option):
+        elif not self.run_command(option[0], option):
             output("Unknown command")
         self.clt()
 
     def main(self) -> None:
         """ Main loop """
+        self.run_command('clear')  # clear screen
+        self.run_command('options')  # options screen
         with ThreadPoolExecutor(max_workers=3) as executor:
             clt_loop = executor.submit(self.clt)
             while True:
@@ -65,9 +65,3 @@ class CLT(Ngoto):
                 if clt_loop.done():
                     break
                 sleep(1 - (time() - curr_time))
-
-    def start(self) -> None:
-        """ Start CLT """
-        self.run_command('clear')  # clear screen
-        self.run_command('options')  # options screen
-        self.main()

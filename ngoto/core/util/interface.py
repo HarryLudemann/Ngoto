@@ -52,7 +52,7 @@ def options(curr_node):  # given Node in plugin and optionally workplace string
         index += 1
 
 
-def commands(commands: list):
+def show_commands(commands: list):
     table = Table(
         title="Ngoto Commands",
         title_style=title_style,
