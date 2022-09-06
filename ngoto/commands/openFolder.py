@@ -17,6 +17,6 @@ class OpenFolder(CommandBase):
         clear_screen()
         show_options(folder)
         logger.debug(
-            f'Opening folder {folder.get_name()}', 
+            f'Opening folder {folder.get_name()}',
             program='OpenFolder')
         return folder

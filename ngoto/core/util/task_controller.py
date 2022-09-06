@@ -54,7 +54,7 @@ class TaskController:
                 logger.info(task.result()[0], task.result()[1])
                 self.tasks_running.remove(task)
 
-    def run_command(self, options: list[str], os: str, logger):
+    def run_command(self, options: list, os: str, logger):
         if len(options) == 4 and options[1] == 'delay':
             self.set_delay(options[2], int(options[3]), logger)
         elif len(options) == 3 and options[1] in ['e', 'enable']:
