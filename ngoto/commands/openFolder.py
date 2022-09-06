@@ -12,9 +12,11 @@ class OpenFolder(CommandBase):
         return ['openFolder', 'openF']
 
     def perform_action(self, pos, options, logger):
-        pos = pos.get_child(int(options[0])-1)
-        pos.set_parent(pos)
+        folder = pos.get_child(int(options[0])-1)
+        folder.set_parent(pos)
         clear_screen()
-        show_options(pos)
-        logger.debug(f'Opening folder {pos.get_name()}', program='OpenFolder')
-        return pos
+        show_options(folder)
+        logger.debug(
+            f'Opening folder {folder.get_name()}', 
+            program='OpenFolder')
+        return folder

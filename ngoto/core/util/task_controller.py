@@ -17,7 +17,6 @@ class TaskController:
             if task.id == task_id or task_id == 'all':
                 task.active = True
                 logger.info('Enabled task: ' + task.id)
-                return
         logger.info('Task not found: ' + task_id)
 
     def disable_task(self, task_id: str, logger) -> None:
@@ -26,7 +25,6 @@ class TaskController:
             if task.id == task_id or task_id == 'all':
                 task.active = False
                 logger.info('Disabled task: ' + task.id)
-                return
         logger.info('Task not found: ' + task_id)
 
     def set_delay(self, task_id: str, delay: int, logger) -> None:
@@ -35,7 +33,6 @@ class TaskController:
                 task.delay = delay
                 logger.info(
                     'Set delay of: ' + task.id + ' to ' + str(delay))
-                return
         logger.info('Task not found: ' + task_id)
 
     def update_task(self, task, curr_time, os: str) -> bool:

@@ -1,7 +1,6 @@
-# contains function to go back
 from ngoto.core.util.command import CommandBase
 from ngoto.core.util.interface import show_options, output
-import os
+from ngoto.core.util.clear import clear_screen
 
 
 class Back(CommandBase):
@@ -14,12 +13,13 @@ class Back(CommandBase):
 
     def perform_action(self, pos, _, logger):
         if pos.has_parent:
-            os.system('cls' if os.name in ('nt', 'dos') else 'clear')
-            show_options(pos.get_parent())
+            clear_screen()
+            parent = pos.get_parent()
+            show_options(parent)
             logger.debug(
-                f'Going back to {pos.get_parent().get_name()}',
+                f'Going back to {parent.get_name()}',
                 'Back')
-            return pos.get_parent()
+            return parent
         else:
             output("You are already in root")
             logger.debug('Cannot go back, in root dir', program='Back')
