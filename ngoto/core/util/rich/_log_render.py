@@ -87,7 +87,7 @@ class LogRender:
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from ngoto.core.util.rich.console import Console
+    from rich.console import Console
 
     c = Console()
     c.print("[on blue]Hello", justify="right")

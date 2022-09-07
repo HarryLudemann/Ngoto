@@ -10,7 +10,7 @@ else:
 from ._loop import loop_last
 
 if TYPE_CHECKING:
-    from ngoto.core.util.rich.console import ConsoleOptions
+    from rich.console import ConsoleOptions
 
 
 class Box:
@@ -465,8 +465,8 @@ PLAIN_HEADED_SUBSTITUTIONS = {
 
 if __name__ == "__main__":  # pragma: no cover
 
-    from ngoto.core.util.rich.columns import Columns
-    from ngoto.core.util.rich.panel import Panel
+    from rich.columns import Columns
+    from rich.panel import Panel
 
     from . import box as box
     from .console import Console

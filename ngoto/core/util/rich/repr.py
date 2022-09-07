@@ -130,7 +130,7 @@ if __name__ == "__main__":
             yield "buy", "hand sanitizer"
 
     foo = Foo()
-    from ngoto.core.util.rich.console import Console
+    from rich.console import Console
 
     console = Console()
 

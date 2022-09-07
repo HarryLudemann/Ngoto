@@ -68,7 +68,7 @@ def render_scope(
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from ngoto.core.util.rich import print
+    from rich import print
 
     print()
 

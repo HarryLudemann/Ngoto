@@ -1069,7 +1069,7 @@ class Console:
         rather than writing it to the console.
 
         Example:
-            >>> from ngoto.core.util.rich.console import Console
+            >>> from rich.console import Console
             >>> console = Console()
             >>> with console.capture() as capture:
             ...     console.print("[bold magenta]Hello World[/]")
@@ -1093,8 +1093,8 @@ class Console:
             links (bool, optional): Show links in pager. Defaults to False.
 
         Example:
-            >>> from ngoto.core.util.rich.console import Console
-            >>> from ngoto.core.util.rich.__main__ import make_test_card
+            >>> from rich.console import Console
+            >>> from rich.__main__ import make_test_card
             >>> console = Console()
             >>> with console.pager():
                     console.print(make_test_card())
@@ -1727,7 +1727,7 @@ class Console:
                 in to something that can be JSON encoded. Defaults to None.
             sort_keys (bool, optional): Sort dictionary keys. Defaults to False.
         """
-        from ngoto.core.util.rich.json import JSON
+        from rich.json import JSON
 
         if json is None:
             json_renderable = JSON.from_data(
@@ -1998,8 +1998,8 @@ class Console:
                                 pass
 
                         if use_legacy_windows_render:
-                            from ngoto.core.util.rich._win32_console import LegacyWindowsTerm
-                            from ngoto.core.util.rich._windows_renderer import legacy_windows_render
+                            from rich._win32_console import LegacyWindowsTerm
+                            from rich._windows_renderer import legacy_windows_render
 
                             buffer = self._buffer[:]
                             if self.no_color and self._color_system:
@@ -2259,7 +2259,7 @@ class Console:
                 injected by Rich can be found by inspecting the ``console.CONSOLE_SVG_FORMAT`` variable.
         """
 
-        from ngoto.core.util.rich.cells import cell_len
+        from rich.cells import cell_len
 
         style_cache: Dict[Style, str] = {}
 

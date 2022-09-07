@@ -81,8 +81,8 @@ class Emoji(JupyterMixin):
 if __name__ == "__main__":  # pragma: no cover
     import sys
 
-    from ngoto.core.util.rich.columns import Columns
-    from ngoto.core.util.rich.console import Console
+    from rich.columns import Columns
+    from rich.console import Console
 
     console = Console(record=True)
 

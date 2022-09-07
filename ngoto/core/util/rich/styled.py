@@ -35,8 +35,8 @@ class Styled:
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from ngoto.core.util.rich import print
-    from ngoto.core.util.rich.panel import Panel
+    from rich import print
+    from rich.panel import Panel
 
     panel = Styled(Panel("hello"), "on blue")
     print(panel)

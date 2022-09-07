@@ -196,11 +196,11 @@ class Tree(JupyterMixin):
 
 if __name__ == "__main__":  # pragma: no cover
 
-    from ngoto.core.util.rich.console import Group
-    from ngoto.core.util.rich.markdown import Markdown
-    from ngoto.core.util.rich.panel import Panel
-    from ngoto.core.util.rich.syntax import Syntax
-    from ngoto.core.util.rich.table import Table
+    from rich.console import Group
+    from rich.markdown import Markdown
+    from rich.panel import Panel
+    from rich.syntax import Syntax
+    from rich.table import Table
 
     table = Table(row_styles=["", "dim"])
 

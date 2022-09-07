@@ -168,9 +168,9 @@ if __name__ == "__main__":  # pragma: no cover
     import argparse
     import io
 
-    from ngoto.core.util.rich.console import Console
-    from ngoto.core.util.rich.table import Table
-    from ngoto.core.util.rich.text import Text
+    from rich.console import Console
+    from rich.table import Table
+    from rich.text import Text
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--html", action="store_true", help="Export as HTML table")

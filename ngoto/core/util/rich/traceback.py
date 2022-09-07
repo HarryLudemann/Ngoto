@@ -334,7 +334,7 @@ class Traceback:
         stacks: List[Stack] = []
         is_cause = False
 
-        from ngoto.core.util.rich import _IMPORT_CWD
+        from rich import _IMPORT_CWD
 
         def safe_str(_object: Any) -> str:
             """Don't allow exceptions from __str__ to propegate."""

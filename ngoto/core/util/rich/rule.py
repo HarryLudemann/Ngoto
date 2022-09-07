@@ -121,7 +121,7 @@ class Rule(JupyterMixin):
 if __name__ == "__main__":  # pragma: no cover
     import sys
 
-    from ngoto.core.util.rich.console import Console
+    from rich.console import Console
 
     try:
         text = sys.argv[1]

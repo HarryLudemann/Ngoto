@@ -595,7 +595,7 @@ if __name__ == "__main__":  # pragma: no cover
     )
     args = parser.parse_args()
 
-    from ngoto.core.util.rich.console import Console
+    from rich.console import Console
 
     if args.path == "-":
         markdown_body = sys.stdin.read()

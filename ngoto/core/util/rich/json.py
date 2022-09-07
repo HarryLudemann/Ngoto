@@ -122,7 +122,7 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    from ngoto.core.util.rich.console import Console
+    from rich.console import Console
 
     console = Console()
     error_console = Console(stderr=True)

@@ -1,10 +1,10 @@
 import os
 import platform
 
-from ngoto.core.util.rich import inspect
-from ngoto.core.util.rich.console import Console, get_windows_console_features
-from ngoto.core.util.rich.panel import Panel
-from ngoto.core.util.rich.pretty import Pretty
+from rich import inspect
+from rich.console import Console, get_windows_console_features
+from rich.panel import Panel
+from rich.pretty import Pretty
 
 
 def report() -> None:  # pragma: no cover

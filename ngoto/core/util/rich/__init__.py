@@ -42,7 +42,7 @@ def reconfigure(*args: Any, **kwargs: Any) -> None:
     Args:
         console (Console): Replacement console instance.
     """
-    from ngoto.core.util.rich.console import Console
+    from rich.console import Console
 
     new_console = Console(*args, **kwargs)
     _console = get_console()
@@ -152,7 +152,7 @@ def inspect(
         value (bool, optional): Pretty print value. Defaults to True.
     """
     _console = console or get_console()
-    from ngoto.core.util.rich._inspect import Inspect
+    from rich._inspect import Inspect
 
     # Special case for inspect(inspect)
     is_inspect = obj is inspect
