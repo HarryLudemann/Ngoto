@@ -1,19 +1,8 @@
-23:08:08 DEBUG Clear Clearing screen
-23:08:08 DEBUG Options Showing options
-23:08:09 INFO BasicPCUsage RAM used: 48.0
+00:20:11 DEBUG Clear Clearing screen
+00:20:11 DEBUG Options Showing options
+00:20:12 INFO BasicPCUsage RAM used: 45.6
 CPU used: 0.0
-23:08:10 INFO NvidiaGPUUsage GPU Memory Used: 320MB
+00:20:13 INFO NvidiaGPUUsage GPU Memory Used: 412MB
 Total Memory:  6144MB
-Free Memory:  5670MB
-Power Draw:  9.03
-23:08:10 INFO  Task not found: al
-23:08:14 INFO  Disabled task: BasicPCUsage
-23:08:14 INFO  Disabled task: Minecraft
-23:08:14 INFO  Disabled task: NvidiaGPUUsage
-23:08:14 INFO  Task not found: all
-23:08:22 INFO  Enabled task: BasicPCUsage
-23:08:22 INFO  Enabled task: Minecraft
-23:08:22 INFO  Enabled task: NvidiaGPUUsage
-23:08:22 INFO  Task not found: all
-23:08:27 INFO  Disabled task: Minecraft
-23:08:27 INFO  Task not found: Minecraft
+Free Memory:  5578MB
+Power Draw:  3.60
