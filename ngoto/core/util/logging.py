@@ -1,5 +1,5 @@
-from rich.style import Style
-from rich.table import Table
+from ngoto.core.util.rich.style import Style
+from ngoto.core.util.rich.table import Table
 import time
 
 

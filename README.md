@@ -46,7 +46,7 @@ Which will bring you to the following:
 ## Plugin:
 ```python
 from ngoto.util import Plugin, interface
-from rich.table import Table # used in this plugin
+from ngoto.core.util.rich.table import Table # used in this plugin
 
 class Plugin(Plugin):
     name = 'IP'

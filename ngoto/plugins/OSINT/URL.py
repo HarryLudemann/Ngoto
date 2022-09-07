@@ -2,7 +2,7 @@ import socket
 from ngoto.core.util.plugin import PluginBase
 from ngoto.core.util.logging import Logging
 from ngoto.core.util.interface import output, get_input
-from rich.table import Table, Style  # used in this plugin
+from ngoto.core.util.rich.table import Table, Style  # used in this plugin
 
 
 class Plugin(PluginBase):

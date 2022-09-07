@@ -1,8 +1,8 @@
-00:20:11 DEBUG Clear Clearing screen
-00:20:11 DEBUG Options Showing options
-00:20:12 INFO BasicPCUsage RAM used: 45.6
-CPU used: 0.0
-00:20:13 INFO NvidiaGPUUsage GPU Memory Used: 412MB
-Total Memory:  6144MB
-Free Memory:  5578MB
-Power Draw:  3.60
+10:41:17 DEBUG Clear Clearing screen
+10:41:17 DEBUG Options Showing options
+10:41:20 DEBUG OpenFolder Opening folder OSINT/
+10:41:23 INFO OSINT URL Getting IP for URL google.com
+10:41:23 INFO OSINT URL IP for URL google.com is 142.250.204.14
+10:41:23 DEBUG OpenPlugin Opening plugin URL
+10:41:24 DEBUG Back Going back to root
+10:41:27 DEBUG Clear Clearing screen

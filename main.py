@@ -3,5 +3,4 @@
 if __name__ == '__main__':
     from ngoto.core.clt import CLT
     ngotoCLT = CLT()
-    # ngotoCLT.main()
-    print(ngotoCLT.curr_pos.num_children)
+    ngotoCLT.main()

@@ -1,7 +1,7 @@
 # script contains interface functions
-from rich.console import Console
-from rich.table import Table  # used in this plugin
-from rich.style import Style  # used in this plugin
+from ngoto.core.util.rich.console import Console
+from ngoto.core.util.rich.table import Table  # used in this plugin
+from ngoto.core.util.rich.style import Style  # used in this plugin
 
 console: Console = Console()
 logo_style = Style(color="blue", blink=False, bold=True)
