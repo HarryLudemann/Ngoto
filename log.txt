@@ -1,9 +1,0 @@
-11:37:36 DEBUG Clear Clearing screen
-11:37:36 DEBUG Options Showing options
-11:37:38 DEBUG OpenFolder Opening folder Passwords/
-11:37:39 DEBUG Back Going back to root
-11:37:41 DEBUG OpenFolder Opening folder OSINT/
-11:37:46 INFO OSINT URL Getting IP for URL google.com
-11:37:46 INFO OSINT URL IP for URL google.com is 172.217.24.46
-11:37:46 DEBUG OpenPlugin Opening plugin URL
-11:37:47 DEBUG Back Going back to root
