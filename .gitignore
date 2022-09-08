@@ -11,4 +11,3 @@ log.txt
 .pytest_cache
 cov.xml
 .coverage
-.coveragerc
