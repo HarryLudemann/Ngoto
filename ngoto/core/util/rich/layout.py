@@ -20,7 +20,7 @@ from .console import Console, ConsoleOptions, RenderableType, RenderResult
 from .highlighter import ReprHighlighter
 from .panel import Panel
 from .pretty import Pretty
-from .repr import rich_repr, Result
+from .repr import ngoto.core.util.rich_repr, Result
 from .region import Region
 from .segment import Segment
 from .style import StyleType

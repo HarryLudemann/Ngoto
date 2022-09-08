@@ -1,7 +1,7 @@
 import io
 import json
 
-import rich
+import ngoto.core.util.rich
 from ngoto.core.util.rich.console import Console
 
 

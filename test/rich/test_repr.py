@@ -3,7 +3,7 @@ import sys
 from typing import Optional
 
 from ngoto.core.util.rich.console import Console
-import rich.repr
+import ngoto.core.util.rich.repr
 
 
 skip_py36 = pytest.mark.skipif(

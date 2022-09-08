@@ -385,7 +385,7 @@ def test_input_password(monkeypatch, capsys):
         console.file.write(prompt)
         return "bar"
 
-    import rich.console
+    import ngoto.core.util.rich.console
 
     monkeypatch.setattr(rich.console, "getpass", fake_input)
     console = Console()

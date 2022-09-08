@@ -25,7 +25,7 @@ from typing import (
     Union,
 )
 
-from ngoto.core.util.rich.repr import RichReprResult
+from ngoto.core.util.rich.repr import ngoto.core.util.richReprResult
 
 try:
     import attr as _attr_module
@@ -37,7 +37,7 @@ except ImportError:  # pragma: no cover
 from . import get_console
 from ._loop import loop_last
 from ._pick import pick_bool
-from .abc import RichRenderable
+from .abc import ngoto.core.util.richRenderable
 from .cells import cell_len
 from .highlighter import ReprHighlighter
 from .jupyter import JupyterMixin, JupyterRenderable

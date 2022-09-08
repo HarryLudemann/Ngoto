@@ -1,6 +1,6 @@
 import io
 
-from ngoto.core.util.rich.abc import RichRenderable
+from ngoto.core.util.rich.abc import ngoto.core.util.richRenderable
 from ngoto.core.util.rich.console import Console
 from ngoto.core.util.rich.panel import Panel
 from ngoto.core.util.rich.text import Text

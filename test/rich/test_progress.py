@@ -7,7 +7,7 @@ from types import SimpleNamespace
 
 import pytest
 
-import rich.progress
+import ngoto.core.util.rich.progress
 from ngoto.core.util.rich.console import Console
 from ngoto.core.util.rich.highlighter import NullHighlighter
 from ngoto.core.util.rich.progress import (
