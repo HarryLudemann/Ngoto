@@ -9,7 +9,7 @@ class Back(CommandBase):
     def get_actions(self):
         return ['b', 'back']
 
-    def perform_action(self, pos, _, logger):
+    def perform_action(self, pos, options, logger):
         if pos.has_parent:
             clear_screen()
             parent = pos.get_parent()

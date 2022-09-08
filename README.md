@@ -1,6 +1,7 @@
 # Ngoto
 [![](https://github.com/HarryLudemann/Ngoto/workflows/pytests/badge.svg)]()
 [![Maintainability](https://api.codeclimate.com/v1/badges/08e4dc1f109aaa6c4f75/maintainability)](https://codeclimate.com/github/HarryLudemann/Ngoto/maintainability)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f50d18ce111d4faf99ff411b5129e920)](https://www.codacy.com/gh/HarryLudemann/Ngoto/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=HarryLudemann/Ngoto&amp;utm_campaign=Badge_Grade)
 ![Supported Python versions](https://img.shields.io/badge/python-3.8+-blue.svg)
 [![version-1.3](https://img.shields.io/badge/version-0.0.33-blue)](https://github.com/Datalux/Osintgram/releases/tag/1.3)
 [![platforms](https://img.shields.io/badge/platform-windows%20%7C%20linux-blue)](https://github.com/loseys/Oblivion/)

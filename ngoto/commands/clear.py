@@ -10,7 +10,7 @@ class Clear(CommandBase):
     def get_actions(self):
         return ["cls", "clear"]
 
-    def perform_action(self, pos, _, logger):
+    def perform_action(self, pos, options, logger):
         clear_screen()
         logger.debug('Clearing screen', program='Clear')
         return pos

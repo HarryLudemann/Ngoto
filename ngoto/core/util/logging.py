@@ -3,6 +3,22 @@ from ngoto.core.util.rich.table import Table
 import time
 
 
+def convert_level(level: str) -> str:
+    level = level.upper()
+    result = -1
+    if level == "DEBUG":
+        result = 1
+    elif level == "INFO":
+        result = 2
+    elif level == "WARNING":
+        result = 3
+    elif level == "ERROR":
+        result = 4
+    elif level == "CRITICAL":
+        result = 5
+    return result
+
+
 class Row:
     def __init__(self, time, level, program, message):
         self.time = time
@@ -32,21 +48,6 @@ class Logging():
                     row.level + " " +
                     row.program + " " +
                     row.message + "\n")
-
-    def convert_level(self, level: str) -> str:
-        level = level.upper()
-        result = -1
-        if level == "DEBUG":
-            result = 1
-        elif level == "INFO":
-            result = 2
-        elif level == "WARNING":
-            result = 3
-        elif level == "ERROR":
-            result = 4
-        elif level == "CRITICAL":
-            result = 5
-        return result
 
     def level_style(self, level: str) -> Style:
         level = level.upper()
@@ -79,7 +80,7 @@ class Logging():
         if level in ["1", "2", "3", "4", "5"]:
             level = int(level)
             for row in self.log:
-                if level <= self.convert_level(row.level):
+                if level <= convert_level(row.level):
                     self.table.add_row(
                         row.time,
                         row.level,

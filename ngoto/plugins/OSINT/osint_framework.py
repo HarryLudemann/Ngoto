@@ -10,11 +10,11 @@ import webbrowser
 class Plugin(PluginBase):
     class Node:
         """ Node of each item in OSINT framework tree """
-        def __init__(self, name: str, type: str, url: str = None):
+        def __init__(self, name: str, types: str, url: str = None):
             self.name: str = name
             if url:
                 self.url = url
-            self.type: str = type
+            self.types: str = types
             self.children: list = []  # list of children nodes
             self.parent = None
 
@@ -64,14 +64,14 @@ class Plugin(PluginBase):
     def load_nodes_helper(self, json):
         """ Recursive function to load nodes, given children of node """
         if json['type'] == 'folder':
-            node = self.Node(name=json['name'], type=json['type'])
+            node = self.Node(name=json['name'], types=json['type'])
             for child in json['children']:
                 loaded_child = self.load_nodes_helper(child)
                 loaded_child.set_parent(node)
                 node.add_child(loaded_child)
         else:
             node = self.Node(
-                name=json['name'], type=json['type'], url=json['url'])
+                name=json['name'], types=json['type'], url=json['url'])
         return node
 
     def run_tree(self, node):
@@ -91,7 +91,7 @@ class Plugin(PluginBase):
         elif option.isdigit():
             if int(option) <= child_count + 1:
                 sel_child = node.get_child(int(option)-1)
-                if sel_child.type == 'folder':
+                if sel_child.types == 'folder':
                     self.run_tree(sel_child)
                 else:
                     self.logger.info(
@@ -133,5 +133,5 @@ class Plugin(PluginBase):
         return {}
 
     # given context of information prints information
-    def print_info(*_):
+    def print_info(self, context):
         pass

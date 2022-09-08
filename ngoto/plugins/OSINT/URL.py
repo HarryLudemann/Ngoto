@@ -27,7 +27,7 @@ class Plugin(PluginBase):
                 program='OSINT URL')
             ip = "Unknown - socket.gaierror"
         return {"ip": ip}
-
+        
     # main function to handle input, then calls and return get_context method
     def main(self, logger):
         self.logger = logger
@@ -56,6 +56,6 @@ class Plugin(PluginBase):
             justify="center",
             header_style=self.header_style)
         for item in context:
-            if type(context[item]) != list:
+            if isinstance(context[item], list):
                 self.table.add_row(item, context[item], style=self.title_style)
         output(self.table)

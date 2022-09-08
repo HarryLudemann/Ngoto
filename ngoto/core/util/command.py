@@ -13,5 +13,5 @@ class CommandBase(ABC):
         pass
 
     @abstractmethod
-    def perform_action(self, *args):
+    def perform_action(self, pos, options, logger):
         pass

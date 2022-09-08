@@ -58,6 +58,6 @@ class PluginBase(ABC):
         pass
 
     @abstractmethod
-    def main(self):
+    def main(self, logger):
         """ Main function to handle input and call get_context method """
         pass

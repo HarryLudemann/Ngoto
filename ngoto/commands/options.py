@@ -9,8 +9,8 @@ class Options(CommandBase):
     def get_actions(self):
         return ['o', 'options', 'ls']
 
-    def perform_action(self, *args):
+    def perform_action(self, pos, options, logger):
         clear_screen()
-        show_options(args[0])
-        args[2].debug('Showing options', program='Options')
-        return args[0]
+        show_options(pos)
+        logger.debug('Showing options', program='Options')
+        return pos
