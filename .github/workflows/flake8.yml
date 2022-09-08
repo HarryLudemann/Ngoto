@@ -12,4 +12,4 @@ jobs:
     - name: Flake8 Code Linter
       uses: jonasrk/flake8-action@master
       with: 
-        args: "--exclude test ngoto/core/util/rich"
+        args: "--exclude test ngoto/core/util/rich/*"
