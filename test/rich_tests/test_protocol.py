@@ -1,9 +1,9 @@
 import io
 
-from rich.abc import RichRenderable
-from rich.console import Console
-from rich.panel import Panel
-from rich.text import Text
+from ngoto.core.util.rich.abc import RichRenderable
+from ngoto.core.util.rich.console import Console
+from ngoto.core.util.rich.panel import Panel
+from ngoto.core.util.rich.text import Text
 
 
 class Foo:

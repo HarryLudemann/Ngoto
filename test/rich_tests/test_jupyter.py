@@ -1,4 +1,4 @@
-from rich.console import Console
+from ngoto.core.util.rich.console import Console
 
 
 def test_jupyter():

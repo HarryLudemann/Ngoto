@@ -1,4 +1,4 @@
-from rich import cells
+from ngoto.core.util.rich import cells
 
 
 def test_set_cell_size():

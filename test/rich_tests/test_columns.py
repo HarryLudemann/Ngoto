@@ -2,8 +2,8 @@
 
 import io
 
-from rich.columns import Columns
-from rich.console import Console
+from ngoto.core.util.rich.columns import Columns
+from ngoto.core.util.rich.console import Console
 
 COLUMN_DATA = [
     "Ursus americanus",

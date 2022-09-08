@@ -4,13 +4,13 @@ from typing import List
 
 import pytest
 
-from rich.highlighter import (
+from ngoto.core.util.rich.highlighter import (
     JSONHighlighter,
     NullHighlighter,
     ReprHighlighter,
     ISO8601Highlighter,
 )
-from rich.text import Span, Text
+from ngoto.core.util.rich.text import Span, Text
 
 
 def test_wrong_type():

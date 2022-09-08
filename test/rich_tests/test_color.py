@@ -1,4 +1,4 @@
-from rich.color import (
+from ngoto.core.util.rich.color import (
     blend_rgb,
     parse_rgb_hex,
     Color,
@@ -7,8 +7,8 @@ from rich.color import (
     ColorType,
     ColorTriplet,
 )
-from rich.style import Style
-from rich.text import Text, Span
+from ngoto.core.util.rich.style import Style
+from ngoto.core.util.rich.text import Text, Span
 
 import pytest
 

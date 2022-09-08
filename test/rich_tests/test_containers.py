@@ -1,7 +1,7 @@
-from rich.console import Console
-from rich.containers import Lines, Renderables
-from rich.text import Span, Text
-from rich.style import Style
+from ngoto.core.util.rich.console import Console
+from ngoto.core.util.rich.containers import Lines, Renderables
+from ngoto.core.util.rich.text import Span, Text
+from ngoto.core.util.rich.style import Style
 
 
 def test_renderables_measure():

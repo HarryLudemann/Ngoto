@@ -1,4 +1,4 @@
-from rich.color_triplet import ColorTriplet
+from ngoto.core.util.rich.color_triplet import ColorTriplet
 
 
 def test_hex():

@@ -1,7 +1,7 @@
 import pytest
 
-from rich.console import ConsoleOptions, ConsoleDimensions
-from rich.box import ASCII, DOUBLE, ROUNDED, HEAVY, SQUARE
+from ngoto.core.util.rich.console import ConsoleOptions, ConsoleDimensions
+from ngoto.core.util.rich.box import ASCII, DOUBLE, ROUNDED, HEAVY, SQUARE
 
 
 def test_str():

@@ -1,5 +1,5 @@
-from rich._palettes import STANDARD_PALETTE
-from rich.table import Table
+from ngoto.core.util.rich._palettes import STANDARD_PALETTE
+from ngoto.core.util.rich.table import Table
 
 
 def test_rich_cast():

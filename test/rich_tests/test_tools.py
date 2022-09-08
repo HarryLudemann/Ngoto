@@ -1,5 +1,5 @@
-from rich._loop import loop_first, loop_last, loop_first_last
-from rich._ratio import ratio_distribute
+from ngoto.core.util.rich._loop import loop_first, loop_last, loop_first_last
+from ngoto.core.util.rich._ratio import ratio_distribute
 
 
 def test_loop_first():

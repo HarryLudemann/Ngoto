@@ -1,9 +1,9 @@
-from rich.text import Text
+from ngoto.core.util.rich.text import Text
 import pytest
 
-from rich.errors import NotRenderableError
-from rich.console import Console
-from rich.measure import Measurement, measure_renderables
+from ngoto.core.util.rich.errors import NotRenderableError
+from ngoto.core.util.rich.console import Console
+from ngoto.core.util.rich.measure import Measurement, measure_renderables
 
 
 def test_span():

@@ -2,10 +2,10 @@ import io
 
 import pytest
 
-from rich.console import Console
-from rich.panel import Panel
-from rich.segment import Segment
-from rich.style import Style
+from ngoto.core.util.rich.console import Console
+from ngoto.core.util.rich.panel import Panel
+from ngoto.core.util.rich.segment import Segment
+from ngoto.core.util.rich.style import Style
 
 tests = [
     Panel("Hello, World", padding=0),

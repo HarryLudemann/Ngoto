@@ -2,7 +2,7 @@ import pytest
 import sys
 from typing import Optional
 
-from rich.console import Console
+from ngoto.core.util.rich.console import Console
 import rich.repr
 
 

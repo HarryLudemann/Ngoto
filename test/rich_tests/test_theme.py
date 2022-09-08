@@ -4,8 +4,8 @@ import tempfile
 
 import pytest
 
-from rich.style import Style
-from rich.theme import Theme, ThemeStack, ThemeStackError
+from ngoto.core.util.rich.style import Style
+from ngoto.core.util.rich.theme import Theme, ThemeStack, ThemeStackError
 
 
 def test_inherit():

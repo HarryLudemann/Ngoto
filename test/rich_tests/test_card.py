@@ -1,8 +1,8 @@
 import io
 import re
 
-from rich.console import Console, RenderableType
-from rich.__main__ import make_test_card
+from ngoto.core.util.rich.console import Console, RenderableType
+from ngoto.core.util.rich.__main__ import make_test_card
 
 from ._card_render import expected
 

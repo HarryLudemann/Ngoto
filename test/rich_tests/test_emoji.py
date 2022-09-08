@@ -1,6 +1,6 @@
 import pytest
 
-from rich.emoji import Emoji, NoEmoji
+from ngoto.core.util.rich.emoji import Emoji, NoEmoji
 
 from .render import render
 

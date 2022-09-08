@@ -2,9 +2,9 @@ import io
 
 import pytest
 
-from rich.console import Console
-from rich.align import Align, VerticalCenter
-from rich.measure import Measurement
+from ngoto.core.util.rich.console import Console
+from ngoto.core.util.rich.align import Align, VerticalCenter
+from ngoto.core.util.rich.measure import Measurement
 
 
 def test_bad_align_legal():

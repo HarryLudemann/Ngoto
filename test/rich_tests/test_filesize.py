@@ -1,4 +1,4 @@
-from rich import filesize
+from ngoto.core.util.rich import filesize
 
 
 def test_traditional():

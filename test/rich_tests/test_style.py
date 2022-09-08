@@ -1,8 +1,8 @@
 import pytest
 
-from rich import errors
-from rich.color import Color, ColorSystem, ColorType
-from rich.style import Style, StyleStack
+from ngoto.core.util.rich import errors
+from ngoto.core.util.rich.color import Color, ColorSystem, ColorType
+from ngoto.core.util.rich.style import Style, StyleStack
 
 
 def test_str():

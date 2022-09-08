@@ -1,7 +1,7 @@
-from rich.console import Console
-from rich.progress_bar import ProgressBar
-from rich.segment import Segment
-from rich.style import Style
+from ngoto.core.util.rich.console import Console
+from ngoto.core.util.rich.progress_bar import ProgressBar
+from ngoto.core.util.rich.segment import Segment
+from ngoto.core.util.rich.style import Style
 
 from .render import render
 

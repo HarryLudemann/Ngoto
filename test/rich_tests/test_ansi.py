@@ -1,7 +1,7 @@
-from rich.ansi import AnsiDecoder
-from rich.console import Console
-from rich.style import Style
-from rich.text import Span, Text
+from ngoto.core.util.rich.ansi import AnsiDecoder
+from ngoto.core.util.rich.console import Console
+from ngoto.core.util.rich.style import Style
+from ngoto.core.util.rich.text import Span, Text
 
 
 def test_decode():

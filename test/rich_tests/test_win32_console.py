@@ -5,11 +5,11 @@ from unittest.mock import patch
 
 import pytest
 
-from rich.style import Style
+from ngoto.core.util.rich.style import Style
 
 if sys.platform == "win32":
-    from rich import _win32_console
-    from rich._win32_console import COORD, LegacyWindowsTerm, WindowsCoordinates
+    from ngoto.core.util.rich import _win32_console
+    from ngoto.core.util.rich._win32_console import COORD, LegacyWindowsTerm, WindowsCoordinates
 
     CURSOR_X = 1
     CURSOR_Y = 2

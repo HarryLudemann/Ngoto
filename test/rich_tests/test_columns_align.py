@@ -2,10 +2,10 @@
 
 import io
 
-from rich import box
-from rich.columns import Columns
-from rich.console import Console
-from rich.panel import Panel
+from ngoto.core.util.rich import box
+from ngoto.core.util.rich.columns import Columns
+from ngoto.core.util.rich.console import Console
+from ngoto.core.util.rich.panel import Panel
 
 
 def render():

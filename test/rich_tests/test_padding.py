@@ -1,9 +1,9 @@
 import pytest
 
-from rich.padding import Padding
-from rich.console import Console, ConsoleDimensions, ConsoleOptions
-from rich.style import Style
-from rich.segment import Segment
+from ngoto.core.util.rich.padding import Padding
+from ngoto.core.util.rich.console import Console, ConsoleDimensions, ConsoleOptions
+from ngoto.core.util.rich.style import Style
+from ngoto.core.util.rich.segment import Segment
 
 
 def test_repr():

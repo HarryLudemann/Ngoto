@@ -3,10 +3,10 @@ from textwrap import dedent
 
 import pytest
 
-from rich import box
-from rich.console import Console
-from rich.rule import Rule
-from rich.table import Table
+from ngoto.core.util.rich import box
+from ngoto.core.util.rich.console import Console
+from ngoto.core.util.rich.rule import Rule
+from ngoto.core.util.rich.table import Table
 
 
 @pytest.mark.parametrize("expand_kwarg", ({}, {"expand": False}))

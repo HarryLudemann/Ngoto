@@ -1,8 +1,8 @@
 import pytest
-from rich.live_render import LiveRender
-from rich.console import Console, ConsoleDimensions, ConsoleOptions
-from rich.style import Style
-from rich.segment import Segment
+from ngoto.core.util.rich.live_render import LiveRender
+from ngoto.core.util.rich.console import Console, ConsoleDimensions, ConsoleOptions
+from ngoto.core.util.rich.style import Style
+from ngoto.core.util.rich.segment import Segment
 
 
 @pytest.fixture
