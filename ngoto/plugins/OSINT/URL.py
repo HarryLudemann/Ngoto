@@ -27,7 +27,7 @@ class Plugin(PluginBase):
                 program='OSINT URL')
             ip = "Unknown - socket.gaierror"
         return {"ip": ip}
-        
+
     # main function to handle input, then calls and return get_context method
     def main(self, logger):
         self.logger = logger
