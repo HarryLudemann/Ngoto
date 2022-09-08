@@ -3,9 +3,9 @@ import time
 from typing import Optional
 
 # import pytest
-from rich.console import Console
-from rich.live import Live
-from rich.text import Text
+from ngoto.core.util.rich.console import Console
+from ngoto.core.util.rich.live import Live
+from ngoto.core.util.rich.text import Text
 
 
 def create_capture_console(

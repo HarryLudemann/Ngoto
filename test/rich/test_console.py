@@ -8,9 +8,9 @@ from unittest import mock
 
 import pytest
 
-from rich import errors
-from rich.color import ColorSystem
-from rich.console import (
+from ngoto.core.util.rich import errors
+from ngoto.core.util.rich.color import ColorSystem
+from ngoto.core.util.rich.console import (
     CaptureError,
     Console,
     ConsoleDimensions,
@@ -18,16 +18,16 @@ from rich.console import (
     ScreenUpdate,
     group,
 )
-from rich.control import Control
-from rich.measure import measure_renderables
-from rich.padding import Padding
-from rich.pager import SystemPager
-from rich.panel import Panel
-from rich.region import Region
-from rich.segment import Segment
-from rich.status import Status
-from rich.style import Style
-from rich.text import Text
+from ngoto.core.util.rich.control import Control
+from ngoto.core.util.rich.measure import measure_renderables
+from ngoto.core.util.rich.padding import Padding
+from ngoto.core.util.rich.pager import SystemPager
+from ngoto.core.util.rich.panel import Panel
+from ngoto.core.util.rich.region import Region
+from ngoto.core.util.rich.segment import Segment
+from ngoto.core.util.rich.status import Status
+from ngoto.core.util.rich.style import Style
+from ngoto.core.util.rich.text import Text
 
 
 def test_dumb_terminal():

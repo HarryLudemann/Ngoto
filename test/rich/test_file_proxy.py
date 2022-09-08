@@ -3,8 +3,8 @@ import sys
 
 import pytest
 
-from rich.console import Console
-from rich.file_proxy import FileProxy
+from ngoto.core.util.rich.console import Console
+from ngoto.core.util.rich.file_proxy import FileProxy
 
 
 def test_empty_bytes():

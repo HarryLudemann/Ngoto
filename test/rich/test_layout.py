@@ -2,9 +2,9 @@ import sys
 
 import pytest
 
-from rich.console import Console
-from rich.layout import Layout, NoSplitter
-from rich.panel import Panel
+from ngoto.core.util.rich.console import Console
+from ngoto.core.util.rich.layout import Layout, NoSplitter
+from ngoto.core.util.rich.panel import Panel
 
 
 def test_no_layout():

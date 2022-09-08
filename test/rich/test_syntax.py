@@ -6,9 +6,9 @@ import tempfile
 import pytest
 from pygments.lexers import PythonLexer
 
-from rich.panel import Panel
-from rich.style import Style
-from rich.syntax import (
+from ngoto.core.util.rich.panel import Panel
+from ngoto.core.util.rich.style import Style
+from ngoto.core.util.rich.syntax import (
     ANSISyntaxTheme,
     Color,
     Console,

@@ -8,9 +8,9 @@ from types import SimpleNamespace
 import pytest
 
 import rich.progress
-from rich.console import Console
-from rich.highlighter import NullHighlighter
-from rich.progress import (
+from ngoto.core.util.rich.console import Console
+from ngoto.core.util.rich.highlighter import NullHighlighter
+from ngoto.core.util.rich.progress import (
     BarColumn,
     DownloadColumn,
     FileSizeColumn,
@@ -29,8 +29,8 @@ from rich.progress import (
     _TrackThread,
     track,
 )
-from rich.progress_bar import ProgressBar
-from rich.text import Text
+from ngoto.core.util.rich.progress_bar import ProgressBar
+from ngoto.core.util.rich.text import Text
 
 
 class MockClock:

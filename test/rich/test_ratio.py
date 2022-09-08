@@ -1,7 +1,7 @@
 import pytest
 from typing import NamedTuple, Optional
 
-from rich._ratio import ratio_reduce, ratio_resolve
+from ngoto.core.util.rich._ratio import ratio_reduce, ratio_resolve
 
 
 class Edge(NamedTuple):

@@ -72,8 +72,8 @@ foobar
 import io
 import re
 
-from rich.console import Console, RenderableType
-from rich.markdown import Markdown
+from ngoto.core.util.rich.console import Console, RenderableType
+from ngoto.core.util.rich.markdown import Markdown
 
 
 re_link_ids = re.compile(r"id=[\d\.\-]*?;.*?\x1b")

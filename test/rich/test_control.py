@@ -1,5 +1,5 @@
-from rich.control import Control, escape_control_codes, strip_control_codes
-from rich.segment import ControlType, Segment
+from ngoto.core.util.rich.control import Control, escape_control_codes, strip_control_codes
+from ngoto.core.util.rich.segment import ControlType, Segment
 
 
 def test_control():

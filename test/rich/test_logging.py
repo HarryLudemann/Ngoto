@@ -5,8 +5,8 @@ from typing import Optional
 
 import pytest
 
-from rich.console import Console
-from rich.logging import RichHandler
+from ngoto.core.util.rich.console import Console
+from ngoto.core.util.rich.logging import RichHandler
 
 handler = RichHandler(
     console=Console(

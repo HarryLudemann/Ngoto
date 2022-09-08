@@ -1,10 +1,10 @@
 import pytest
 
-from rich.console import Console
-from rich.measure import Measurement
-from rich.rule import Rule
-from rich.spinner import Spinner
-from rich.text import Text
+from ngoto.core.util.rich.console import Console
+from ngoto.core.util.rich.measure import Measurement
+from ngoto.core.util.rich.rule import Rule
+from ngoto.core.util.rich.spinner import Spinner
+from ngoto.core.util.rich.text import Text
 
 
 def test_spinner_create():

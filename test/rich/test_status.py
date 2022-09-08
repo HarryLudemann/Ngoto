@@ -1,8 +1,8 @@
 from time import sleep
 
-from rich.console import Console
-from rich.spinner import Spinner
-from rich.status import Status
+from ngoto.core.util.rich.console import Console
+from ngoto.core.util.rich.spinner import Spinner
+from ngoto.core.util.rich.status import Status
 
 
 def test_status():

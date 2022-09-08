@@ -2,10 +2,10 @@ from io import StringIO
 
 import pytest
 
-from rich.console import Console, Group
-from rich.measure import Measurement
-from rich.style import Style
-from rich.text import Span, Text
+from ngoto.core.util.rich.console import Console, Group
+from ngoto.core.util.rich.measure import Measurement
+from ngoto.core.util.rich.style import Style
+from ngoto.core.util.rich.text import Span, Text
 
 
 def test_span():

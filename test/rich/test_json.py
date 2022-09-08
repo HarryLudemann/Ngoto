@@ -1,4 +1,4 @@
-from rich.json import JSON
+from ngoto.core.util.rich.json import JSON
 import datetime
 
 

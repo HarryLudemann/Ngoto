@@ -1,9 +1,9 @@
 import pytest
 
-from rich.console import Console
-from rich.errors import MarkupError
-from rich.markup import RE_TAGS, Tag, _parse, escape, render
-from rich.text import Span
+from ngoto.core.util.rich.console import Console
+from ngoto.core.util.rich.errors import MarkupError
+from ngoto.core.util.rich.markup import RE_TAGS, Tag, _parse, escape, render
+from ngoto.core.util.rich.text import Span
 
 
 def test_re_no_match():

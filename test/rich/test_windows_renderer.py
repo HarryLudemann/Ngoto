@@ -4,13 +4,13 @@ from unittest.mock import call, create_autospec
 import pytest
 
 try:
-    from rich._win32_console import LegacyWindowsTerm, WindowsCoordinates
-    from rich._windows_renderer import legacy_windows_render
+    from ngoto.core.util.rich._win32_console import LegacyWindowsTerm, WindowsCoordinates
+    from ngoto.core.util.rich._windows_renderer import legacy_windows_render
 except:
     # These modules can only be imported on Windows
     pass
-from rich.segment import ControlType, Segment
-from rich.style import Style
+from ngoto.core.util.rich.segment import ControlType, Segment
+from ngoto.core.util.rich.style import Style
 
 pytestmark = pytest.mark.skipif(sys.platform != "win32", reason="windows only")
 

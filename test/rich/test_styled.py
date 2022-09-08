@@ -1,8 +1,8 @@
 import io
 
-from rich.console import Console
-from rich.measure import Measurement
-from rich.styled import Styled
+from ngoto.core.util.rich.console import Console
+from ngoto.core.util.rich.measure import Measurement
+from ngoto.core.util.rich.styled import Styled
 
 
 def test_styled():

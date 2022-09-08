@@ -1,5 +1,5 @@
-from rich.console import Console
-from rich.screen import Screen
+from ngoto.core.util.rich.console import Console
+from ngoto.core.util.rich.screen import Screen
 
 
 def test_screen():

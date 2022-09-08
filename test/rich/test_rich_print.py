@@ -2,7 +2,7 @@ import io
 import json
 
 import rich
-from rich.console import Console
+from ngoto.core.util.rich.console import Console
 
 
 def test_get_console():

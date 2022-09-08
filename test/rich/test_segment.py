@@ -2,8 +2,8 @@ from io import StringIO
 
 import pytest
 
-from rich.segment import ControlType, Segment, SegmentLines, Segments
-from rich.style import Style
+from ngoto.core.util.rich.segment import ControlType, Segment, SegmentLines, Segments
+from ngoto.core.util.rich.style import Style
 
 
 def test_repr():
@@ -178,8 +178,8 @@ def test_divide_complex():
         "[on orange4]                        \n"
         "          [on green]XX[on orange4]          \n"
     )
-    from rich.console import Console
-    from rich.text import Text
+    from ngoto.core.util.rich.console import Console
+    from ngoto.core.util.rich.text import Text
 
     text = Text.from_markup(MAP)
     console = Console(

@@ -2,9 +2,9 @@ import sys
 
 import pytest
 
-from rich.console import Console
-from rich.measure import Measurement
-from rich.tree import Tree
+from ngoto.core.util.rich.console import Console
+from ngoto.core.util.rich.measure import Measurement
+from ngoto.core.util.rich.tree import Tree
 
 
 def test_render_single_node():

@@ -4,12 +4,12 @@ import io
 
 import pytest
 
-from rich import box, errors
-from rich.console import Console
-from rich.measure import Measurement
-from rich.style import Style
-from rich.table import Column, Table
-from rich.text import Text
+from ngoto.core.util.rich import box, errors
+from ngoto.core.util.rich.console import Console
+from ngoto.core.util.rich.measure import Measurement
+from ngoto.core.util.rich.style import Style
+from ngoto.core.util.rich.table import Column, Table
+from ngoto.core.util.rich.text import Text
 
 
 def render_tables():
