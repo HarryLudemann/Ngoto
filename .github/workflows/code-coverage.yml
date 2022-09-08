@@ -18,7 +18,8 @@ jobs:
         run: |
           pytest --cov-report xml --cov=src/
       - name: Upload coverage to Code Climate
-        uses: codeclimate/test-reporter-action@v2
+        uses: 
+        uses: codeclimate/test-reporter-action@v1
         with:
           token: ${{ secrets.CODECLIMATE_REPO_TOKEN }}
           coverageCommand: coverage.xml
