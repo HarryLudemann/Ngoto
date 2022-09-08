@@ -20,7 +20,7 @@ jobs:
         python3 -m pip install --upgrade pip
         pip3 install pytest-cov
         pip3 install -r requirements.txt
-        pytest --cov=./ --cov-report=xml  --cov-exclude="rich test"
+        pytest --cov=./ --cov-report=xml  --cov-config=.coverage_config
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
