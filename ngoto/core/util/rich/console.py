@@ -56,7 +56,7 @@ from .markup import render as render_markup
 from .measure import Measurement, measure_renderables
 from .pager import Pager, SystemPager
 from .pretty import Pretty, is_expandable
-from .protocol import ngoto.core.util.rich_cast
+from .protocol import rich_cast
 from .region import Region
 from .scope import render_scope
 from .screen import Screen
