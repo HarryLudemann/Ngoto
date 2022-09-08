@@ -1,2 +1,8 @@
 __pycache__
 log.txt
+setup.py
+Ngoto.egg-info
+.vscode
+build
+dist
+Ngoto.bat
