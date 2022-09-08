@@ -1,7 +1,7 @@
 # Ngoto
 [![](https://github.com/HarryLudemann/Ngoto/workflows/pytests/badge.svg)]()
 [![Maintainability](https://api.codeclimate.com/v1/badges/08e4dc1f109aaa6c4f75/maintainability)](https://codeclimate.com/github/HarryLudemann/Ngoto/maintainability)
-[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/HarryLudemann/Ngoto.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/HarryLudemann/Ngoto/context:python)
+[![codecov](https://codecov.io/gh/HarryLudemann/Ngoto/branch/main/graph/badge.svg?token=LGUUWLT3K5)](https://codecov.io/gh/HarryLudemann/Ngoto)
 ![Supported Python versions](https://img.shields.io/badge/python-3.8+-blue.svg)
 [![version-1.3](https://img.shields.io/badge/version-0.0.33-blue)](https://github.com/Datalux/Osintgram/releases/tag/1.3)
 [![platforms](https://img.shields.io/badge/platform-windows%20%7C%20linux-blue)](https://github.com/loseys/Oblivion/)

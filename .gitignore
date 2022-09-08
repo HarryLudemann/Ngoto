@@ -8,3 +8,6 @@ dist
 Ngoto.bat
 ChromePwTest.py
 log.txt
+.pytest_cache
+cov.xml
+.coverage

@@ -8,7 +8,7 @@ class Logs(CommandBase):
         return "Show logs"
 
     def get_actions(self):
-        return ["logs", "l"]
+        return ["logs", "l", "log"]
 
     def perform_action(self, pos, options, logger):
         if len(options) == 2:
