@@ -33,7 +33,7 @@ def test_open_folder_command():
     assert ngotoCLT.curr_pos.get_name() != root_pos
 
 
-def test_back_command():
+def test_back_command_1():
     """
         Check the back command works
     """
@@ -42,3 +42,52 @@ def test_back_command():
     ngotoCLT.run_command('1', ['1'])  # open folder
     ngotoCLT.run_command('b')
     assert ngotoCLT.curr_pos.get_name() == root_pos
+
+
+def test_back_command_2():
+    """
+        Check the back command works
+    """
+    ngotoCLT = CLT()
+    ngotoCLT.run_command('1', ['1'])  # open folder
+    assert ngotoCLT.run_command('b')
+
+
+def test_clear_command():
+    """
+        Check the clear command works
+    """
+    ngotoCLT = CLT()
+    assert ngotoCLT.run_command('clear')
+
+
+def test_log_command():
+    """
+        Check the log command works
+    """
+    ngotoCLT = CLT()
+    assert ngotoCLT.run_command('logs')
+
+
+def test_help_command():
+    """
+        Check the help command works
+    """
+    ngotoCLT = CLT()
+    assert ngotoCLT.run_command('help')
+
+
+def test_options_command():
+    """
+        Check the options command works
+    """
+    ngotoCLT = CLT()
+    assert ngotoCLT.run_command('options')
+
+
+def test_paths_command():
+    """
+        Check the paths command works
+    """
+    ngotoCLT = CLT()
+    assert ngotoCLT.run_command('paths')
