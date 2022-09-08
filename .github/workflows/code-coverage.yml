@@ -25,8 +25,8 @@ jobs:
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
-        ignore:
-        - "**/rich/"
+        gcov: true
+        gcov_ignore: */tests/*
         directory: ./coverage/reports/
         env_vars: OS,PYTHON
         fail_ci_if_error: true
