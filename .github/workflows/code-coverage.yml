@@ -1,36 +1,24 @@
-name: Code Coverage
+name: Code Climate Coverage
 on: [push]
 
 jobs:
-  build:
-    name: Run Code Coverage Test
+  test:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
-        with: 
-          fetch-depth: 0
-
-      - name: Coverage Badge
-        uses: tj-actions/coverage-badge-py@v1.8
-
-      - name: Verify Changed files
-        uses: tj-actions/verify-changed-files@v9
-        id: changed_files
+      - name: Setup Python
+        uses: actions/setup-python@v2
         with:
-          files: coverage.svg
-
-      - name: Commit files
-        if: steps.changed_files.outputs.files_changed == 'true'
+          python-version: '3.8'
+      - name: Install dependencies
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add coverage.svg
-          git commit -m "Updated coverage.svg"
-
-      - name: Push changes
-        if: steps.changed_files.outputs.files_changed == 'true'
-        uses: ad-m/github-push-action@master
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run tests
+        run: |
+          pytest --cov-report xml --cov=src/
+      - name: Upload coverage to Code Climate
+        uses: codeclimate/test-reporter-action@v2
         with:
-          github_token: ${{ secrets.github_token }}
-          branch: ${{ github.ref }}
+          token: ${{ secrets.CODECLIMATE_REPO_TOKEN }}
+          coverageCommand: coverage.xml
