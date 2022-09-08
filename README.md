@@ -45,8 +45,7 @@ Which will bring you to the following:
 
 ## Plugin:
 ```python
-from ngoto.util import Plugin, interface
-from ngoto.core.util.rich.table import Table # used in this plugin
+from ngoto import Plugin, interface, Table # used in this plugin
 
 class Plugin(Plugin):
     name = 'IP'
@@ -77,8 +76,7 @@ class Plugin(Plugin):
 ```
 ## Command:
 ```python
-from ngoto.core.util.command import Command
-from ngoto.core.util.interface import output
+from ngoto import Command, output
 class Logs(Command):
 
     def get_description(self):

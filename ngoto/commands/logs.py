@@ -1,6 +1,5 @@
 # contains function to show logs
-from ngoto.core.util.command import CommandBase
-from ngoto.core.util.interface import output
+from ngoto import CommandBase, output
 
 
 class Logs(CommandBase):

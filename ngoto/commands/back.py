@@ -1,6 +1,4 @@
-from ngoto.core.util.command import CommandBase
-from ngoto.core.util.interface import show_options, output
-from ngoto.core.util.clear import clear_screen
+from ngoto import CommandBase, show_options, output, clear_screen
 
 
 class Back(CommandBase):

@@ -1,6 +1,5 @@
 # contains function to exit program
-from ngoto.core.util.command import CommandBase
-from ngoto.core.util.interface import output
+from ngoto import CommandBase, output
 import sys
 
 

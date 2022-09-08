@@ -1,8 +1,5 @@
 import socket
-from ngoto.core.util.plugin import PluginBase
-from ngoto.core.util.logging import Logging
-from ngoto.core.util.interface import output, get_input
-from ngoto.core.util.rich.table import Table, Style  # used in this plugin
+from ngoto import PluginBase, Logging, output, get_input, Table, Style
 
 
 class Plugin(PluginBase):

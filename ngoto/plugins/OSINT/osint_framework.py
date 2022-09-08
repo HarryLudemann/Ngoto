@@ -1,9 +1,7 @@
 # this script loads the osint framework as tree from their github json file
 # the main method allowing to traverse the load tree
 
-from ngoto.core.util.plugin import PluginBase
-from ngoto.core.util.logging import Logging
-from ngoto.core.util.interface import output, get_input
+from ngoto import PluginBase, Logging, output, get_input
 import requests
 import os
 import webbrowser

@@ -1,12 +1,12 @@
 # still needs to be flushed out
 
-from ngoto.core.util import Node, Plugin
+from ngoto.core.util.node import Node
 from ngoto.core.ngoto import Ngoto
 
 
 class Module(Ngoto):
     """ Module class, contains Module specific methods """
-    def get_plugin(self, name: str, node: Node) -> Plugin:
+    def get_plugin(self, name: str, node: Node):
         """ recursive method given plugins name returns plugin,
             returns None if not found """
         for plugin in node.get_plugins():
@@ -19,6 +19,6 @@ class Module(Ngoto):
         """ Get context from plugin, given plugin name & list of args """
         return self.get_plugin(plugin_name, self.curr_pos).get_context(*args)
 
-    def add_plugin(self, plugin: Plugin) -> None:
+    def add_plugin(self, plugin) -> None:
         """ Add plugin to current node """
         self.curr_pos.add_plugin(plugin)

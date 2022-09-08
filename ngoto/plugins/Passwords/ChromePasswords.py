@@ -1,7 +1,4 @@
-from ngoto.core.util.plugin import PluginBase
-from ngoto.core.util.logging import Logging
-from ngoto.core.util.interface import output
-from ngoto.core.util.rich.table import Table, Style  # used in this plugin
+from ngoto import PluginBase, Logging, output, Table, Style
 from dataclasses import dataclass
 
 

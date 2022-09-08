@@ -1,6 +1,4 @@
-from ngoto.core.util.plugin import PluginBase
-from ngoto.core.util.interface import output
-from ngoto.core.util.rich.table import Table, Style  # used in this plugin
+from ngoto import PluginBase, output, Table, Style  # used in this plugin
 import subprocess
 
 
