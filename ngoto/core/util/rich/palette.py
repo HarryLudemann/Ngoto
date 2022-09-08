@@ -5,7 +5,7 @@ from typing import Sequence, Tuple, TYPE_CHECKING
 from .color_triplet import ColorTriplet
 
 if TYPE_CHECKING:
-    from rich.table import Table
+    from ngoto.core.util.rich.table import Table
 
 
 class Palette:
@@ -18,10 +18,10 @@ class Palette:
         return ColorTriplet(*self._colors[number])
 
     def __rich__(self) -> "Table":
-        from rich.color import Color
-        from rich.style import Style
-        from rich.text import Text
-        from rich.table import Table
+        from ngoto.core.util.rich.color import Color
+        from ngoto.core.util.rich.style import Style
+        from ngoto.core.util.rich.text import Text
+        from ngoto.core.util.rich.table import Table
 
         table = Table(
             "index",
@@ -75,10 +75,10 @@ class Palette:
 if __name__ == "__main__":  # pragma: no cover
     import colorsys
     from typing import Iterable
-    from rich.color import Color
-    from rich.console import Console, ConsoleOptions
-    from rich.segment import Segment
-    from rich.style import Style
+    from ngoto.core.util.rich.color import Color
+    from ngoto.core.util.rich.console import Console, ConsoleOptions
+    from ngoto.core.util.rich.segment import Segment
+    from ngoto.core.util.rich.style import Style
 
     class ColorBox:
         def __rich_console__(

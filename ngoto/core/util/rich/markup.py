@@ -235,8 +235,8 @@ if __name__ == "__main__":  # pragma: no cover
         ":warning-emoji: [bold red blink] DANGER![/]",
     ]
 
-    from rich import print
-    from rich.table import Table
+    from ngoto.core.util.rich import print
+    from ngoto.core.util.rich.table import Table
 
     grid = Table("Markup", "Result", padding=(0, 1))
 

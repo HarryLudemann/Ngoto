@@ -16,8 +16,8 @@ import time
 from ctypes import Structure, byref, wintypes
 from typing import IO, NamedTuple, Type, cast
 
-from rich.color import ColorSystem
-from rich.style import Style
+from ngoto.core.util.rich.color import ColorSystem
+from ngoto.core.util.rich.style import Style
 
 STDOUT = -11
 ENABLE_VIRTUAL_TERMINAL_PROCESSING = 4
@@ -576,7 +576,7 @@ class LegacyWindowsTerm:
 if __name__ == "__main__":
     handle = GetStdHandle()
 
-    from rich.console import Console
+    from ngoto.core.util.rich.console import Console
 
     console = Console()
 

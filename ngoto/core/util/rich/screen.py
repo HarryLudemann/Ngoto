@@ -31,7 +31,7 @@ class Screen:
         style: Optional[StyleType] = None,
         application_mode: bool = False,
     ) -> None:
-        from rich.console import Group
+        from ngoto.core.util.rich.console import Group
 
         self.renderable = Group(*renderables)
         self.style = style

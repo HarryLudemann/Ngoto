@@ -19,7 +19,7 @@ class RichRenderable(ABC):
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from rich.text import Text
+    from ngoto.core.util.rich.text import Text
 
     t = Text()
     print(isinstance(Text, RichRenderable))

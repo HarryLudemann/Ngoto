@@ -288,9 +288,9 @@ class VerticalCenter(JupyterMixin):
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from rich.console import Console, Group
-    from rich.highlighter import ReprHighlighter
-    from rich.panel import Panel
+    from ngoto.core.util.rich.console import Console, Group
+    from ngoto.core.util.rich.highlighter import ReprHighlighter
+    from ngoto.core.util.rich.panel import Panel
 
     highlighter = ReprHighlighter()
     console = Console()

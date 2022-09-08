@@ -215,7 +215,7 @@ def escape_control_codes(
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from rich.console import Console
+    from ngoto.core.util.rich.console import Console
 
     console = Console()
     console.print("Look at the title of your terminal window ^")

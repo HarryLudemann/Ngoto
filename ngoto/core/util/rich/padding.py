@@ -136,6 +136,6 @@ class Padding(JupyterMixin):
 
 
 if __name__ == "__main__":  #  pragma: no cover
-    from rich import print
+    from ngoto.core.util.rich import print
 
     print(Padding("Hello, World", (2, 4), style="on blue"))

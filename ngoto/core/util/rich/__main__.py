@@ -2,17 +2,17 @@ import colorsys
 import io
 from time import process_time
 
-from rich import box
-from rich.color import Color
-from rich.console import Console, ConsoleOptions, Group, RenderableType, RenderResult
-from rich.markdown import Markdown
-from rich.measure import Measurement
-from rich.pretty import Pretty
-from rich.segment import Segment
-from rich.style import Style
-from rich.syntax import Syntax
-from rich.table import Table
-from rich.text import Text
+from ngoto.core.util.rich import box
+from ngoto.core.util.rich.color import Color
+from ngoto.core.util.rich.console import Console, ConsoleOptions, Group, RenderableType, RenderResult
+from ngoto.core.util.rich.markdown import Markdown
+from ngoto.core.util.rich.measure import Measurement
+from ngoto.core.util.rich.pretty import Pretty
+from ngoto.core.util.rich.segment import Segment
+from ngoto.core.util.rich.style import Style
+from ngoto.core.util.rich.syntax import Syntax
+from ngoto.core.util.rich.table import Table
+from ngoto.core.util.rich.text import Text
 
 
 class ColorBox:
@@ -235,7 +235,7 @@ if __name__ == "__main__":  # pragma: no cover
     print(f"rendered in {pre_cache_taken}ms (cold cache)")
     print(f"rendered in {taken}ms (warm cache)")
 
-    from rich.panel import Panel
+    from ngoto.core.util.rich.panel import Panel
 
     console = Console()
 

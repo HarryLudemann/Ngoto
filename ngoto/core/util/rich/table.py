@@ -916,9 +916,9 @@ class Table(JupyterMixin):
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from rich.console import Console
-    from rich.highlighter import ReprHighlighter
-    from rich.table import Table as Table
+    from ngoto.core.util.rich.console import Console
+    from ngoto.core.util.rich.highlighter import ReprHighlighter
+    from ngoto.core.util.rich.table import Table as Table
 
     from ._timer import timer
 

@@ -706,11 +706,11 @@ class SegmentLines:
 
 
 if __name__ == "__main__":  # pragma: no cover
-    from rich.console import Console
-    from rich.syntax import Syntax
-    from rich.text import Text
+    from ngoto.core.util.rich.console import Console
+    from ngoto.core.util.rich.syntax import Syntax
+    from ngoto.core.util.rich.text import Text
 
-    code = """from rich.console import Console
+    code = """from ngoto.core.util.rich.console import Console
 console = Console()
 text = Text.from_markup("Hello, [bold magenta]World[/]!")
 console.print(text)"""
