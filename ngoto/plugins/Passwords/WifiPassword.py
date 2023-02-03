@@ -25,7 +25,6 @@ class Plugin(PluginBase):
 
     # main function to handle input, then calls and return get_context method
     def main(self, logger):
-        self.logger = logger
         logger.info(
             'Getting Wifi Passwords',
             program='Wifi Passwords')
@@ -43,25 +42,20 @@ class Plugin(PluginBase):
             border_style=self.border_style)
         self.table.add_column("Profile Name", style=self.header_style)
         self.table.add_column("Password", style=self.header_style)
-        profiles = []
         for i in context['data']:
-            if "All User Profile" in i:
-                profiles.append(i.split(":")[1][1:-1])
-        for i in profiles:
+            if "All User Profile" not in i:
+                continue
+            profile = i.split(":")[1][1:-1]
             try:
-                results = subprocess.check_output(
-                    ['netsh', 'wlan', 'show', 'profile', i, 'key=clear']
+                for line in subprocess.check_output(
+                    ['netsh', 'wlan', 'show', 'profile', profile, 'key=clear']
                         ).decode(
                             'utf-8',
                             errors="backslashreplace"
-                                ).split('\n')
-                for b in results:
-                    if "Key Content" in b:
-                        results.append(b.split(":")[1][1:-1])
-                try:
-                    self.table.add_row(i, results[0])
-                except IndexError:
-                    self.table.add_row(i, "")
+                                ).split('\n'):
+                    if "Key Content" in line:
+                        self.table.add_row(profile, line.split(":")[1])
+                        break
             except subprocess.CalledProcessError:
                 self.table.add_row(i, "ENCODING ERROR")
         output(self.table)

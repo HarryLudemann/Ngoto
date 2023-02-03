@@ -82,7 +82,7 @@ class Plugin(PluginBase):
             output(f'{str(index + 1)}. ' + child.get_name())
             child_count = index
         print('\n')
-        option = get_input()
+        option = get_input('> ')
         if option in ['b', 'back', '0', 'q']:  # move back in dir
             if node.has_parent:
                 self.run_tree(node.get_parent())

@@ -56,6 +56,6 @@ class Plugin(PluginBase):
             justify="center",
             header_style=self.header_style)
         for item in context:
-            if isinstance(context[item], list):
+            if not isinstance(context[item], list):
                 self.table.add_row(item, context[item], style=self.title_style)
         output(self.table)

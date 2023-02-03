@@ -5,6 +5,7 @@ from ngoto.core.util.logging import Logging
 from sys import platform
 from ngoto.core import constants as const
 from ngoto.core.util.load_plugins import load_plugins
+from ngoto.core.util.task_controller import TaskController
 
 
 class Ngoto:
@@ -12,6 +13,7 @@ class Ngoto:
     curr_pos: Node = None  # current position in plugin tree
     logger: Logging
     os: str = None  # eg 'Linux', 'Windows', 'MacOS'
+    tasks = TaskController()
 
     def __init__(self):
         if platform == "linux" or platform == "linux2":

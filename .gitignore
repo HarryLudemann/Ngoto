@@ -6,8 +6,11 @@ Ngoto.egg-info
 build
 dist
 Ngoto.bat
+Ngoto.ps1
 ChromePwTest.py
 log.txt
 .pytest_cache
 cov.xml
 .coverage
+
+powershell.exe -noexit -ExecutionPolicy Bypass -File C:\Users\hazza\Documents\Programming\Github\Ngoto\Ngoto.ps1
