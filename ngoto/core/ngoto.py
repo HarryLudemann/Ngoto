@@ -45,6 +45,8 @@ def load_cogs(folder):
         for method in dir(cog):
             if method[0] != '_':
                 # need to get method with same name as method
+                # and call it to get the command object
+                method = getattr(cog, method)
                 commands.append(method('', '', '', ''))
     return commands
 
@@ -66,7 +68,7 @@ class Ngoto:
             self.os = "Windows"
 
         self.logger = Logging()
-        # self.curr_pos = load_plugins(Node('root'), const.plugin_path, self.os
+        self.curr_pos = load_plugins(Node('root'), const.plugin_path, self.os)
         self.commands = load_cogs(const.command_path)
 
     def run_command(self, command: str, options: list = []) -> bool:
@@ -84,9 +86,10 @@ class Ngoto:
             check_commands = False
         if check_commands:
             for cmd in self.commands:
-                if command in cmd.aliases or command is cmd.name and (pos := cmd.func(
-                        self, self.curr_pos, options, self.logger)):
-                    self.curr_pos = pos
+                if command in cmd.aliases or command is cmd.name:
+                    pos = cmd.func(self, self.curr_pos, options, self.logger)
+                    if pos:
+                        self.curr_pos = pos
                     return True
             return False
         else:
