@@ -30,7 +30,7 @@ from ngoto.core.util.rich.repr import RichReprResult
 try:
     import attr as _attr_module
 
-    _has_attrs = True
+    _has_attrs = hasattr(_attr_module, "ib")
 except ImportError:  # pragma: no cover
     _has_attrs = False
 
@@ -371,6 +371,7 @@ class Pretty(JupyterMixin):
             indent_size=self.indent_size,
             max_length=self.max_length,
             max_string=self.max_string,
+            max_depth=self.max_depth,
             expand_all=self.expand_all,
         )
         text_width = (
@@ -433,7 +434,7 @@ class Node:
     is_tuple: bool = False
     is_namedtuple: bool = False
     children: Optional[List["Node"]] = None
-    key_separator = ": "
+    key_separator: str = ": "
     separator: str = ", "
 
     def iter_tokens(self) -> Iterable[str]:
@@ -636,8 +637,12 @@ def traverse(
     def _traverse(obj: Any, root: bool = False, depth: int = 0) -> Node:
         """Walk the object depth first."""
 
+        obj_id = id(obj)
+        if obj_id in visited_ids:
+            # Recursion detected
+            return Node(value_repr="...")
+
         obj_type = type(obj)
-        py_version = (sys.version_info.major, sys.version_info.minor)
         children: List[Node]
         reached_max_depth = max_depth is not None and depth >= max_depth
 
@@ -673,6 +678,7 @@ def traverse(
                 pass
 
         if rich_repr_result is not None:
+            push_visited(obj_id)
             angular = getattr(obj.__rich_repr__, "angular", False)
             args = list(iter_rich_args(rich_repr_result))
             class_name = obj.__class__.__name__
@@ -720,7 +726,9 @@ def traverse(
                     children=[],
                     last=root,
                 )
+            pop_visited(obj_id)
         elif _is_attr_object(obj) and not fake_attributes:
+            push_visited(obj_id)
             children = []
             append = children.append
 
@@ -767,19 +775,14 @@ def traverse(
                 node = Node(
                     value_repr=f"{obj.__class__.__name__}()", children=[], last=root
                 )
-
+            pop_visited(obj_id)
         elif (
             is_dataclass(obj)
             and not _safe_isinstance(obj, type)
             and not fake_attributes
-            and (_is_dataclass_repr(obj) or py_version == (3, 6))
+            and _is_dataclass_repr(obj)
         ):
-            obj_id = id(obj)
-            if obj_id in visited_ids:
-                # Recursion detected
-                return Node(value_repr="...")
             push_visited(obj_id)
-
             children = []
             append = children.append
             if reached_max_depth:
@@ -801,8 +804,9 @@ def traverse(
                     child_node.key_separator = "="
                     append(child_node)
 
-                pop_visited(obj_id)
+            pop_visited(obj_id)
         elif _is_namedtuple(obj) and _has_default_namedtuple_repr(obj):
+            push_visited(obj_id)
             class_name = obj.__class__.__name__
             if reached_max_depth:
                 # If we've reached the max depth, we still show the class name, but not its contents
@@ -824,16 +828,13 @@ def traverse(
                     child_node.last = last
                     child_node.key_separator = "="
                     append(child_node)
+            pop_visited(obj_id)
         elif _safe_isinstance(obj, _CONTAINERS):
             for container_type in _CONTAINERS:
                 if _safe_isinstance(obj, container_type):
                     obj_type = container_type
                     break
 
-            obj_id = id(obj)
-            if obj_id in visited_ids:
-                # Recursion detected
-                return Node(value_repr="...")
             push_visited(obj_id)
 
             open_brace, close_brace, empty = _BRACES[obj_type](obj)

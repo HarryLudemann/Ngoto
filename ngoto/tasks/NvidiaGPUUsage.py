@@ -1,4 +1,4 @@
-from ngoto.core.util.task import Task
+from ngoto.core.util.abstract.task import Task
 import subprocess
 
 
@@ -29,7 +29,7 @@ class NvidiaGPUUsage(Task):
     os: list = ['Windows']
 
     def __call__(self) -> bool:
-        from ngoto.core.util.notify import notify
+        from ngoto import notify
         usage = get_gpu_memory_map()
         if len(usage) > 3:
             if int(usage[2]) < 2048:

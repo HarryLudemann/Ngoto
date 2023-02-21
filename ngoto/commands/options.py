@@ -1,16 +1,15 @@
 # contains function to show options
-from ngoto import CommandBase, show_options, clear_screen
+from ngoto import CommandCog, command, show_options, clear_screen
 
 
-class Options(CommandBase):
-    def get_description(self):
-        return "Show plugins/options"
-
-    def get_actions(self):
-        return ['o', 'options', 'ls']
-
-    def perform_action(self, pos, options, logger):
+class Options(CommandCog):
+    @command(name='options', aliases=['o', 'ls'], help='Display Options')
+    def options(self, pos, _, logger):
         clear_screen()
         show_options(pos)
         logger.debug('Showing options', program='Options')
         return pos
+
+
+def setup():
+    return Options()

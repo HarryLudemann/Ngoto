@@ -7,7 +7,6 @@ class Plugin(PluginBase):
     version = 0.1
     description = 'Search URL'
     req_modules: list = []
-    req_apis: list = []
     logger: Logging = None
     parameters: list = []
     os: list = ['Linux', 'Windows', 'MacOS']

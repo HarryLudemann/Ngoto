@@ -1,15 +1,9 @@
-from ngoto import CommandBase, show_options, output, clear_screen
+from ngoto import CommandCog, command, show_options, output, clear_screen
 
 
-class Back(CommandBase):
-
-    def get_description(self):
-        return "Back out of folder"
-
-    def get_actions(self):
-        return ['b', 'back']
-
-    def perform_action(self, pos, options, logger):
+class Back(CommandCog):
+    @command(name='back', aliases=['b'], help='Back out of plugin etc')
+    def back(self, pos, _, logger):
         if pos.has_parent:
             clear_screen()
             parent = pos.get_parent()
@@ -21,3 +15,7 @@ class Back(CommandBase):
         else:
             output("You are already in root")
             logger.debug('Cannot go back, in root dir', program='Back')
+
+
+def setup():
+    return Back()

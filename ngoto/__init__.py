@@ -1,19 +1,19 @@
-from ngoto.core.clt import CLT
-from ngoto.core.module import Module
+from ngoto.core.ngoto import Ngoto
 from ngoto.core.util.interface import output, get_input, logo
 from ngoto.core.util.interface import show_options, show_commands
 from ngoto.core.util.clear import clear_screen
 from ngoto.core.util.notify import notify
 from ngoto.core.util.logging import Logging
 from ngoto.core.util.node import Node
-from ngoto.core.util.plugin import PluginBase
-from ngoto.core.util.command import CommandBase
+from ngoto.core.util.abstract.plugin import PluginBase
+from ngoto.core.util.abstract.command import CommandCog, command
+from ngoto.core.util.abstract.task import Task
 from ngoto.core.util.rich.table import Table
 from ngoto.core.util.rich.style import Style
 
 __all__ = [
-    'CLT',
-    'Module',
+    'Ngoto',
+    'Task',
     'output',
     'get_input',
     'logo',
@@ -23,7 +23,8 @@ __all__ = [
     'notify',
     'Node',
     'PluginBase',
-    'CommandBase',
+    'CommandCog',
+    'command',
     'Table',
     'Style',
     'Logging'

@@ -7,7 +7,6 @@ class Plugin(PluginBase):
     version = 0.1
     description = 'Get stored wifi passwords'
     req_modules: list = []
-    req_apis: list = []
     logger = None
     parameters: list = []
     os: list = ['Windows']
