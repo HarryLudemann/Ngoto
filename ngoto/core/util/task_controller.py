@@ -35,7 +35,9 @@ class TaskController:
                     'Set delay of: ' + task.id + ' to ' + str(delay))
         logger.info('Task not found: ' + task_id)
 
+    @staticmethod
     def update_task(self, task, curr_time, os: str) -> bool:
+        """ Check if task should be run """
         if ((curr_time - task.last_run) > task.delay and
                 task.active and os in task.os and (
                 curr_time - task.last_run) > task.delay):
@@ -44,7 +46,7 @@ class TaskController:
 
     def check_available_tasks(self, executor, curr_time, os: str) -> None:
         for task in self.tasks:
-            if self.update_task(task, curr_time, os):
+            if self.update_task(self, task, curr_time, os):
                 self.tasks_running.append(executor.submit(task))
                 task.last_run = curr_time
 

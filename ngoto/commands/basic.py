@@ -5,7 +5,7 @@ from ngoto import CommandCog, command, clear_screen, output, show_options
 class Basic(CommandCog):
     """ Basic commands for ngoto eg. exit, clear, back"""
     @staticmethod
-    @command(name='logs', aliases=['l'], help='Display logs')
+    @command(name='logs', aliases=['l'], desc='Display logs')
     def log(self, pos, options, logger):
         if len(options) == 2:
             output(logger.get_log(options[1]))
@@ -14,14 +14,14 @@ class Basic(CommandCog):
         return pos
 
     @staticmethod
-    @command(name='clear', aliases=['cls'], help='Clear screen')
+    @command(name='clear', aliases=['cls'], desc='Clear screen')
     def clear(self, pos, _, logger):
         clear_screen()
         logger.debug('Clearing screen', program='Clear')
         return pos
 
     @staticmethod
-    @command(name='options', aliases=['o', 'ls'], help='Display Options')
+    @command(name='options', aliases=['o', 'ls'], desc='Display Options')
     def options(self, pos, _, logger):
         clear_screen()
         show_options(pos)
@@ -29,16 +29,16 @@ class Basic(CommandCog):
         return pos
 
     @staticmethod
-    @command(name='exit', aliases=['q'], help='Exit ngoto')
+    @command(name='exit', aliases=['q'], desc='Exit ngoto')
     def exit(self, pos, options, logger):
         output("Exiting...")
         logger.save_log()
         logger.info("Exiting ngoto")
         logger.debug('Exiting ngoto', program='Exit')
         exit()
-    
+
     @staticmethod
-    @command(name='back', aliases=['b'], help='Back out of plugin etc')
+    @command(name='back', aliases=['b'], desc='Back out of plugin etc')
     def back(self, pos, _, logger):
         if pos.has_parent:
             clear_screen()

@@ -10,12 +10,13 @@ def get_gpu_memory_map() -> list:
         [2] Free memory
         [3] Power draw
     """
+    # enable shell for subprocess
     result = subprocess.check_output(
         [
             'nvidia-smi',
             '--query-gpu=memory.used,memory.total,memory.free,power.draw',
             '--format=csv,nounits,noheader'
-        ])
+        ], shell=False)
     return result.decode('utf-8').strip().split(',')
 
 

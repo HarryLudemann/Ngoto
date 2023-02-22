@@ -5,7 +5,7 @@ from ngoto import CommandCog, command, show_options, clear_screen
 class Open(CommandCog):
     """ Open commands for ngoto eg. openPlugin, openFolder"""
     @staticmethod
-    @command(name='openPlugin', aliases=['openP'], help='Open plugin')
+    @command(name='openPlugin', aliases=['openP'], desc='Open plugin')
     def open_plugin(self, pos, options, logger):
         plugin = pos.get_plugin(int(options[0]) - pos.num_children - 1)
         if context := plugin.main(logger):  # if context print
@@ -18,7 +18,7 @@ class Open(CommandCog):
         return pos
 
     @staticmethod
-    @command(name='openFolder', aliases=['openF'], help='Open folder')
+    @command(name='openFolder', aliases=['openF'], desc='Open folder')
     def open_folder(self, pos, options, logger):
         folder = pos.get_child(int(options[0])-1)
         folder.set_parent(pos)

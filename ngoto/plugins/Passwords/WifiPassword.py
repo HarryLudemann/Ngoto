@@ -18,7 +18,7 @@ class Plugin(PluginBase):
 
     def get_context(self) -> list:
         return {"data": check_output(
-            ['netsh', 'wlan', 'show', 'profiles']).decode(
+            ['netsh', 'wlan', 'show', 'profiles'], shell=False).decode(
                 'utf-8',
                 errors="backslashreplace").split('\n')}
 
@@ -47,8 +47,8 @@ class Plugin(PluginBase):
             profile = i.split(":")[1][1:-1]
             try:
                 for line in check_output(
-                    ['netsh', 'wlan', 'show', 'profile', profile, 'key=clear']
-                        ).decode(
+                    ['netsh', 'wlan', 'show', 'profile', profile, 'key=clear'],
+                    shell=False).decode(
                             'utf-8',
                             errors="backslashreplace"
                                 ).split('\n'):
