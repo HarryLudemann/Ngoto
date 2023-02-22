@@ -106,7 +106,7 @@ class Ngoto:
 
     def main(self) -> None:
         """ Main loop """
-        self.run_command('clear') 
+        self.run_command('clear')
         self.run_command('options')
         with ThreadPoolExecutor(max_workers=3) as executor:
             clt_loop = executor.submit(self.clt)

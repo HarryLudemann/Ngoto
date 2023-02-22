@@ -12,20 +12,20 @@ class Basic(CommandCog):
         else:
             output(logger.get_log("1"))
         return pos
-    
+
     @command(name='clear', aliases=['cls'], help='Clear screen')
     def clear(self, pos, _, logger):
         clear_screen()
         logger.debug('Clearing screen', program='Clear')
         return pos
-    
+
     @command(name='options', aliases=['o', 'ls'], help='Display Options')
     def options(self, pos, _, logger):
         clear_screen()
         show_options(pos)
         logger.debug('Showing options', program='Options')
         return pos
-    
+
     @command(name='exit', aliases=['q'], help='Exit ngoto')
     def exit(self, pos, options, logger):
         output("Exiting...")

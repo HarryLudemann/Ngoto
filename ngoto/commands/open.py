@@ -15,7 +15,7 @@ class Open(CommandCog):
 
         logger.debug(f'Opening plugin {plugin.name}', program='OpenPlugin')
         return pos
-    
+
     @command(name='openFolder', aliases=['openF'], help='Open folder')
     def open_folder(self, pos, options, logger):
         folder = pos.get_child(int(options[0])-1)
