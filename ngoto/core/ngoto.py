@@ -44,8 +44,6 @@ def load_cogs(folder):
         # for each class method thats not inbuilt call and add returned
         for method in dir(cog):
             if method[0] != '_':
-                # need to get method with same name as method
-                # and call it to get the command object
                 method = getattr(cog, method)
                 commands.append(method('', '', '', ''))
     return commands

@@ -1,5 +1,5 @@
 from ngoto import PluginBase, output, Table, Style  # used in this plugin
-import subprocess
+from subprocess import check_output, CalledProcessError
 
 
 class Plugin(PluginBase):
@@ -17,7 +17,7 @@ class Plugin(PluginBase):
     header_style = Style(color="black", blink=False, bold=True)
 
     def get_context(self) -> list:
-        return {"data": subprocess.check_output(
+        return {"data": check_output(
             ['netsh', 'wlan', 'show', 'profiles']).decode(
                 'utf-8',
                 errors="backslashreplace").split('\n')}
@@ -46,7 +46,7 @@ class Plugin(PluginBase):
                 continue
             profile = i.split(":")[1][1:-1]
             try:
-                for line in subprocess.check_output(
+                for line in check_output(
                     ['netsh', 'wlan', 'show', 'profile', profile, 'key=clear']
                         ).decode(
                             'utf-8',
@@ -55,10 +55,6 @@ class Plugin(PluginBase):
                     if "Key Content" in line:
                         self.table.add_row(profile, line.split(":")[1])
                         break
-            except subprocess.CalledProcessError:
+            except CalledProcessError:
                 self.table.add_row(i, "ENCODING ERROR")
         output(self.table)
-
-    # holds sqlite3 create table query to store information
-    def create_table(self):
-        return ''

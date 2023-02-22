@@ -4,6 +4,7 @@ from ngoto import CommandCog, command, show_options, clear_screen
 
 class Open(CommandCog):
     """ Open commands for ngoto eg. openPlugin, openFolder"""
+    @staticmethod
     @command(name='openPlugin', aliases=['openP'], help='Open plugin')
     def open_plugin(self, pos, options, logger):
         plugin = pos.get_plugin(int(options[0]) - pos.num_children - 1)
@@ -16,6 +17,7 @@ class Open(CommandCog):
         logger.debug(f'Opening plugin {plugin.name}', program='OpenPlugin')
         return pos
 
+    @staticmethod
     @command(name='openFolder', aliases=['openF'], help='Open folder')
     def open_folder(self, pos, options, logger):
         folder = pos.get_child(int(options[0])-1)
