@@ -16,7 +16,7 @@ def get_gpu_memory_map() -> list:
             'nvidia-smi',
             '--query-gpu=memory.used,memory.total,memory.free,power.draw',
             '--format=csv,nounits,noheader'
-        ], shell=True)
+        ], shell=False)
     return result.decode('utf-8').strip().split(',')
 
 

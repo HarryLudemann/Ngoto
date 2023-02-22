@@ -18,7 +18,7 @@ class Plugin(PluginBase):
 
     def get_context(self) -> list:
         return {"data": check_output(
-            ['netsh', 'wlan', 'show', 'profiles'], shell=True).decode(
+            ['netsh', 'wlan', 'show', 'profiles'], shell=False).decode(
                 'utf-8',
                 errors="backslashreplace").split('\n')}
 
@@ -48,10 +48,8 @@ class Plugin(PluginBase):
             try:
                 for line in check_output(
                     ['netsh', 'wlan', 'show', 'profile', profile, 'key=clear'],
-                    shell=True).decode(
-                            'utf-8',
-                            errors="backslashreplace"
-                                ).split('\n'):
+                    shell=False).decode(
+                        'utf-8', errors="backslashreplace").split('\n'):
                     if "Key Content" in line:
                         self.table.add_row(profile, line.split(":")[1])
                         break
