@@ -9,7 +9,7 @@ import threading
 # this is not called on the main thread!
 def handle_activated(sender, _):
     path = os.path.expanduser("~\\Documents")
-    Popen('explorer ' + path, check=True, shell=False)
+    Popen('explorer ' + path, shell=False)
 
 
 def notify(title, message, button_name=None):

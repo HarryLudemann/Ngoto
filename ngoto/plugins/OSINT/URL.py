@@ -28,7 +28,7 @@ class Plugin(PluginBase):
         return ip
 
     # Returns dict of acquired information, given desired information
-    def get_context(self, target_url):
+    def get_context(self):
         return {"ip": 'can only be used with clt'}
 
     # main function to handle input, then calls and return get_context method
