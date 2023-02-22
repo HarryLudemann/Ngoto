@@ -16,8 +16,8 @@ class Plugin(PluginBase):
     border_style = Style(color="black", blink=False, bold=True)
     header_style = Style(color="black", blink=False, bold=True)
 
-    # Returns dict of acquired information, given desired information
-    def get_context(self, target_url):
+    @classmethod
+    def __get_ip(self, target_url):
         try:
             ip = socket.gethostbyname(target_url)
         except socket.gaierror:
@@ -25,7 +25,11 @@ class Plugin(PluginBase):
                 f'Could not get IP for URL {target_url}, socket.gaierror ',
                 program='OSINT URL')
             ip = "Unknown - socket.gaierror"
-        return {"ip": ip}
+        return ip
+
+    # Returns dict of acquired information, given desired information
+    def get_context(self, target_url):
+        return {"ip": 'can only be used with clt'}
 
     # main function to handle input, then calls and return get_context method
     def main(self, logger):
@@ -34,7 +38,7 @@ class Plugin(PluginBase):
         if target in ['back', 'b']:
             return {}
         logger.info(f'Getting IP for URL {target}', program='OSINT URL')
-        context = self.get_context(target)
+        context = {'ip': self.__get_ip(target)}
         logger.info(
             f'IP for URL {target} is {context["ip"]}',
             program='OSINT URL')

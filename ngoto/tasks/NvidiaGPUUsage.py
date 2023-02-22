@@ -1,5 +1,5 @@
 from ngoto.core.util.abstract.task import Task
-import subprocess
+from subprocess import check_output
 
 
 def get_gpu_memory_map() -> list:
@@ -10,13 +10,12 @@ def get_gpu_memory_map() -> list:
         [2] Free memory
         [3] Power draw
     """
-    # enable shell for subprocess
-    result = subprocess.check_output(
+    result = check_output(
         [
             'nvidia-smi',
             '--query-gpu=memory.used,memory.total,memory.free,power.draw',
             '--format=csv,nounits,noheader'
-        ], shell=False)
+        ], shell=False, check=True)
     return result.decode('utf-8').strip().split(',')
 
 
