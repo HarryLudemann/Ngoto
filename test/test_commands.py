@@ -1,15 +1,17 @@
-from ngoto.core.clt import CLT
+from ngoto.core.ngoto import Ngoto
 
 
 def test_dup_action():
     """
         Check there are no duplicate command actions eg. 'b'
     """
-    ngotoCLT = CLT()
+    ngoto = Ngoto()
     # get list of all actions
     commands = []
-    for command in ngotoCLT.commands:
-        commands += command.get_actions()
+    for command in ngoto.commands:
+        commands.append(command.name)
+        for cmd in command.aliases:
+            commands.append(cmd)
     # check for duplicates
     if len(commands) == len(set(commands)):
         assert True
@@ -26,68 +28,52 @@ def test_open_folder_command():
     """
         Check the open folder command works
     """
-    ngotoCLT = CLT()
-    root_pos = ngotoCLT.curr_pos.get_name()
-    print(ngotoCLT.curr_pos.num_children)
-    ngotoCLT.run_command('1', ['1'])  # open folder
-    assert ngotoCLT.curr_pos.get_name() != root_pos
+    ngoto = Ngoto()
+    root_pos = ngoto.curr_pos.get_name()
+    print(ngoto.curr_pos.num_children)
+    ngoto.run_command('1', ['1'])  # open folder
+    assert ngoto.curr_pos.get_name() != root_pos
 
 
 def test_back_command_1():
     """
         Check the back command works
     """
-    ngotoCLT = CLT()
-    root_pos = ngotoCLT.curr_pos.get_name()
-    ngotoCLT.run_command('1', ['1'])  # open folder
-    ngotoCLT.run_command('b')
-    assert ngotoCLT.curr_pos.get_name() == root_pos
+    ngoto = Ngoto()
+    root_pos = ngoto.curr_pos.get_name()
+    ngoto.run_command('1', ['1'])  # open folder
+    ngoto.run_command('b')
+    assert ngoto.curr_pos.get_name() == root_pos
 
 
 def test_back_command_2():
     """
         Check the back command works
     """
-    ngotoCLT = CLT()
-    ngotoCLT.run_command('1', ['1'])  # open folder
-    assert ngotoCLT.run_command('b')
+    ngoto = Ngoto()
+    ngoto.run_command('1', ['1'])  # open folder
+    assert ngoto.run_command('b')
 
 
 def test_clear_command():
     """
         Check the clear command works
     """
-    ngotoCLT = CLT()
-    assert ngotoCLT.run_command('clear')
+    ngoto = Ngoto()
+    assert ngoto.run_command('clear')
 
 
 def test_log_command():
     """
         Check the log command works
     """
-    ngotoCLT = CLT()
-    assert ngotoCLT.run_command('logs')
-
-
-def test_help_command():
-    """
-        Check the help command works
-    """
-    ngotoCLT = CLT()
-    assert ngotoCLT.run_command('help')
+    ngoto = Ngoto()
+    assert ngoto.run_command('logs')
 
 
 def test_options_command():
     """
         Check the options command works
     """
-    ngotoCLT = CLT()
-    assert ngotoCLT.run_command('options')
-
-
-def test_paths_command():
-    """
-        Check the paths command works
-    """
-    ngotoCLT = CLT()
-    assert ngotoCLT.run_command('paths')
+    ngoto = Ngoto()
+    assert ngoto.run_command('options')

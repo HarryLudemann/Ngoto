@@ -2,14 +2,14 @@
 import os
 import sys
 import time
-import subprocess
+from subprocess import Popen
 import threading
 
 
 # this is not called on the main thread!
 def handle_activated(sender, _):
     path = os.path.expanduser("~\\Documents")
-    subprocess.Popen('explorer ' + path)
+    Popen('explorer ' + path, shell=False)
 
 
 def notify(title, message, button_name=None):

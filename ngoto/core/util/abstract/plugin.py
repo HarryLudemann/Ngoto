@@ -20,8 +20,6 @@ class PluginBase(ABC):
         the version of the plugin
     req_modules : list[str]
         the required modules for the plugin to run
-    req_apis : list[str]
-        the required apis for the plugin to run
     parameters : list[str]
         the parameters for the plugin main function
     os : list[str]
@@ -42,7 +40,6 @@ class PluginBase(ABC):
     description: str = ''
     version: str = ''
     req_modules: list = []  # given in the pip install name
-    req_apis: list = []
     parameters: list = []  # for get context
     os: list = []  # stores working os eg. Windows, Linux, MacOS
 

@@ -1,4 +1,4 @@
-from ngoto.core.util.task import Task
+from ngoto.core.util.abstract.task import Task
 
 
 class BasicPCUsage(Task):
@@ -11,7 +11,7 @@ class BasicPCUsage(Task):
     os: list = ['Windows']
 
     def __call__(self) -> bool:
-        from ngoto.core.util.notify import notify
+        from ngoto import notify
         import psutil
         ram_usage = psutil.virtual_memory()[2]
         cpu_usage = psutil.cpu_percent()

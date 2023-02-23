@@ -48,7 +48,6 @@ class Plugin(PluginBase):
     version = 0.1
     description = 'Search OSINT Framework'
     req_modules: list = []
-    req_apis: list = []
     root: Node = None  # Root Node
     logger: Logging = None
     parameters: list = []

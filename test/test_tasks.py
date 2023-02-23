@@ -1,14 +1,14 @@
-from ngoto.core.clt import CLT
+from ngoto.core.ngoto import Ngoto
 
 
 def test_task_dup_id():
     """
         Check there are no duplicate task ids
     """
-    ngotoCLT = CLT()
+    ngoto = Ngoto()
     # get list of all actions
     tasks = []
-    for task in ngotoCLT.tasks.tasks:
+    for task in ngoto.tasks.tasks:
         tasks.append(task.id)
     # check for duplicates
     if len(tasks) == len(set(tasks)):

@@ -52,7 +52,6 @@ class Plugin(Plugin):
     version = 0.1
     description = 'Get IP'
     req_modules: list = []
-    req_apis: list = []
     parameters: list = []
     os: list = ['Linux', 'Windows', 'MacOS']
 

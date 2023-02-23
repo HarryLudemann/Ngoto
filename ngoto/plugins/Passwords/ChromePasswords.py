@@ -29,7 +29,6 @@ class Plugin(PluginBase):
     version = 0.1
     description = 'Get stored chrome passwords'
     req_modules: list = ['pycryptodome']
-    req_apis: list = []
     logger: Logging = None
     parameters: list = []
     os: list = ['Windows']

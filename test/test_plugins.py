@@ -1,4 +1,4 @@
-from ngoto.core.clt import CLT
+from ngoto.core.ngoto import Ngoto
 
 
 # recursive function to get all plugins from node
@@ -15,9 +15,9 @@ def test_plugin_dup_name():
     """
         Check there are no duplicate plugin names
     """
-    ngotoCLT = CLT()
+    ngoto = Ngoto()
     # get list of all plugin names
-    plugins = get_all_plugins(ngotoCLT.curr_pos)
+    plugins = get_all_plugins(ngoto.curr_pos)
     names = []
     for plugin in plugins:
         names.append(plugin.name)

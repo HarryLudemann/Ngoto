@@ -1,5 +1,5 @@
-from ngoto.core.util.task import Task
-import subprocess
+from ngoto.core.util.abstract.task import Task
+from subprocess import check_output
 
 
 def get_gpu_memory_map() -> list:
@@ -10,12 +10,12 @@ def get_gpu_memory_map() -> list:
         [2] Free memory
         [3] Power draw
     """
-    result = subprocess.check_output(
+    result = check_output(
         [
             'nvidia-smi',
             '--query-gpu=memory.used,memory.total,memory.free,power.draw',
             '--format=csv,nounits,noheader'
-        ])
+        ], shell=False, check=True)
     return result.decode('utf-8').strip().split(',')
 
 
@@ -29,7 +29,7 @@ class NvidiaGPUUsage(Task):
     os: list = ['Windows']
 
     def __call__(self) -> bool:
-        from ngoto.core.util.notify import notify
+        from ngoto import notify
         usage = get_gpu_memory_map()
         if len(usage) > 3:
             if int(usage[2]) < 2048:

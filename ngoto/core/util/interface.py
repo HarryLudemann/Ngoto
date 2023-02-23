@@ -17,6 +17,18 @@ border_style = Style(color="black", blink=False, bold=True)
 header_style = Style(color="black", blink=False, bold=True)
 
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+
 def output(output, style=Style()):
     console.print(output, style=style, highlight=False)
 
@@ -53,21 +65,24 @@ def show_options(curr_node):  # given Node in plugin
 
 
 def show_commands(commands: list):
-    table = Table(
-        title="Ngoto Commands",
-        title_style=title_style,
-        border_style=border_style)
-    table.add_column("Commands", style=output_style)
-    table.add_column("Description", style=output_style)
-    for command in commands:
-        actions = str(
-            command.get_actions()
-            ).replace("'", "").replace("[", "").replace("]", "")
-        table.add_row(actions, command.get_description())
-    table.add_row("t/task d {task_id}/all", "Disable a task")
-    table.add_row("t/task e {task_id}/all", "Enable a task")
-    table.add_row("t/task delay {task_id}/all {delay}", "Set a task delay")
-    output(table)
+    try:
+        table = Table(
+            title="Ngoto Commands",
+            title_style=title_style,
+            border_style=border_style)
+        table.add_column("Commands", style=output_style)
+        table.add_column("Description", style=output_style)
+        for command in commands:
+            actions = str(
+                command.aliases
+                ).replace("'", "").replace("[", "").replace("]", "")
+            table.add_row(command.name + ', ' + actions, command.desc)
+        table.add_row("t/task d {task_id}/all", "Disable a task")
+        table.add_row("t/task e {task_id}/all", "Enable a task")
+        table.add_row("t/task delay {task_id}/all {delay}", "Set a task delay")
+        output(table)
+    except Exception as e:
+        output(e)
 
 
 def show_tasks(tasks: list, thisOS: str):
