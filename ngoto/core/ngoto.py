@@ -1,8 +1,10 @@
 from ngoto.core.util.node import Node
 from ngoto.core.util.logging import Logging
-from ngoto.core import constants as const
 from ngoto.core.util.task_controller import TaskController
 from ngoto.core.util.interface import show_commands, output, get_input
+from ngoto.core.util.abstract.command import Command
+from ngoto.core.util.abstract.task import Task
+from ngoto.core import constants as const
 from concurrent.futures import ThreadPoolExecutor
 from sys import platform
 import os
@@ -11,7 +13,7 @@ from time import sleep, time
 
 def load_plugins(curr_node: Node, file_path: str, curr_os: str) -> Node:
     """ Recursive function to traverse plugin directory adding
-        each folder as node to tree and each plugin to node"""
+        each folder as node to tree and each plugin to node """
     for file in os.listdir(file_path):
         if file.endswith(".py"):    # if python script
             mod = __import__(
@@ -27,26 +29,28 @@ def load_plugins(curr_node: Node, file_path: str, curr_os: str) -> Node:
     return curr_node
 
 
-def load_cogs(folder):
-    """Load all commands in commands folders __init__ __all__ list """
-    cogs, commands, files_paths = [], [], []
-    for c in os.listdir(folder):
-        if c.endswith('.py') and not c.startswith('__'):
-            files_paths.append(c)
-    for files_path in files_paths:
-        complete_path = folder + '/' + files_path
-        complete_path = complete_path.replace('/', '.')[:-3]
-        # load file and call setup function
-        module = __import__(complete_path, fromlist=['setup'])
-        cogs.append(module.setup())
-
-    for cog in cogs:
-        # for each class method thats not inbuilt call and add returned
-        for method in dir(cog):
-            if method[0] != '_':
-                method = getattr(cog, method)
-                commands.append(method('', '', '', ''))
-    return commands
+def get_object_from_method(method):
+    num_args = method.__code__.co_argcount
+    if num_args == 0:
+        return method()
+    elif num_args == 1:
+        return method('')
+    elif num_args == 2:
+        return method('', '')
+    elif num_args == 3:
+        return method('', '', '')
+    elif num_args == 4:
+        return method('', '', '', '')
+    elif num_args == 5:
+        return method('', '', '', '', '')
+    elif num_args == 6:
+        return method('', '', '', '', '', '')
+    elif num_args == 7:
+        return method('', '', '', '', '', '', '')
+    elif num_args == 8:
+        return method('', '', '', '', '', '', '', '')
+    else:
+        raise Exception('Too many arguments for method')
 
 
 class Ngoto:
@@ -67,7 +71,30 @@ class Ngoto:
 
         self.logger = Logging()
         self.curr_pos = load_plugins(Node('root'), const.plugin_path, self.os)
-        self.commands = load_cogs(const.command_path)
+        self.commands = self.load_cogs(const.command_path)
+
+    def load_cogs(self, folder):
+        """Load all commands in commands folders __init__ __all__ list """
+        cogs, commands, files_paths = [], [], []
+        for c in os.listdir(folder):
+            if c.endswith('.py') and not c.startswith('__'):
+                files_paths.append(c)
+        for files_path in files_paths:
+            complete_path = folder + '/' + files_path
+            complete_path = complete_path.replace('/', '.')[:-3]
+            # load file and call setup function
+            module = __import__(complete_path, fromlist=['setup'])
+            cogs.append(module.setup())
+        for cog in cogs:
+            for method in dir(cog):
+                if method[0] != '_':
+                    method = getattr(cog, method)
+                    method_object = get_object_from_method(method)
+                    if isinstance(method_object, Command):
+                        commands.append(method_object)
+                    elif isinstance(method_object, Task):
+                        self.tasks.add_task(method_object)
+        return commands
 
     def run_command(self, command: str, options: list = []) -> bool:
         check_commands = True

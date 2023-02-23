@@ -103,7 +103,7 @@ def show_tasks(tasks: list, thisOS: str):
             table.add_row(
                 task.id,
                 str(task.delay),
-                task.description,
+                task.desc,
                 task.last_output,
                 str(task.iteration),
                 str(task.active),
@@ -112,7 +112,7 @@ def show_tasks(tasks: list, thisOS: str):
             table.add_row(
                 task.id,
                 str(task.delay),
-                task.description,
+                task.desc,
                 task.last_output,
                 str(task.iteration),
                 "False",

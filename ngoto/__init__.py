@@ -6,8 +6,8 @@ from ngoto.core.util.notify import notify
 from ngoto.core.util.logging import Logging
 from ngoto.core.util.node import Node
 from ngoto.core.util.abstract.plugin import PluginBase
-from ngoto.core.util.abstract.command import CommandCog, command
-from ngoto.core.util.abstract.task import Task
+from ngoto.core.util.abstract.command import command
+from ngoto.core.util.abstract.task import Task, task
 from ngoto.core.util.rich.table import Table
 from ngoto.core.util.rich.style import Style
 
@@ -27,5 +27,6 @@ __all__ = [
     'command',
     'Table',
     'Style',
-    'Logging'
+    'Logging',
+    'task'
 ]

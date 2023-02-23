@@ -1,47 +1,36 @@
-# Base command class for all tasks
-from abc import ABC, abstractmethod
-
-
-class Task(ABC):
-    """
-    A abstract class used to represent an Task, a task is run every set delay
-
-    ...
-
-    Attributes
-    ----------
-    id : str
-        a formatted string with no spaces to represent the task
-    description : str
-        description of the tasks purpose
-    last_output : str
-        the last output of the task
-    delay : int
-        the delay in seconds between runs
-    iteration : int
-        the number of times the task has run
-    active : bool
-        whether the task is active or not
-    os : list
-        the operating systems the task is compatible with
-
-    Methods
-    -------
-    __call__()
-        Abstract method to be implemented by all tasks
-    """
-
+class Task:
     id: str = ""
-    description = ""
-    last_output = ""
-    delay = 30
+    last_output = ''
     iteration = 0
-    active = False
-    os: list = ['Linux', 'Windows', 'MacOS']
+    last_run = 0
 
-    def __init__(self):
-        self.last_run = 0
+    def __init__(self, func, args, kwargs, name: str, delay: int, desc="",
+                 active=True, os=None):
+        self.name = name
+        self.args = args
+        self.kwargs = kwargs
+        self.desc = desc
+        self.func = func
+        self.delay = delay
+        self.active = active
+        if os:
+            self.os = os
+        else:
+            self.os = []
 
-    @abstractmethod
-    def __call__(self):
-        pass
+    def execute(self):
+        return self.func(self)
+
+    def __call__(self) -> bool:
+        return self.execute()
+
+
+def task(name: str, delay: int, desc="", active=True, os=None):
+    """Decorator to add command to cog"""
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            return Task(
+                func, args, kwargs, name, delay, desc=desc, active=active,
+                os=os)
+        return wrapper
+    return decorator

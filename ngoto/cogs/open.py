@@ -1,8 +1,8 @@
 # contains function open plugin
-from ngoto import CommandCog, command, show_options, clear_screen
+from ngoto import command, show_options, clear_screen
 
 
-class Open(CommandCog):
+class Open():
     """ Open commands for ngoto eg. openPlugin, openFolder"""
     @staticmethod
     @command(name='openPlugin', aliases=['openP'], desc='Open plugin')

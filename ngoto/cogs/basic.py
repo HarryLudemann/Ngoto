@@ -1,8 +1,8 @@
 # contains function to clear screen
-from ngoto import CommandCog, command, clear_screen, output, show_options
+from ngoto import command, clear_screen, output, show_options
 
 
-class Basic(CommandCog):
+class Basic():
     """ Basic commands for ngoto eg. exit, clear, back"""
     @staticmethod
     @command(name='logs', aliases=['l'], desc='Display logs')

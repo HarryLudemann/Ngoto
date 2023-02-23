@@ -1,6 +1,3 @@
-# Base command class for all commands
-# from abc import ABC, abstractmethod
-
 
 class Command:
     def __init__(self, func, args, kwargs, name: str, desc="", aliases=None):
@@ -16,10 +13,6 @@ class Command:
 
     def execute(self):
         self.func(self.args, self.kwargs)
-
-
-class CommandCog:
-    pass
 
 
 def command(name, desc='', aliases=None):
