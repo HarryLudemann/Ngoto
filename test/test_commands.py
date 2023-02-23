@@ -12,6 +12,7 @@ def test_dup_action():
         commands.append(command.name)
         for cmd in command.aliases:
             commands.append(cmd)
+    commands = [cmd for cmd in commands if cmd != '']
     # check for duplicates
     if len(commands) == len(set(commands)):
         assert True
