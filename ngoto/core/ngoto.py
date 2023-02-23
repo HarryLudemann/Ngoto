@@ -3,6 +3,7 @@ from ngoto.core.util.logging import Logging
 from ngoto.core.util.task_controller import TaskController
 from ngoto.core.util.interface import show_commands, output, get_input
 from ngoto.core.util.abstract.command import Command
+from ngoto.core.util.abstract.plugin import Plugin
 from ngoto.core.util.abstract.task import Task
 from ngoto.core import constants as const
 from concurrent.futures import ThreadPoolExecutor
@@ -30,27 +31,12 @@ def load_plugins(curr_node: Node, file_path: str, curr_os: str) -> Node:
 
 
 def get_object_from_method(method):
+    """ Returns object from method """
     num_args = method.__code__.co_argcount
-    if num_args == 0:
-        return method()
-    elif num_args == 1:
-        return method('')
-    elif num_args == 2:
-        return method('', '')
-    elif num_args == 3:
-        return method('', '', '')
-    elif num_args == 4:
-        return method('', '', '', '')
-    elif num_args == 5:
-        return method('', '', '', '', '')
-    elif num_args == 6:
-        return method('', '', '', '', '', '')
-    elif num_args == 7:
-        return method('', '', '', '', '', '', '')
-    elif num_args == 8:
-        return method('', '', '', '', '', '', '', '')
-    else:
-        raise Exception('Too many arguments for method')
+    args = []
+    for _ in range(num_args):
+        args.append('')
+    return method(*args)
 
 
 class Ngoto:
@@ -70,12 +56,27 @@ class Ngoto:
             self.os = "Windows"
 
         self.logger = Logging()
-        self.curr_pos = load_plugins(Node('root'), const.plugin_path, self.os)
-        self.commands = self.load_cogs(const.command_path)
+        self.curr_pos = Node('root')
+        self.load_cogs(const.command_path)
+    # self.curr_pos = load_plugins(Node('root'), const.plugin_path, self.os)
 
-    def load_cogs(self, folder):
+    def add_plugin(self, plugin: Plugin, location: str) -> None:
+        """ Add plugin to the correct point in tree """
+        curr_node = self.curr_pos
+        for folder in location.split('/'):
+            if folder != '':
+                # if folder exists in tree
+                if curr_node.has_child(folder):
+                    curr_node = curr_node.get_child_from_name(folder)
+                else:  # if folder does not exist in tree
+                    new_node = Node(folder)
+                    curr_node.add_child(new_node)
+                    curr_node = new_node
+        curr_node.add_plugin(plugin)
+
+    def load_cogs(self, folder) -> None:
         """Load all commands in commands folders __init__ __all__ list """
-        cogs, commands, files_paths = [], [], []
+        cogs, files_paths = [], []
         for c in os.listdir(folder):
             if c.endswith('.py') and not c.startswith('__'):
                 files_paths.append(c)
@@ -91,10 +92,11 @@ class Ngoto:
                     method = getattr(cog, method)
                     method_object = get_object_from_method(method)
                     if isinstance(method_object, Command):
-                        commands.append(method_object)
+                        self.commands.append(method_object)
                     elif isinstance(method_object, Task):
                         self.tasks.add_task(method_object)
-        return commands
+                    elif isinstance(method_object, Plugin):
+                        self.add_plugin(method_object, method_object.folder)
 
     def run_command(self, command: str, options: list = []) -> bool:
         check_commands = True

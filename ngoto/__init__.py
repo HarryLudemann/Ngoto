@@ -5,7 +5,7 @@ from ngoto.core.util.clear import clear_screen
 from ngoto.core.util.notify import notify
 from ngoto.core.util.logging import Logging
 from ngoto.core.util.node import Node
-from ngoto.core.util.abstract.plugin import PluginBase
+from ngoto.core.util.abstract.plugin import PluginBase, Plugin, plugin
 from ngoto.core.util.abstract.command import command
 from ngoto.core.util.abstract.task import Task, task
 from ngoto.core.util.rich.table import Table
@@ -28,5 +28,7 @@ __all__ = [
     'Table',
     'Style',
     'Logging',
-    'task'
+    'task',
+    'Plugin',
+    'plugin'
 ]

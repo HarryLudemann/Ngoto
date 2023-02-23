@@ -66,9 +66,21 @@ class Node:
 
     def get_children(self) -> list:
         return self.children
+    
+    def get_child_from_name(self, name: str):
+        for child in self.children:
+            if child.name == name:
+                return child
+        return None
 
     def get_child(self, index: int):  # returns Node obj
         return self.children[index]
+    
+    def has_child(self, name: str) -> bool:
+        for child in self.children:
+            if child.name == name or child.name.lower() == name.lower():
+                return True
+        return False
 
     def add_plugin(self, plugin):  # given Plugin obj
         self.plugins.append(plugin)

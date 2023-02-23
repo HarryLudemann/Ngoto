@@ -16,7 +16,7 @@ class Task:
         if os:
             self.os = os
         else:
-            self.os = []
+            self.os = ['Windows', 'MacOS', 'Linux']
 
     def execute(self):
         return self.func(self)

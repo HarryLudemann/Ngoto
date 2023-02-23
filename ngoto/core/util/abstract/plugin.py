@@ -58,3 +58,39 @@ class PluginBase(ABC):
     def main(self, logger):
         """ Main function to handle input and call get_context method """
         pass
+
+
+class Plugin:
+    def __init__(self, func, args, kwargs, name, desc,
+                 req_modules, os, folder):
+        self.name = name
+        self.args = args
+        self.kwargs = kwargs
+        self.desc = desc
+        self.func = func
+        self.folder = folder
+        if req_modules:
+            self.req_modules = req_modules
+        else:
+            self.req_modules = []
+        if os:
+            self.os = os
+        else:
+            self.os = ['Windows', 'MacOS', 'Linux']
+
+    def execute(self, logger):
+        return self.func(self, logger)
+
+    def __call__(self, logger) -> bool:
+        return self.execute(logger=logger)
+
+
+def plugin(name: str, desc="", req_modules=None, os=None, folder=''):
+    """Decorator to add command to cog"""
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            return Plugin(
+                func, args, kwargs, name, desc=desc,
+                req_modules=req_modules, os=os, folder=folder)
+        return wrapper
+    return decorator
