@@ -10,7 +10,6 @@ from ngoto.core.util.rich.style import Style
 
 __all__ = [
     'Ngoto',
-    'Node',
     'Table',
     'Style',
     'output',
