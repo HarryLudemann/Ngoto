@@ -12,5 +12,6 @@ log.txt
 .pytest_cache
 cov.xml
 .coverage
+.gitattributes
 
 powershell.exe -noexit -ExecutionPolicy Bypass -File C:\Users\hazza\Documents\Programming\Github\Ngoto\Ngoto.ps1

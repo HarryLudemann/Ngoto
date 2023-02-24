@@ -1,4 +1,5 @@
-from ngoto.core.util.abstract.task import Task
+# contains function open plugin
+from ngoto import task
 from subprocess import check_output
 
 
@@ -15,20 +16,29 @@ def get_gpu_memory_map() -> list:
             'nvidia-smi',
             '--query-gpu=memory.used,memory.total,memory.free,power.draw',
             '--format=csv,nounits,noheader'
-        ], shell=False, check=True)
+        ], shell=False)
     return result.decode('utf-8').strip().split(',')
 
 
-class NvidiaGPUUsage(Task):
-    id = "NvidiaGPUUsage"
-    delay = 30
-    description = "Nvidia GPU Usage Notifier"
-    last_output = ""
-    iteration = 0
-    active = True
-    os: list = ['Windows']
+class Tasks():
+    @classmethod
+    @task(name='PCUsage', delay=30, id='pcusage', os=['Windows'],
+          desc="RAM and CPU Usage Notifier, Req winsdk module")
+    def pc_usage(self):
+        from ngoto import notify
+        import psutil
+        ram_usage = psutil.virtual_memory()[2]
+        cpu_usage = psutil.cpu_percent()
+        self.last_output = f"RAM used: {ram_usage}\nCPU used: {cpu_usage}"
+        self.iteration += 1
+        if ram_usage > 80 or cpu_usage > 80:
+            notify("Computer Usage", self.last_output)
+        return [self.last_output, self.id]
 
-    def __call__(self) -> bool:
+    @classmethod
+    @task(name='NvidiaGPUUsage', delay=30, id='nvidia', os=['Windows'],
+          desc="Nvidia GPU Usage Notifier")
+    def nvidia_usage(self):
         from ngoto import notify
         usage = get_gpu_memory_map()
         if len(usage) > 3:
@@ -45,3 +55,7 @@ class NvidiaGPUUsage(Task):
         self.last_output += str(usage)
         self.iteration += 1
         return [self.last_output, self.id]
+
+
+def setup():
+    return Tasks()

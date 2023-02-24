@@ -1,8 +1,8 @@
 from ngoto.core.util.node import Node
 from ngoto.core.util.logging import Logging
-from ngoto.core import constants as const
 from ngoto.core.util.task_controller import TaskController
 from ngoto.core.util.interface import show_commands, output, get_input
+from ngoto.core.decorators import Command, Plugin, Task
 from concurrent.futures import ThreadPoolExecutor
 from sys import platform
 import os
@@ -11,7 +11,7 @@ from time import sleep, time
 
 def load_plugins(curr_node: Node, file_path: str, curr_os: str) -> Node:
     """ Recursive function to traverse plugin directory adding
-        each folder as node to tree and each plugin to node"""
+        each folder as node to tree and each plugin to node """
     for file in os.listdir(file_path):
         if file.endswith(".py"):    # if python script
             mod = __import__(
@@ -27,26 +27,13 @@ def load_plugins(curr_node: Node, file_path: str, curr_os: str) -> Node:
     return curr_node
 
 
-def load_cogs(folder):
-    """Load all commands in commands folders __init__ __all__ list """
-    cogs, commands, files_paths = [], [], []
-    for c in os.listdir(folder):
-        if c.endswith('.py') and not c.startswith('__'):
-            files_paths.append(c)
-    for files_path in files_paths:
-        complete_path = folder + '/' + files_path
-        complete_path = complete_path.replace('/', '.')[:-3]
-        # load file and call setup function
-        module = __import__(complete_path, fromlist=['setup'])
-        cogs.append(module.setup())
-
-    for cog in cogs:
-        # for each class method thats not inbuilt call and add returned
-        for method in dir(cog):
-            if method[0] != '_':
-                method = getattr(cog, method)
-                commands.append(method('', '', '', ''))
-    return commands
+def get_object_from_method(method):
+    """ Returns object from method """
+    num_args = method.__code__.co_argcount
+    args = []
+    for _ in range(num_args):
+        args.append('')
+    return method(*args)
 
 
 class Ngoto:
@@ -66,8 +53,46 @@ class Ngoto:
             self.os = "Windows"
 
         self.logger = Logging()
-        self.curr_pos = load_plugins(Node('root'), const.plugin_path, self.os)
-        self.commands = load_cogs(const.command_path)
+        self.curr_pos = Node('root')
+        self.load_cogs("ngoto/cogs")
+
+    def add_plugin(self, plugin: Plugin, location: str) -> None:
+        """ Add plugin to the correct point in tree """
+        curr_node = self.curr_pos
+        for folder in location.split('/'):
+            if folder != '':
+                # if folder exists in tree
+                if curr_node.has_child(folder):
+                    curr_node = curr_node.get_child_from_name(folder)
+                else:  # if folder does not exist in tree
+                    new_node = Node(folder)
+                    curr_node.add_child(new_node)
+                    curr_node = new_node
+        curr_node.add_plugin(plugin)
+
+    def load_cogs(self, folder) -> None:
+        """Load all commands in commands folders __init__ __all__ list """
+        cogs, files_paths = [], []
+        for c in os.listdir(folder):
+            if c.endswith('.py') and not c.startswith('__'):
+                files_paths.append(c)
+        for files_path in files_paths:
+            complete_path = folder + '/' + files_path
+            complete_path = complete_path.replace('/', '.')[:-3]
+            # load file and call setup function
+            module = __import__(complete_path, fromlist=['setup'])
+            cogs.append(module.setup())
+        for cog in cogs:
+            for method in dir(cog):
+                if method[0] != '_':
+                    method = getattr(cog, method)
+                    method_object = get_object_from_method(method)
+                    if isinstance(method_object, Command):
+                        self.commands.append(method_object)
+                    elif isinstance(method_object, Task):
+                        self.tasks.add_task(method_object)
+                    elif isinstance(method_object, Plugin):
+                        self.add_plugin(method_object, method_object.folder)
 
     def run_command(self, command: str, options: list = []) -> bool:
         check_commands = True

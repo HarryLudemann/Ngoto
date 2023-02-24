@@ -4,16 +4,14 @@ from ngoto.core.util.interface import show_options, show_commands
 from ngoto.core.util.clear import clear_screen
 from ngoto.core.util.notify import notify
 from ngoto.core.util.logging import Logging
-from ngoto.core.util.node import Node
-from ngoto.core.util.abstract.plugin import PluginBase
-from ngoto.core.util.abstract.command import CommandCog, command
-from ngoto.core.util.abstract.task import Task
+from ngoto.core.decorators import plugin, command, task
 from ngoto.core.util.rich.table import Table
 from ngoto.core.util.rich.style import Style
 
 __all__ = [
     'Ngoto',
-    'Task',
+    'Table',
+    'Style',
     'output',
     'get_input',
     'logo',
@@ -21,11 +19,8 @@ __all__ = [
     'show_commands',
     'clear_screen',
     'notify',
-    'Node',
-    'PluginBase',
-    'CommandCog',
+    'Logging',
     'command',
-    'Table',
-    'Style',
-    'Logging'
+    'task',
+    'plugin'
 ]

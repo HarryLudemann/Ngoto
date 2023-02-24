@@ -1,15 +1,13 @@
-from ngoto.core import constants as const
 from ngoto.core.util.interface import show_tasks
 from ngoto.core.util.clear import clear_screen
-from ngoto.core.util.load_scripts import load_scripts
 
 
 class TaskController:
     tasks = []
     tasks_running = []
 
-    def __init__(self) -> None:
-        self.tasks = load_scripts(const.task_path)
+    def add_task(self, task) -> None:
+        self.tasks.append(task)
 
     def enable_task(self, task_id: str, logger) -> None:
         """ Enable task """
@@ -64,5 +62,8 @@ class TaskController:
         elif len(options) == 3 and options[1] in ['d', 'disable']:
             self.disable_task(options[2], logger)
         else:  # show tasks status
-            clear_screen()
-            show_tasks(self.tasks, os)
+            try:
+                clear_screen()
+                show_tasks(self.tasks, os)
+            except Exception as e:
+                print(e)

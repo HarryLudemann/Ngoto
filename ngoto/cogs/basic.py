@@ -1,8 +1,8 @@
 # contains function to clear screen
-from ngoto import CommandCog, command, clear_screen, output, show_options
+from ngoto import command, clear_screen, output, show_options
 
 
-class Basic(CommandCog):
+class Basic():
     """ Basic commands for ngoto eg. exit, clear, back"""
     @staticmethod
     @command(name='logs', aliases=['l'], desc='Display logs')
@@ -51,6 +51,28 @@ class Basic(CommandCog):
         else:
             output("You are already in root")
             logger.debug('Cannot go back, in root dir', program='Back')
+
+    @staticmethod
+    @command(name='openPlugin', aliases=['openP'], desc='Open plugin')
+    def open_plugin(_, pos, options, logger):
+        plugin = pos.get_plugin(int(options[0]) - pos.num_children - 1)
+        if not plugin(logger=logger):  # if context print
+            clear_screen()
+            show_options(pos)
+        logger.debug(f'Opening plugin {plugin.name}', program='OpenPlugin')
+        return pos
+
+    @staticmethod
+    @command(name='openFolder', aliases=['openF'], desc='Open folder')
+    def open_folder(_, pos, options, logger):
+        folder = pos.get_child(int(options[0])-1)
+        folder.set_parent(pos)
+        clear_screen()
+        show_options(folder)
+        logger.debug(
+            f'Opening folder {folder.get_name()}',
+            program='OpenFolder')
+        return folder
 
 
 def setup():
