@@ -121,6 +121,7 @@ def run_tree(node, logger):
 
 class OSINTFramework():
     """ Explore OSINT Framework """
+    @classmethod
     @plugin(name='OSINT Framework', desc='Explore OSINT Framework',
             folder='OSINT')
     def osint_framework(self, logger):

@@ -36,6 +36,7 @@ def print_info(url, ip):
 
 class URL():
     """ Get IP for URL """
+    @classmethod
     @plugin(name='URL', desc='Get IP for URL', folder='OSINT')
     def url(self, logger):
         self.logger = logger

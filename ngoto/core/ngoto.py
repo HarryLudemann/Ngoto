@@ -2,10 +2,7 @@ from ngoto.core.util.node import Node
 from ngoto.core.util.logging import Logging
 from ngoto.core.util.task_controller import TaskController
 from ngoto.core.util.interface import show_commands, output, get_input
-from ngoto.core.util.abstract.command import Command
-from ngoto.core.util.abstract.plugin import Plugin
-from ngoto.core.util.abstract.task import Task
-from ngoto.core import constants as const
+from ngoto.core.decorators import Command, Plugin, Task
 from concurrent.futures import ThreadPoolExecutor
 from sys import platform
 import os
@@ -57,8 +54,7 @@ class Ngoto:
 
         self.logger = Logging()
         self.curr_pos = Node('root')
-        self.load_cogs(const.command_path)
-    # self.curr_pos = load_plugins(Node('root'), const.plugin_path, self.os)
+        self.load_cogs("ngoto/cogs")
 
     def add_plugin(self, plugin: Plugin, location: str) -> None:
         """ Add plugin to the correct point in tree """

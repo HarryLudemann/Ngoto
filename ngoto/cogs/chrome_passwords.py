@@ -140,6 +140,7 @@ def print_info(context):
 
 class ChromePasswords():
     """ Get IP for URL """
+    @classmethod
     @plugin(name='Chrome Passwords', desc='Get saved chrome passwords',
             folder='Passwords')
     def url(self, logger):

@@ -22,7 +22,7 @@ def get_gpu_memory_map() -> list:
 
 class Tasks():
     @classmethod
-    @task(name='PCUsage', delay=30, os=['Windows'],
+    @task(name='PCUsage', delay=30, id='pcusage', os=['Windows'],
           desc="RAM and CPU Usage Notifier, Req winsdk module")
     def pc_usage(self):
         from ngoto import notify
@@ -36,7 +36,7 @@ class Tasks():
         return [self.last_output, self.id]
 
     @classmethod
-    @task(name='NvidiaGPUUsage', delay=30, os=['Windows'],
+    @task(name='NvidiaGPUUsage', delay=30, id='nvidia', os=['Windows'],
           desc="Nvidia GPU Usage Notifier")
     def nvidia_usage(self):
         from ngoto import notify

@@ -38,6 +38,7 @@ def print_info(context):
 
 class URL():
     """ Get saved wifi passwords """
+    @classmethod
     @plugin(name='Wifi Passwords', desc='Get saved wifi passwords',
             folder='Passwords')
     def url(self, logger):
