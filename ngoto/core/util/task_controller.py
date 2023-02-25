@@ -1,5 +1,4 @@
-from ngoto.core.util.interface import show_tasks
-from ngoto.core.util.clear import clear_screen
+from ngoto.core.util.interface import show_tasks, clear_screen
 
 
 class TaskController:
