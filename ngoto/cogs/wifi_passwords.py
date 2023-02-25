@@ -1,4 +1,7 @@
-from ngoto import plugin, output, Table, Style
+from ngoto.core.util.interface import output
+from ngoto.core.decorators import plugin
+from ngoto.core.util.rich.table import Table
+from ngoto.core.util.rich.style import Style
 from subprocess import check_output, CalledProcessError
 
 title_style = Style(color="blue", blink=False, bold=True)

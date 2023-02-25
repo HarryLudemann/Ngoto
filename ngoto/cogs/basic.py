@@ -1,5 +1,7 @@
 # contains function to clear screen
-from ngoto import command, clear_screen, output, show_options
+from ngoto.core.util.interface import output
+from ngoto.core.util.interface import show_options, show_commands, clear_screen
+from ngoto.core.decorators import command
 
 
 class Basic():
@@ -36,6 +38,16 @@ class Basic():
         logger.info("Exiting ngoto")
         logger.debug('Exiting ngoto', program='Exit')
         exit()
+
+    @staticmethod
+    @command(name='commands', aliases=['c', 'h', 'help'], desc='Exit ngoto')
+    def commands(self, pos, options, logger):
+        show_commands(self.commands)
+
+    @staticmethod
+    @command(name='tasks', aliases=['t'], desc='Exit ngoto')
+    def tasks(self, pos, options, logger):
+        self.tasks.run_command(options, self.os, self.logger)
 
     @staticmethod
     @command(name='back', aliases=['b'], desc='Back out of plugin etc')

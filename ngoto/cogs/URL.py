@@ -1,4 +1,7 @@
-from ngoto import plugin, get_input, output, Table, Style
+from ngoto.core.util.interface import output, get_input
+from ngoto.core.decorators import plugin
+from ngoto.core.util.rich.table import Table
+from ngoto.core.util.rich.style import Style
 import socket
 
 title_style = Style(color="blue", blink=False, bold=True)

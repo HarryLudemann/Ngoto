@@ -1,4 +1,7 @@
-from ngoto import plugin, output, Table, Style
+from ngoto.core.util.interface import output
+from ngoto.core.util.rich.table import Table
+from ngoto.core.util.rich.style import Style
+from ngoto.core.decorators import plugin
 from dataclasses import dataclass
 
 title_style = Style(color="blue", blink=False, bold=True)

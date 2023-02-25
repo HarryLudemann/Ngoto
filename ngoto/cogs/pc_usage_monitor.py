@@ -1,5 +1,5 @@
 # contains function open plugin
-from ngoto import task
+from ngoto.core.decorators import task
 from subprocess import check_output
 
 

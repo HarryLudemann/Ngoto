@@ -2,6 +2,7 @@
 from ngoto.core.util.rich.console import Console
 from ngoto.core.util.rich.table import Table  # used in this plugin
 from ngoto.core.util.rich.style import Style  # used in this plugin
+import os
 
 console: Console = Console()
 logo_style = Style(color="blue", blink=False, bold=True)
@@ -119,3 +120,8 @@ def show_tasks(tasks: list, thisOS: str):
                 str(task.os),
                 style=greyed_out_style)
     output(table)
+
+
+def clear_screen():
+    os.system('cls' if os.name in ('nt', 'dos') else 'clear')
+    return True
