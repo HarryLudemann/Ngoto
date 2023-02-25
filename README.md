@@ -44,7 +44,7 @@ Which will bring you to the following:
 # Example:
 
 ```python
-from ngoto.core.util.interface import plugin, command, task, Ngoto
+from ngoto import plugin, command, task, Ngoto
 
 
 class Basic():
