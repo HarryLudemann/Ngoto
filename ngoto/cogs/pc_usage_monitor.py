@@ -30,7 +30,6 @@ class Tasks():
         ram_usage = psutil.virtual_memory()[2]
         cpu_usage = psutil.cpu_percent()
         self.last_output = f"RAM used: {ram_usage}\nCPU used: {cpu_usage}"
-        self.iteration += 1
         if ram_usage > 80 or cpu_usage > 80:
             notify("Computer Usage", self.last_output)
         return [self.last_output, self.id]
@@ -49,11 +48,9 @@ class Tasks():
                 f"\nTotal Memory: {usage[1]}MB",
                 f"\nFree Memory: {usage[2]}MB",
                 f"\nPower Draw: {usage[3]}"])
-            self.iteration += 1
-            return [self.last_output, self.id]
-        self.last_output = "Failed to get gpu memory map, usage: "
-        self.last_output += str(usage)
-        self.iteration += 1
+        else:
+            self.last_output = "Failed to get gpu memory map, usage: "
+            self.last_output += str(usage)
         return [self.last_output, self.id]
 
 

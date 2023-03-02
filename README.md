@@ -48,24 +48,18 @@ from ngoto import plugin, command, task, Ngoto
 
 
 class Basic():
-    """ Basic commands for ngoto eg. exit, clear, back"""
-    
-    @classmethod
     @plugin(name='Tester', desc='Tester Plugin', folder='Random')
     def tester(self, logger):
-        logger.info(f'Plugin ran', program='Tester')
+        logger.info(f'Plugin ran', program='Test')
 
-    @classmethod
     @command(name='test', aliases=['t'], desc='Tests command')
-    def test(self, pos, _, logger):
-        logger.info(f'Plugin ran', program='Tester')
+    def test(self, pos, options, logger):
+        logger.info(f'Command ran', program='Test')
 
-    @classmethod
-    @task(name='TaskTest', delay=30, id='tasktest', os=['Windows'],
-          desc="Tests task crfeation")
-    def pc_usage(self):
-        from ngoto import notify
-        notify('Tester", "Testing task creation)
+    @task(name='TaskTest', delay=30, id='test', os=['Windows'],
+          desc="Tests task creation")
+    def testing(self):
+        return ['Task ran', 'Test']
 
 
 ngoto = Ngoto()
