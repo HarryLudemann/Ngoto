@@ -64,5 +64,5 @@ class Basic():
 
 ngoto = Ngoto()
 ngoto.load_cogs([Basic()])
-ngoto.main()
+ngoto.start()
 ```
