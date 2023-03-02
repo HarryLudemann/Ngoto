@@ -4,6 +4,7 @@ from ngoto.core.util.interface import show_tasks, clear_screen
 class TaskController:
     tasks = []
     tasks_running = []
+    logger = None
 
     def add_task(self, task) -> None:
         self.tasks.append(task)
@@ -45,6 +46,7 @@ class TaskController:
         for task in self.tasks:
             if self.update_task(self, task, curr_time, os):
                 self.tasks_running.append(executor.submit(task))
+                task.iteration += 1
                 task.last_run = curr_time
 
     def check_running_tasks(self, logger):

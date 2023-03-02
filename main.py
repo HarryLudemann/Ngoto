@@ -3,4 +3,4 @@
 if __name__ == '__main__':
     from ngoto import Ngoto
     ngoto = Ngoto()
-    ngoto.main()
+    ngoto.start()

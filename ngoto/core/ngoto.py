@@ -64,6 +64,7 @@ class Ngoto:
                     if isinstance(method_object, Command):
                         self.commands.append(method_object)
                     elif isinstance(method_object, Task):
+                        method_object.logger = self.logger
                         self.tasks.add_task(method_object)
                     elif isinstance(method_object, Plugin):
                         self.add_plugin(method_object, method_object.folder)
@@ -105,7 +106,7 @@ class Ngoto:
             output("Unknown command")
         self.clt()
 
-    def main(self) -> None:
+    def start(self) -> None:
         """ Main loop """
         self.run_command('clear')
         self.run_command('options')
