@@ -91,7 +91,7 @@ class Ngoto:
                 command = 'openPlugin'
         for cmd in self.commands:
             if command in cmd.aliases or command == cmd.name:
-                pos = cmd.func(self, self.curr_pos, options, self.logger)
+                pos = cmd.func(self, self.logger, options)
                 if pos:
                     self.curr_pos = pos
                 return True
