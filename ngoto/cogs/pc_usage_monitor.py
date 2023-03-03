@@ -32,7 +32,7 @@ class Tasks():
         self.last_output = f"RAM used: {ram_usage}\nCPU used: {cpu_usage}"
         if ram_usage > 80 or cpu_usage > 80:
             notify("Computer Usage", self.last_output)
-        return [self.last_output, self.id]
+        return self.last_output
 
     @classmethod
     @task(name='NvidiaGPUUsage', delay=30, id='nvidia', os=['Windows'],
@@ -51,7 +51,7 @@ class Tasks():
         else:
             self.last_output = "Failed to get gpu memory map, usage: "
             self.last_output += str(usage)
-        return [self.last_output, self.id]
+        return self.last_output
 
 
 def setup():

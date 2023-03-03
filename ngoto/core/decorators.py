@@ -47,7 +47,8 @@ class Task:
         return self.func(self)
 
     def __call__(self) -> bool:
-        return self.execute()
+        self.last_output = self.execute()
+        return self.last_output
 
 
 class Command:

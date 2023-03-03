@@ -145,7 +145,7 @@ class ChromePasswords():
     """ Get IP for URL """
     @classmethod
     @plugin(name='Chrome Passwords', desc='Get saved chrome passwords',
-            folder='Passwords')
+            folder='Passwords', os=['Windows'])
     def url(self, logger):
         logger.info('Getting Chrome Passwords', program='Chrome Passwords')
         info = get_info(logger)

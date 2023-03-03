@@ -45,14 +45,16 @@ class TaskController:
     def check_available_tasks(self, executor, curr_time, os: str) -> None:
         for task in self.tasks:
             if self.update_task(self, task, curr_time, os):
-                self.tasks_running.append(executor.submit(task))
+                tmp_task = executor.submit(task)
+                tmp_task.name = task.name
+                self.tasks_running.append(tmp_task)
                 task.iteration += 1
                 task.last_run = curr_time
 
     def check_running_tasks(self, logger):
         for task in self.tasks_running:
             if task.done():
-                logger.info(task.result()[0], task.result()[1])
+                logger.info(task.result(), program=task.name)
                 self.tasks_running.remove(task)
 
     def run_command(self, options: list, os: str, logger):

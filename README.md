@@ -42,7 +42,6 @@ Which will bring you to the following:
 ![](.github/LaunchScreen.png)
 
 # Example:
-
 ```python
 from ngoto import plugin, command, task, Ngoto
 
@@ -53,16 +52,16 @@ class Basic():
         logger.info(f'Plugin ran', program='Test')
 
     @command(name='test', aliases=['t'], desc='Tests command')
-    def test(self, pos, options, logger):
+    def test(self, logger, options):
         logger.info(f'Command ran', program='Test')
 
-    @task(name='TaskTest', delay=30, id='test', os=['Windows'],
-          desc="Tests task creation")
+    @task(name='TaskTest', desc="Tests task creation", delay=3, id='test')
     def testing(self):
-        return ['Task ran', 'Test']
+        self.logger.info(f'Task logger test ran', program='Test')
+        return 'Task ran'
 
 
 ngoto = Ngoto()
 ngoto.load_cogs([Basic()])
-ngoto.main()
+ngoto.start()
 ```
