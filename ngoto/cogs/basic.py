@@ -67,7 +67,8 @@ class Basic():
     @staticmethod
     @command(name='openPlugin', aliases=['openP'], desc='Open plugin')
     def open_plugin(self, logger, options):
-        plugin = self.curr_pos.get_plugin(int(options[0]) - self.curr_pos.num_children - 1)
+        plugin = self.curr_pos.get_plugin(
+            int(options[0]) - self.curr_pos.num_children - 1)
         if not plugin(logger=logger):  # if context print
             clear_screen()
             show_options(self.curr_pos)
